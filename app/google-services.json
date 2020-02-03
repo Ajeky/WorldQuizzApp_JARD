@@ -1,34 +1,42 @@
 {
   "project_info": {
-    "project_number": "694324671801",
-    "firebase_url": "https://worldquizzappjard.firebaseio.com",
-    "project_id": "worldquizzappjard",
-    "storage_bucket": "worldquizzappjard.appspot.com"
+    "project_number": "1083929015607",
+    "firebase_url": "https://worldquizzappjarddam.firebaseio.com",
+    "project_id": "worldquizzappjarddam",
+    "storage_bucket": "worldquizzappjarddam.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:694324671801:android:6b864dcdb389036f2da4e8",
+        "mobilesdk_app_id": "1:1083929015607:android:5a4e115d47ed84969fd6b2",
         "android_client_info": {
           "package_name": "com.example.worldquizzapp_jard"
         }
       },
       "oauth_client": [
         {
-          "client_id": "694324671801-v6eklpjh9l61fv9mtq2gl3sl7a0sdaml.apps.googleusercontent.com",
+          "client_id": "1083929015607-a8hveiu09m9mvja97kiqfupscgorhh5i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.worldquizzapp_jard",
+            "certificate_hash": "5b419679ab10e9182e728fb039cb090674972839"
+          }
+        },
+        {
+          "client_id": "1083929015607-dvf0cp6d6rf9mi4dc72rnu55e44d2qvq.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBOE5bFyTCdtp82Voav6NS-BxRWatKSPs4"
+          "current_key": "AIzaSyAeFDA4clfPd-tLojULW7m8vJtwSkZXv9M"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "694324671801-v6eklpjh9l61fv9mtq2gl3sl7a0sdaml.apps.googleusercontent.com",
+              "client_id": "1083929015607-dvf0cp6d6rf9mi4dc72rnu55e44d2qvq.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
