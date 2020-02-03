@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "694324671801",
+    "firebase_url": "https://worldquizzappjard.firebaseio.com",
+    "project_id": "worldquizzappjard",
+    "storage_bucket": "worldquizzappjard.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:694324671801:android:6b864dcdb389036f2da4e8",
+        "android_client_info": {
+          "package_name": "com.example.worldquizzapp_jard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "694324671801-v6eklpjh9l61fv9mtq2gl3sl7a0sdaml.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOE5bFyTCdtp82Voav6NS-BxRWatKSPs4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "694324671801-v6eklpjh9l61fv9mtq2gl3sl7a0sdaml.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
