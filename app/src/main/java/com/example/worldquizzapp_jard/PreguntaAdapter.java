@@ -3,9 +3,12 @@ package com.example.worldquizzapp_jard;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.worldquizzapp_jard.PreguntaFragment.OnListFragmentInteractionListener;
@@ -35,6 +38,22 @@ public class PreguntaAdapter extends RecyclerView.Adapter<PreguntaAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
+        holder.tvEnunciado.setText(holder.mItem.getEnunciado());
+        holder.rbRespuesta1.setText(holder.mItem.getRespuesta1());
+        holder.rbRespuesta2.setText(holder.mItem.getRespuesta2());
+        holder.rbRespuesta3.setText(holder.mItem.getRespuesta3());
+        holder.rbRespuesta4.setText(holder.mItem.getRespuesta4());
+
+        holder.rgRespuestas.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton respuesta = (RadioButton) holder.rgRespuestas.findViewById(checkedId);
+                if (respuesta.getText() == "Managua") {
+                    Log.d("Exito", "De puta madre paco");
+                } else
+                    Log.d("Fracaso", "Hasta luego bro");
+            }
+        });
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,18 +70,25 @@ public class PreguntaAdapter extends RecyclerView.Adapter<PreguntaAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mContentView;
+        public final TextView tvEnunciado;
+        public final RadioGroup rgRespuestas;
+        public final RadioButton rbRespuesta1;
+        public final RadioButton rbRespuesta2;
+        public final RadioButton rbRespuesta3;
+        public final RadioButton rbRespuesta4;
         public Pregunta mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mContentView = (TextView) view.findViewById(R.id.content);
+            tvEnunciado = (TextView) view.findViewById(R.id.enunciadoPregunta);
+            rgRespuestas = (RadioGroup) view.findViewById(R.id.respuestas);
+            rbRespuesta1 = (RadioButton) view.findViewById(R.id.respuesta1);
+            rbRespuesta2 = (RadioButton) view.findViewById(R.id.respuesta2);
+            rbRespuesta3 = (RadioButton) view.findViewById(R.id.respuesta3);
+            rbRespuesta4 = (RadioButton) view.findViewById(R.id.respuesta4);
         }
 
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
-        }
+
     }
 }
