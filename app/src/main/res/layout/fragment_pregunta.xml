@@ -1,20 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:padding="32dp">
 
     <TextView
-        android:id="@+id/item_number"
+        android:id="@+id/enunciadoPregunta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:text="¿Cuál es la capital de Nicaragua?"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/content"
-        android:layout_width="wrap_content"
+    <RadioGroup
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem" />
-</LinearLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enunciadoPregunta">
+
+        <RadioButton
+            android:id="@+id/respuesta1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Madrid" />
+
+        <RadioButton
+            android:id="@+id/respuesta2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mexico DF" />
+
+        <RadioButton
+            android:id="@+id/respuesta3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Managua" />
+
+        <RadioButton
+            android:id="@+id/respuesta4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Santiago" />
+    </RadioGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>

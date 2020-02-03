@@ -12,9 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.worldquizzapp_jard.dummy.DummyContent;
-import com.example.worldquizzapp_jard.dummy.DummyContent.DummyItem;
+import com.example.worldquizzapp_jard.models.Pregunta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +27,7 @@ public class PreguntaFragment extends Fragment {
 
     // TODO: Customize parameters
     private int mColumnCount = 1;
+    private List<Pregunta> preguntas;
 
     private OnListFragmentInteractionListener mListener;
 
@@ -57,7 +58,10 @@ public class PreguntaFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new PreguntaAdapter(DummyContent.ITEMS, mListener));
+
+            preguntas = new ArrayList<>();
+
+            recyclerView.setAdapter(new PreguntaAdapter(preguntas, mListener));
         }
         return view;
     }
@@ -92,6 +96,6 @@ public class PreguntaFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Pregunta item);
     }
 }
