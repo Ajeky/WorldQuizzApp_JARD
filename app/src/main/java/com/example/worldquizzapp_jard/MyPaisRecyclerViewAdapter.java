@@ -18,13 +18,12 @@ import java.util.List;
 public class MyPaisRecyclerViewAdapter extends RecyclerView.Adapter<MyPaisRecyclerViewAdapter.ViewHolder> {
 
     private final List<Pais> listadoPaises;
-    private final Context ctx;
+    Context ctx;
     private final IPaisListener mListener;
 
 
-    public MyPaisRecyclerViewAdapter(List<Pais> listadoPaises, Context ctx, IPaisListener mListener) {
+    public MyPaisRecyclerViewAdapter(List<Pais> listadoPaises,IPaisListener mListener) {
         this.listadoPaises = listadoPaises;
-        this.ctx = ctx;
         this.mListener = mListener;
     }
 
@@ -32,6 +31,8 @@ public class MyPaisRecyclerViewAdapter extends RecyclerView.Adapter<MyPaisRecycl
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_pais, parent, false);
+
+        ctx = parent.getContext();
         return new ViewHolder(view);
     }
 

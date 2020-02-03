@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import com.example.worldquizzapp_jard.models.Pais;
 import com.example.worldquizzapp_jard.serviceGenerator.PaisServiceGenerator;
 import com.example.worldquizzapp_jard.services.PaisService;
@@ -33,6 +35,7 @@ public class PaisFragment extends Fragment {
     private List<Pais> listadoPais;
     private RecyclerView recyclerView;
     private MyPaisRecyclerViewAdapter adapter;
+    PaisService service;
 
 
     public PaisFragment() {
@@ -66,8 +69,7 @@ public class PaisFragment extends Fragment {
 
 
 
-            adapter =  new MyPaisRecyclerViewAdapter(listadoPais,getActivity(),mListener);
-            recyclerView.setAdapter(adapter);
+            service = PaisServiceGenerator.createService(PaisService.class);
             new LoadDataTask().execute();
         }
         return view;
@@ -91,27 +93,33 @@ public class PaisFragment extends Fragment {
         mListener = null;
     }
 
-    private class LoadDataTask extends AsyncTask<Void, Void, List<Pais>> {
+    private class LoadDataTask extends AsyncTask<List<Pais>, Void, List<Pais>> {
 
-        protected List<Pais> doInBackground(Void... voids) {
-            List<Pais> listadoPaises = null;
-            PaisService service;
-            service = PaisServiceGenerator.createService(PaisService.class);
+        protected List<Pais> doInBackground(List<Pais>... paises) {
+            Call<List<Pais>> call = service.listadoPaises();
 
-            Call<List<Pais>> paises = service.listadoPaises();
-
-            Response<List<Pais>> responseRepos = null;
+            Response<List<Pais>> response = null;
 
             try {
-                responseRepos = paises.execute();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                response = call.execute();
 
-            if (responseRepos.isSuccessful()) {
-                listadoPaises = responseRepos.body();
+                if(response.isSuccessful()){
+                    return response.body();
+                }
+
+            } catch (IOException e){
+                e.printStackTrace();
+                Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
             }
-            return listadoPaises;
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<Pais> paises) {
+
+            recyclerView.setAdapter(new MyPaisRecyclerViewAdapter(paises, mListener));
+
         }
     }
 }
+
