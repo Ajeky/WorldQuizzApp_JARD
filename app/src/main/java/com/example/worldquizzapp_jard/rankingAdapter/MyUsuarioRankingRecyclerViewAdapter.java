@@ -12,8 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.worldquizzapp_jard.R;
 import com.example.worldquizzapp_jard.models.Usuario;
-import com.example.worldquizzapp_jard.rankingAdapter.UsuarioFragmentRanking.OnListFragmentInteractionListener;
-import com.example.worldquizzapp_jard.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
@@ -43,17 +41,20 @@ public class MyUsuarioRankingRecyclerViewAdapter extends RecyclerView.Adapter<My
         holder.tvNombre.setText(holder.mItem.getNombre());
         holder.tvPosicion.setText(String.valueOf(position+1));
         holder.tvPuntosPorPartida.setText(String.valueOf(holder.mItem.getPuntosPorPartida()));
-        holder.tvPuntos.setText(holder.mItem.getPuntos());
+        holder.tvPuntos.setText(String.valueOf(holder.mItem.getPuntos()));
 
+        if (position==0){
+            holder.ivCorona.setVisibility(View.VISIBLE);
 
+        }else {
+            holder.ivCorona.setVisibility(View.INVISIBLE);
+        }
+        
         Glide
                 .with(ctx)
                 .load(holder.mItem.getFoto())
+                .centerCrop()
                 .into(holder.ivAvatar);
-
-
-
-
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +76,7 @@ public class MyUsuarioRankingRecyclerViewAdapter extends RecyclerView.Adapter<My
         public final TextView tvPuntos;
         public final TextView tvPuntosPorPartida;
         public final ImageView ivAvatar;
+        public final ImageView ivCorona;
         public Usuario mItem;
 
         public ViewHolder(View view) {
@@ -85,6 +87,7 @@ public class MyUsuarioRankingRecyclerViewAdapter extends RecyclerView.Adapter<My
             tvPuntos = view.findViewById(R.id.ranking_puntos);
             tvPuntosPorPartida = view.findViewById(R.id.ranking_puntosPorPartida);
             ivAvatar = view.findViewById(R.id.ranking_avatar);
+            ivCorona = view.findViewById(R.id.ranking_corona);
 
 
         }

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario {
+public class Usuario  implements Comparable<Usuario> {
     private String foto;
     private String nombre;
     private String posicion;
@@ -20,4 +20,18 @@ public class Usuario {
         this.puntos = puntos;
         this.puntosPorPartida = puntosPorPartida;
     }
+
+    @Override
+    public int compareTo(Usuario o) {
+        if (puntos > o.puntos) {
+            return -1;
+        }
+        if (puntos < o.puntos) {
+            return 1;
+        }
+        return 0;
+    }
+
+
+
 }
