@@ -1,6 +1,7 @@
 package com.example.worldquizzapp_jard;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,42 +12,32 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.example.worldquizzapp_jard.models.Pais;
+import com.example.worldquizzapp_jard.serviceGenerator.PaisServiceGenerator;
+import com.example.worldquizzapp_jard.services.PaisService;
+import com.example.worldquizzapp_jard.ui.IPaisListener;
 
-import com.example.worldquizzapp_jard.dummy.DummyContent;
-import com.example.worldquizzapp_jard.dummy.DummyContent.DummyItem;
-
+import java.io.IOException;
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
+import retrofit2.Call;
+import retrofit2.Response;
+
+
 public class PaisFragment extends Fragment {
 
-    // TODO
+
     private static final String ARG_COLUMN_COUNT = "column-count";
-
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
+    private IPaisListener mListener;
+    private List<Pais> listadoPais;
+    private RecyclerView recyclerView;
+    private MyPaisRecyclerViewAdapter adapter;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
+
     public PaisFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static PaisFragment newInstance(int columnCount) {
-        PaisFragment fragment = new PaisFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,16 +53,22 @@ public class PaisFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pais_list, container, false);
 
-        // Set the adapter
+
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyPaisRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+
+
+
+
+            adapter =  new MyPaisRecyclerViewAdapter(listadoPais,getActivity(),mListener);
+            recyclerView.setAdapter(adapter);
+            new LoadDataTask().execute();
         }
         return view;
     }
@@ -80,11 +77,11 @@ public class PaisFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+        if (context instanceof IPaisListener) {
+            mListener = (IPaisListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+                    + " must implement IPaisListener");
         }
     }
 
@@ -94,18 +91,27 @@ public class PaisFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+    private class LoadDataTask extends AsyncTask<Void, Void, List<Pais>> {
+
+        protected List<Pais> doInBackground(Void... voids) {
+            List<Pais> listadoPaises = null;
+            PaisService service;
+            service = PaisServiceGenerator.createService(PaisService.class);
+
+            Call<List<Pais>> paises = service.listadoPaises();
+
+            Response<List<Pais>> responseRepos = null;
+
+            try {
+                responseRepos = paises.execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (responseRepos.isSuccessful()) {
+                listadoPaises = responseRepos.body();
+            }
+            return listadoPaises;
+        }
     }
 }
