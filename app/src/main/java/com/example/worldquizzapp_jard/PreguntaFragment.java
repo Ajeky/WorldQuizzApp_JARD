@@ -60,8 +60,15 @@ public class PreguntaFragment extends Fragment {
             }
 
             preguntas = new ArrayList<>();
+            preguntas.add(new Pregunta("¿Cuál es la capital de Nicaragua?", "Madrid", "Mexico DF", "Managua", "Santiago"));
+            preguntas.add(new Pregunta("¿Cuál es la capital de Nicaragua?", "Madrid", "Mexico DF", "Managua", "Santiago"));
+            preguntas.add(new Pregunta("¿Cuál es la capital de Nicaragua?", "Madrid", "Mexico DF", "Managua", "Santiago"));
+            preguntas.add(new Pregunta("¿Cuál es la capital de Nicaragua?", "Madrid", "Mexico DF", "Managua", "Santiago"));
+            preguntas.add(new Pregunta("¿Cuál es la capital de Nicaragua?", "Madrid", "Mexico DF", "Managua", "Santiago"));
+            preguntas.add(new Pregunta("¿Cuál es la capital de Nicaragua?", "Madrid", "Mexico DF", "Managua", "Santiago"));
+            preguntas.add(new Pregunta("¿Cuál es la capital de Nicaragua?", "Madrid", "Mexico DF", "Managua", "Santiago"));
 
-            recyclerView.setAdapter(new PreguntaAdapter(preguntas, mListener));
+            recyclerView.setAdapter(new PreguntaAdapter(context, R.layout.fragment_pregunta, preguntas));
         }
         return view;
     }
