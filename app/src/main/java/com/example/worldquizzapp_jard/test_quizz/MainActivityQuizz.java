@@ -14,6 +14,7 @@ import com.example.worldquizzapp_jard.models.Pregunta;
 public class MainActivityQuizz extends AppCompatActivity implements PreguntaFragment.OnListFragmentInteractionListener {
 
     Button botonEnviar;
+    RadioGroup rgRespuesta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,7 @@ public class MainActivityQuizz extends AppCompatActivity implements PreguntaFrag
         botonEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                
             }
         });
 
