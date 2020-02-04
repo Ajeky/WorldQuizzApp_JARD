@@ -29,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -116,22 +117,40 @@ public class LogInActivity extends AppCompatActivity {
          });
      }
 
-     private void updateUi(FirebaseUser user){
+     private void updateUi(final FirebaseUser user){
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         if(account != null){
 
             db = FirebaseFirestore.getInstance();
 
-            Map<String, Object> usuario = new HashMap<>();
+            final Map<String, Object> usuario = new HashMap<>();
             usuario.put("nombre", user.getDisplayName());
             usuario.put("email", user.getEmail());
             usuario.put("avatar",user.getPhotoUrl().toString());
             usuario.put("resultados", new ArrayList<Integer>());
 
-            // Add a new document with a custom ID
             db.collection("usuarios")
                     .document(user.getUid())
-                    .set(usuario);
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                //Si el usuario existe no lo vuelve a guardar en firebase
+                                if (document.exists()) {
+                                //Si el usuario no existe lo guarda en firebase
+                                } else {
+                                    // Add a new document with a custom ID
+                                    db.collection("usuarios")
+                                            .document(user.getUid())
+                                            .set(usuario);
+                                }
+                            } else {
+                                Log.d(TAG, "get failed with ", task.getException());
+                            }
+                        }
+                    });
 
         }
      }
