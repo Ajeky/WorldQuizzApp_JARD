@@ -3,7 +3,7 @@ package com.example.worldquizzapp_jard;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.media.Image;
+import android.graphics.drawable.PictureDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.ViewTarget;
 import com.example.worldquizzapp_jard.models.Pais;
-import com.example.worldquizzapp_jard.ui.IPaisListener;
+
 import java.util.List;
 
 
@@ -21,6 +22,7 @@ public class MyPaisRecyclerViewAdapter extends RecyclerView.Adapter<MyPaisRecycl
     private final List<Pais> listadoPaises;
     Context ctx;
     private int layout;
+    private ViewTarget<ImageView, PictureDrawable> requestBuilder;
 
 
     public MyPaisRecyclerViewAdapter(List<Pais> listadoPaises, Context ctx, int layout) {
@@ -45,9 +47,15 @@ public class MyPaisRecyclerViewAdapter extends RecyclerView.Adapter<MyPaisRecycl
         holder.monedaPrincipal.setText(holder.item.getCurrencies().get(0).getName());
         holder.lenguaje.setText(holder.item.getLanguages().get(0).getName());
 
-        Glide.with(ctx)
-                .load(listadoPaises.get(position).getFlag())
-                .into(holder.urlBandera);
+
+        //requestBuilder = Glide.with(ctx)
+          //      .as(PictureDrawable.class)
+            //    .load(holder.item.getFlag())
+              //  .listener(new SvgSoftwareLayerSetter())
+                //.into(holder.urlBandera);
+
+
+
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,11 +81,11 @@ public class MyPaisRecyclerViewAdapter extends RecyclerView.Adapter<MyPaisRecycl
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            nombrePais = (TextView) view.findViewById(R.id.nombrePais);
-            urlBandera = (ImageView) view.findViewById(R.id.urlBandera);
-            nombreCapital = (TextView) view.findViewById(R.id.nombreCapital);
-            monedaPrincipal = (TextView) view.findViewById(R.id.monedaPrincipal);
-            lenguaje = (TextView) view.findViewById(R.id.lenguajePrincipal);
+            nombrePais = (TextView) view.findViewById(R.id.textNombre);
+            nombreCapital = (TextView) view.findViewById(R.id.textCapital);
+            monedaPrincipal = (TextView) view.findViewById(R.id.textMoneda);
+            urlBandera = view.findViewById(R.id.bandera);
+            lenguaje = (TextView) view.findViewById(R.id.textLanguague);
         }
     }
 }
