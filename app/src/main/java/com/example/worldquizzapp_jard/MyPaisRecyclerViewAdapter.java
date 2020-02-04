@@ -3,6 +3,7 @@ package com.example.worldquizzapp_jard;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.graphics.drawable.PictureDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.ViewTarget;
 import com.example.worldquizzapp_jard.models.Pais;
-import com.example.worldquizzapp_jard.ui.IPaisListener;
+
 import java.util.List;
 
 
@@ -19,12 +21,14 @@ public class MyPaisRecyclerViewAdapter extends RecyclerView.Adapter<MyPaisRecycl
 
     private final List<Pais> listadoPaises;
     Context ctx;
-    private final IPaisListener mListener;
+    private int layout;
+    private ViewTarget<ImageView, PictureDrawable> requestBuilder;
 
 
-    public MyPaisRecyclerViewAdapter(List<Pais> listadoPaises,IPaisListener mListener) {
+    public MyPaisRecyclerViewAdapter(List<Pais> listadoPaises, Context ctx, int layout) {
         this.listadoPaises = listadoPaises;
-        this.mListener = mListener;
+        this.ctx = ctx;
+        this.layout = layout;
     }
 
     @Override
@@ -32,28 +36,30 @@ public class MyPaisRecyclerViewAdapter extends RecyclerView.Adapter<MyPaisRecycl
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_pais, parent, false);
 
-        ctx = parent.getContext();
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.item = listadoPaises.get(position);
-        holder.nombrePais.setText(listadoPaises.get(position).getName());
-        holder.nombreCapital.setText(listadoPaises.get(position).getCapital());
-        holder.monedaPrincipal.setText(listadoPaises.get(position).getCurrencies().get(0).getName());
-        holder.lenguaje.setText(listadoPaises.get(position).getLanguages().get(0).getName());
+        holder.nombrePais.setText(holder.item.getName());
+        holder.nombreCapital.setText(holder.item.getCapital());
+        holder.monedaPrincipal.setText(holder.item.getCurrencies().get(0).getName());
+        holder.lenguaje.setText(holder.item.getLanguages().get(0).getName());
 
-        Glide.with(ctx)
-                .load(listadoPaises.get(position).getFlag())
-                .into(holder.urlBandera);
+
+        //requestBuilder = Glide.with(ctx)
+          //      .as(PictureDrawable.class)
+            //    .load(holder.item.getFlag())
+              //  .listener(new SvgSoftwareLayerSetter())
+                //.into(holder.urlBandera);
+
+
+
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != mListener) {
-                    mListener.onClickPais(holder.item);
-                }
             }
         });
     }
@@ -75,11 +81,11 @@ public class MyPaisRecyclerViewAdapter extends RecyclerView.Adapter<MyPaisRecycl
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            nombrePais = view.findViewById(R.id.nombrePais);
-            urlBandera = view.findViewById(R.id.urlBandera);
-            nombreCapital = view.findViewById(R.id.nombreCapital);
-            monedaPrincipal = view.findViewById(R.id.monedaPrincipal);
-            lenguaje = view.findViewById(R.id.lenguajePrincipal);
+            nombrePais = (TextView) view.findViewById(R.id.textNombre);
+            nombreCapital = (TextView) view.findViewById(R.id.textCapital);
+            monedaPrincipal = (TextView) view.findViewById(R.id.textMoneda);
+            urlBandera = view.findViewById(R.id.bandera);
+            lenguaje = (TextView) view.findViewById(R.id.textLanguague);
         }
     }
 }
