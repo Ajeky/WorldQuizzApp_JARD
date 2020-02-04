@@ -11,7 +11,7 @@ import retrofit2.http.Path;
 
 public interface PaisService {
 
-    @GET("/paises")
+    @GET("/")
     Call<List<Pais>> listadoPaises();
 
 }

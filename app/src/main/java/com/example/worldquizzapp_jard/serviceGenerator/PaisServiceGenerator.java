@@ -1,7 +1,6 @@
 package com.example.worldquizzapp_jard.serviceGenerator;
 
 
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -11,9 +10,10 @@ public class PaisServiceGenerator {
 
     private static final String URL = "https://restcountries.eu/rest/v2/all";
 
-    private static  Retrofit.Builder builder = new Retrofit.Builder()
-                                                           .baseUrl(URL)
-                                                           .addConverterFactory(GsonConverterFactory.create());
+    private static  Retrofit.Builder builder =
+            new Retrofit.Builder()
+                    .baseUrl(URL)
+                    .addConverterFactory(GsonConverterFactory.create());
 
     public static Retrofit retrofit = null;
 

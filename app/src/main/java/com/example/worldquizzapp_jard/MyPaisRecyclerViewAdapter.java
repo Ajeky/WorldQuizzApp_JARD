@@ -3,6 +3,7 @@ package com.example.worldquizzapp_jard;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +20,13 @@ public class MyPaisRecyclerViewAdapter extends RecyclerView.Adapter<MyPaisRecycl
 
     private final List<Pais> listadoPaises;
     Context ctx;
-    private final IPaisListener mListener;
+    private int layout;
 
 
-    public MyPaisRecyclerViewAdapter(List<Pais> listadoPaises,IPaisListener mListener) {
+    public MyPaisRecyclerViewAdapter(List<Pais> listadoPaises, Context ctx, int layout) {
         this.listadoPaises = listadoPaises;
-        this.mListener = mListener;
+        this.ctx = ctx;
+        this.layout = layout;
     }
 
     @Override
@@ -32,17 +34,16 @@ public class MyPaisRecyclerViewAdapter extends RecyclerView.Adapter<MyPaisRecycl
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_pais, parent, false);
 
-        ctx = parent.getContext();
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.item = listadoPaises.get(position);
-        holder.nombrePais.setText(listadoPaises.get(position).getName());
-        holder.nombreCapital.setText(listadoPaises.get(position).getCapital());
-        holder.monedaPrincipal.setText(listadoPaises.get(position).getCurrencies().get(0).getName());
-        holder.lenguaje.setText(listadoPaises.get(position).getLanguages().get(0).getName());
+        holder.nombrePais.setText(holder.item.getName());
+        holder.nombreCapital.setText(holder.item.getCapital());
+        holder.monedaPrincipal.setText(holder.item.getCurrencies().get(0).getName());
+        holder.lenguaje.setText(holder.item.getLanguages().get(0).getName());
 
         Glide.with(ctx)
                 .load(listadoPaises.get(position).getFlag())
@@ -51,9 +52,6 @@ public class MyPaisRecyclerViewAdapter extends RecyclerView.Adapter<MyPaisRecycl
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != mListener) {
-                    mListener.onClickPais(holder.item);
-                }
             }
         });
     }
@@ -75,11 +73,11 @@ public class MyPaisRecyclerViewAdapter extends RecyclerView.Adapter<MyPaisRecycl
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            nombrePais = view.findViewById(R.id.nombrePais);
-            urlBandera = view.findViewById(R.id.urlBandera);
-            nombreCapital = view.findViewById(R.id.nombreCapital);
-            monedaPrincipal = view.findViewById(R.id.monedaPrincipal);
-            lenguaje = view.findViewById(R.id.lenguajePrincipal);
+            nombrePais = (TextView) view.findViewById(R.id.nombrePais);
+            urlBandera = (ImageView) view.findViewById(R.id.urlBandera);
+            nombreCapital = (TextView) view.findViewById(R.id.nombreCapital);
+            monedaPrincipal = (TextView) view.findViewById(R.id.monedaPrincipal);
+            lenguaje = (TextView) view.findViewById(R.id.lenguajePrincipal);
         }
     }
 }
