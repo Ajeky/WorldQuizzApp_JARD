@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1083929015607-uhaqjifhcqictt9mtfou8lmjv7bpbeuo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.worldquizzapp_jard",
+            "certificate_hash": "d6e62edf7274c13df2575d82429df695b059cf6e"
+          }
+        },
+        {
           "client_id": "1083929015607-a8hveiu09m9mvja97kiqfupscgorhh5i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
