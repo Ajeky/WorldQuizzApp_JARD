@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.bitmap_recycle.IntegerArrayAdapter;
 import com.example.worldquizzapp_jard.R;
 import com.example.worldquizzapp_jard.models.Usuario;
 
@@ -19,6 +20,7 @@ import java.util.List;
 public class MyUsuarioRankingRecyclerViewAdapter extends RecyclerView.Adapter<MyUsuarioRankingRecyclerViewAdapter.ViewHolder> {
 
     private final List<Usuario> mValues;
+    private List<Integer> resultados;
     private Context ctx;
     private int layout;
 
@@ -39,10 +41,20 @@ public class MyUsuarioRankingRecyclerViewAdapter extends RecyclerView.Adapter<My
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.ivCopa.setVisibility(View.INVISIBLE);
-        holder.tvNombre.setText(holder.mItem.getNombre());
+
+        resultados = holder.mItem.getResultados();
+        Integer total=0;
+
+
+        for (Integer i: resultados){
+            total += i;
+        }
+
+
+        holder.tvNombre.setText(holder.mItem.getNombreCompleto());
         holder.tvPosicion.setText(String.valueOf(position+1));
-        holder.tvPuntosPorPartida.setText(String.valueOf(holder.mItem.getPuntosPorPartida()));
-        holder.tvPuntos.setText(String.valueOf(holder.mItem.getPuntos()));
+        holder.tvPuntosPorPartida.setText(String.valueOf(holder.mItem.getResultados());
+        holder.tvPuntos.setText(total);
         holder.ivGold.setVisibility(View.INVISIBLE);
         holder.ivSilver.setVisibility(View.INVISIBLE);
         holder.ivBronze.setVisibility(View.INVISIBLE);

@@ -1,7 +1,9 @@
 package com.example.worldquizzapp_jard.ui.ranking;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,12 @@ import com.example.worldquizzapp_jard.R;
 import com.example.worldquizzapp_jard.models.Usuario;
 import com.example.worldquizzapp_jard.rankingAdapter.IUsuarioRankingListener;
 import com.example.worldquizzapp_jard.rankingAdapter.MyUsuarioRankingRecyclerViewAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +46,7 @@ public class RankingFragment extends Fragment{
     private MyUsuarioRankingRecyclerViewAdapter adapter;
     private RankingViewModel rankingViewModel;
     private IUsuarioRankingListener mListener;
+    private FirebaseFirestore db;
 
 
     public RankingFragment() {
@@ -65,8 +74,9 @@ public class RankingFragment extends Fragment{
             }
 
         }
-        usuariosList = new ArrayList<>();
 
+
+/*
         usuariosList.add(new Usuario("https://ep00.epimg.net/elpais/imagenes/2017/10/09/fotorrelato/1507564472_973290_1507564969_album_normal.jpg","Juanma",250,25.6));
         usuariosList.add(new Usuario("https://ep00.epimg.net/elpais/imagenes/2017/10/09/fotorrelato/1507564472_973290_1507564969_album_normal.jpg","Juanma",200,25.6));
         usuariosList.add(new Usuario("https://ep00.epimg.net/elpais/imagenes/2017/10/09/fotorrelato/1507564472_973290_1507564969_album_normal.jpg","Juanma",190,25.6));
@@ -86,9 +96,9 @@ public class RankingFragment extends Fragment{
                 R.layout.fragment_ranking,
                 usuariosList
         );
+        recyclerView.setAdapter(adapter);*/
 
 
-        recyclerView.setAdapter(adapter);
             return root;
         }
     @Override
@@ -109,4 +119,48 @@ public class RankingFragment extends Fragment{
         mListener = null;
     }
 
+    public class cargarUsuarios extends AsyncTask<Void, Void, List<Usuario>>{
+
+        @Override
+        protected void onPreExecute() {
+            usuariosList = new ArrayList<>();
+
+        }
+
+        @Override
+        protected List<Usuario> doInBackground(Void... voids) {
+
+            db.collection("usuarios")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                        usuariosList.addAll(task.getResult().toObjects(Usuario.class));
+
+                                } else {
+                                    Log.w("jajajaja", "Error getting documents.", task.getException());
+                                }
+                            }
+                        });
+
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<Usuario> nasaPictureLista) {
+
+            adapter = new MyUsuarioRankingRecyclerViewAdapter(
+                    ctx,
+                    R.layout.fragment_ranking,
+                    usuariosList
+                    );
+
+
+            recyclerView.setAdapter(adapter);
+
+
+        }
+    }
 }
