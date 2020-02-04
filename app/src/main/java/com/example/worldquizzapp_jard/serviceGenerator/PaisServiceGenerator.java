@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PaisServiceGenerator {
 
-    private static final String URL = "https://restcountries.eu/rest/v2/all";
+    private static final String URL = "https://restcountries.eu/";
 
     private static  Retrofit.Builder builder =
             new Retrofit.Builder()
@@ -26,11 +26,10 @@ public class PaisServiceGenerator {
 
     public static <S> S createService(Class<S> serviceClass) {
 
-        if (!httpClient.interceptors().contains(logging)) {
-            httpClient.addInterceptor(logging);
-            builder.client(httpClient.build());
-            retrofit = builder.build();
-        }
+
+        builder.client(httpClient.build());
+        retrofit = builder.build();
+
         return retrofit.create(serviceClass);
     }
 

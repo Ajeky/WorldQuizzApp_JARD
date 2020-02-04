@@ -34,10 +34,10 @@ public class PaisFragment extends Fragment {
     private int mColumnCount = 1;
     private IPaisListener mListener;
     private List<Pais> listadoPais;
-    private RecyclerView recyclerView;
     private MyPaisRecyclerViewAdapter adapter;
     PaisService service;
     Context ctx;
+    RecyclerView recyclerView;
 
 
     public PaisFragment() {
@@ -61,6 +61,7 @@ public class PaisFragment extends Fragment {
 
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
+            recyclerView = (RecyclerView) view;
 
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -73,6 +74,7 @@ public class PaisFragment extends Fragment {
 
             service = PaisServiceGenerator.createService(PaisService.class);
             new LoadDataTask().execute();
+
         }
         return view;
     }
@@ -94,6 +96,11 @@ public class PaisFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void cargarDatos(List<Pais> lista) {
+
+        recyclerView.setAdapter(new MyPaisRecyclerViewAdapter(lista, ctx, R.layout.fragment_pais));
     }
 
     private class LoadDataTask extends AsyncTask<Void, Void, List<Pais>> {
@@ -120,8 +127,7 @@ public class PaisFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Pais> paises) {
             if (paises != null)
-                recyclerView.setAdapter(new MyPaisRecyclerViewAdapter(paises, ctx, R.layout.fragment_pais));
-
+                cargarDatos(paises);
         }
     }
 }
