@@ -37,7 +37,6 @@ public class MainActivityQuizz extends AppCompatActivity implements PreguntaFrag
 
     @Override
     public void onListFragmentInteraction(Pregunta item) {
-        Log.d("Si", "onListFragmentInteraction: Que esto funciona bro");
     }
 
     public void registrarRespuesta(int posicion, String respuesta) {
@@ -62,10 +61,10 @@ public class MainActivityQuizz extends AppCompatActivity implements PreguntaFrag
                 respuesta5 = respuesta;
                 break;
 
-                default:
-                    //TODO Tratar el error como se debe tratar
-                    Log.d("Error", "Algo ha ido mal");
-                    break;
+            default:
+                //TODO Tratar el error como se debe tratar
+                Log.d("Error", "Algo ha ido mal");
+                break;
         }
 
     }

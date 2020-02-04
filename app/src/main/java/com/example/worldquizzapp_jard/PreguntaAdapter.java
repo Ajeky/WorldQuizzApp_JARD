@@ -55,13 +55,17 @@ public class PreguntaAdapter extends RecyclerView.Adapter<PreguntaAdapter.ViewHo
 
                 ((MainActivityQuizz)ctx).registrarRespuesta(position, respuesta.getText().toString());
 
+                if (respuesta.getText().toString() == holder.mItem.getRespuestaCorrecta()) {
+
+                    Log.d("AHYES", "PUTA MADRE BRO");
+                }
+
             }
         });
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("No", "onClick: Que funciona aqui me vale verga bro");
             }
         });
     }
