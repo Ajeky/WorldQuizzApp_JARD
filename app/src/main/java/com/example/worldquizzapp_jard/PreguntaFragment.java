@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.worldquizzapp_jard.models.Pregunta;
+import com.example.worldquizzapp_jard.test_quizz.MainActivityQuizz;
 
 import java.util.ArrayList;
 import java.util.List;

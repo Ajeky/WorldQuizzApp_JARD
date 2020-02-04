@@ -13,8 +13,11 @@ import android.widget.TextView;
 
 import com.example.worldquizzapp_jard.PreguntaFragment.OnListFragmentInteractionListener;
 import com.example.worldquizzapp_jard.models.Pregunta;
+import com.example.worldquizzapp_jard.test_quizz.MainActivityQuizz;
 
 import java.util.List;
+
+import static android.app.PendingIntent.getActivity;
 
 public class PreguntaAdapter extends RecyclerView.Adapter<PreguntaAdapter.ViewHolder> {
 
@@ -37,7 +40,7 @@ public class PreguntaAdapter extends RecyclerView.Adapter<PreguntaAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
         holder.tvEnunciado.setText(holder.mItem.getEnunciado());
         holder.rbRespuesta1.setText(holder.mItem.getRespuesta1());
@@ -49,24 +52,16 @@ public class PreguntaAdapter extends RecyclerView.Adapter<PreguntaAdapter.ViewHo
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton respuesta = (RadioButton) holder.rgRespuestas.findViewById(checkedId);
-                Log.d("holder.rgRespuestas", holder.rgRespuestas.getId() + "");
-                Log.d("group.getId()", "" + group.getId());
-                Log.d("generic", "" + R.id.enviarQuizz);
 
-                if (respuesta.getText() == "Managua") {
-                    Log.d("Exito", "De puta madre paco");
-                } else
-                    Log.d("Fracaso", "Hasta luego bro");
+                ((MainActivityQuizz)ctx).registrarRespuesta(position, respuesta.getText().toString());
 
-                Log.d("ButtonId()", "" + group.getCheckedRadioButtonId());
-                Log.d("int checkedId", "" + checkedId);
             }
         });
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Log.d("No", "onClick: Que funciona aqui me vale verga bro");
             }
         });
     }

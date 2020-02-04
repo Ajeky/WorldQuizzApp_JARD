@@ -3,6 +3,7 @@ package com.example.worldquizzapp_jard.test_quizz;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
@@ -15,6 +16,9 @@ public class MainActivityQuizz extends AppCompatActivity implements PreguntaFrag
 
     Button botonEnviar;
     RadioGroup rgRespuesta;
+    String respuesta1, respuesta2, respuesta3, respuesta4, respuesta5;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,37 @@ public class MainActivityQuizz extends AppCompatActivity implements PreguntaFrag
 
     @Override
     public void onListFragmentInteraction(Pregunta item) {
+        Log.d("Si", "onListFragmentInteraction: Que esto funciona bro");
+    }
+
+    public void registrarRespuesta(int posicion, String respuesta) {
+        switch (posicion) {
+            case 0:
+                respuesta1 = respuesta;
+                break;
+
+            case 1:
+                respuesta2 = respuesta;
+                break;
+
+            case 2:
+                respuesta3 = respuesta;
+                break;
+
+            case 3:
+                respuesta4 = respuesta;
+                break;
+
+            case 4:
+                respuesta5 = respuesta;
+                break;
+
+                default:
+                    //TODO Tratar el error como se debe tratar
+                    Log.d("Error", "Algo ha ido mal");
+                    break;
+        }
 
     }
+
 }
