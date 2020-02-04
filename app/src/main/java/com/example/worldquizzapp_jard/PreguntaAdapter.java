@@ -21,6 +21,7 @@ public class PreguntaAdapter extends RecyclerView.Adapter<PreguntaAdapter.ViewHo
     private final List<Pregunta> mValues;
     private Context ctx;
     private int layout;
+    View view;
 
     public PreguntaAdapter(Context ctx, int layout, List<Pregunta> items) {
         this.ctx = ctx;
@@ -30,7 +31,7 @@ public class PreguntaAdapter extends RecyclerView.Adapter<PreguntaAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+        view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_pregunta, parent, false);
         return new ViewHolder(view);
     }
@@ -48,10 +49,17 @@ public class PreguntaAdapter extends RecyclerView.Adapter<PreguntaAdapter.ViewHo
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton respuesta = (RadioButton) holder.rgRespuestas.findViewById(checkedId);
+                Log.d("holder.rgRespuestas", holder.rgRespuestas.getId() + "");
+                Log.d("group.getId()", "" + group.getId());
+                Log.d("generic", "" + R.id.enviarQuizz);
+
                 if (respuesta.getText() == "Managua") {
                     Log.d("Exito", "De puta madre paco");
                 } else
                     Log.d("Fracaso", "Hasta luego bro");
+
+                Log.d("ButtonId()", "" + group.getCheckedRadioButtonId());
+                Log.d("int checkedId", "" + checkedId);
             }
         });
 
