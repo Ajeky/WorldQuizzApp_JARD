@@ -13,12 +13,13 @@ public class Usuario  implements Comparable<Usuario> {
     private String posicion;
     private int puntos;
     private double puntosPorPartida;
+    private int partidas;
 
     public Usuario(String foto, String nombre, int puntos, double puntosPorPartida) {
         this.foto = foto;
         this.nombre = nombre;
         this.puntos = puntos;
-        this.puntosPorPartida = puntosPorPartida;
+        this.puntosPorPartida = puntos/partidas;
     }
 
     @Override

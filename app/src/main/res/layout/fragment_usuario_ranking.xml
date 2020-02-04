@@ -57,19 +57,75 @@
         android:id="@+id/ranking_puntos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="6dp"
         android:text="Puntos"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/ranking_copa"
-        app:layout_constraintTop_toBottomOf="@+id/ranking_copa" />
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
 
     <TextView
         android:id="@+id/ranking_puntosPorPartida"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="6dp"
         android:text="Puntos por partida"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/ranking_puntos"
-        app:layout_constraintTop_toBottomOf="@+id/ranking_puntos" />
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/total_puntos"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/ranking_copa"
+        app:layout_constraintTop_toBottomOf="@+id/ranking_copa" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/puntos_por_partida"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <ImageView
+        android:id="@+id/imageView_medal_gold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/ranking_nombre"
+        app:layout_constraintTop_toBottomOf="@+id/ranking_nombre"
+        app:srcCompat="@drawable/ic_medal_gold" />
+
+    <ImageView
+        android:id="@+id/imageView_medal_silver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/ranking_nombre"
+        app:layout_constraintTop_toBottomOf="@+id/ranking_nombre"
+        app:srcCompat="@drawable/ic_medal_silver" />
+
+    <ImageView
+        android:id="@+id/imageView_medal_bronze"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/ranking_nombre"
+        app:layout_constraintTop_toBottomOf="@+id/ranking_nombre"
+        app:srcCompat="@drawable/ic_medal_bronze" />
+
+    <ImageView
+        android:id="@+id/imageView_medal_ribbon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/ranking_nombre"
+        app:layout_constraintTop_toBottomOf="@+id/ranking_nombre"
+        app:srcCompat="@drawable/ic_medal_ribbon" />
 </androidx.constraintlayout.widget.ConstraintLayout>

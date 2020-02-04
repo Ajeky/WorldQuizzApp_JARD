@@ -38,10 +38,35 @@ public class MyUsuarioRankingRecyclerViewAdapter extends RecyclerView.Adapter<My
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
+        holder.ivCopa.setVisibility(View.INVISIBLE);
         holder.tvNombre.setText(holder.mItem.getNombre());
         holder.tvPosicion.setText(String.valueOf(position+1));
         holder.tvPuntosPorPartida.setText(String.valueOf(holder.mItem.getPuntosPorPartida()));
         holder.tvPuntos.setText(String.valueOf(holder.mItem.getPuntos()));
+        holder.ivGold.setVisibility(View.INVISIBLE);
+        holder.ivSilver.setVisibility(View.INVISIBLE);
+        holder.ivBronze.setVisibility(View.INVISIBLE);
+        holder.ivRibbon.setVisibility(View.INVISIBLE);
+
+        switch (position+1){
+            case 1:
+                holder.ivGold.setVisibility(View.VISIBLE);
+                break;
+
+            case 2:
+                holder.ivSilver.setVisibility(View.VISIBLE);
+                break;
+
+            case 3:
+                holder.ivBronze.setVisibility(View.VISIBLE);
+                break;
+
+            default:
+                holder.ivRibbon.setVisibility(View.VISIBLE);
+
+        }
+
+
 
         if (position==0){
             holder.ivCorona.setVisibility(View.VISIBLE);
@@ -77,6 +102,11 @@ public class MyUsuarioRankingRecyclerViewAdapter extends RecyclerView.Adapter<My
         public final TextView tvPuntosPorPartida;
         public final ImageView ivAvatar;
         public final ImageView ivCorona;
+        public final ImageView ivGold;
+        public final ImageView ivSilver;
+        public final ImageView ivBronze;
+        public final ImageView ivRibbon;
+        public final ImageView ivCopa;
         public Usuario mItem;
 
         public ViewHolder(View view) {
@@ -88,6 +118,11 @@ public class MyUsuarioRankingRecyclerViewAdapter extends RecyclerView.Adapter<My
             tvPuntosPorPartida = view.findViewById(R.id.ranking_puntosPorPartida);
             ivAvatar = view.findViewById(R.id.ranking_avatar);
             ivCorona = view.findViewById(R.id.ranking_corona);
+            ivGold = view.findViewById(R.id.imageView_medal_gold);
+            ivSilver = view.findViewById(R.id.imageView_medal_silver);
+            ivBronze = view.findViewById(R.id.imageView_medal_bronze);
+            ivRibbon = view.findViewById(R.id.imageView_medal_ribbon);
+            ivCopa = view.findViewById(R.id.ranking_copa);
 
 
         }
