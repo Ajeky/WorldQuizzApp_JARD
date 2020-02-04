@@ -2,9 +2,15 @@ package com.example.worldquizzapp_jard;
 
 import android.content.Intent;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.view.View;
 
 import com.example.worldquizzapp_jard.test_quizz.MainActivityQuizz;
+=======
+
+import com.example.worldquizzapp_jard.models.Pais;
+import com.example.worldquizzapp_jard.ui.IPaisListener;
+>>>>>>> 4c107188f7a430b59b9818db82780bc384918b7f
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -14,7 +20,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IPaisListener {
 
     FloatingActionButton botonTest;
 
@@ -44,4 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onClickPais(Pais p) {
+
+    }
 }
