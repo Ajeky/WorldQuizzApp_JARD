@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -23,11 +24,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.worldquizzapp_jard.utilidades.Constantes.MONEDA;
+import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_CAPITAL;
+import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_PAIS_EN_ESPANOL;
+import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_PAIS_ORIGINAL;
+import static com.example.worldquizzapp_jard.utilidades.Constantes.POBLACION;
+
 public class DetalleActivity extends AppCompatActivity {
 
     UnsplashService serviceUnsplash;
     SliderView sliderView;
     List<String> urlsFotos;
+    TextView txPais, txCapital, txMoneda, txPoblacion;
     int IMAGENES_A_MOSTRAR = 5;
 
     @Override
@@ -37,6 +45,21 @@ public class DetalleActivity extends AppCompatActivity {
 
         serviceUnsplash = ServiceGenerator.createService(UnsplashService.class);
         sliderView = findViewById(R.id.imageSlider);
+        txCapital = findViewById(R.id.txCapital);
+        txPais = findViewById(R.id.txPais);
+        txMoneda = findViewById(R.id.txMoneda);
+        txPoblacion = findViewById(R.id.txPoblacion);
+
+        txPoblacion.setText(getIntent().getExtras().get(POBLACION).toString());
+        txCapital.setText(getIntent().getExtras().get(NOMBRE_CAPITAL).toString());
+        txMoneda.setText(getIntent().getExtras().get(MONEDA).toString());
+        txPais.setText(getIntent().getExtras().get(NOMBRE_PAIS_EN_ESPANOL).toString());
+
+
+
+        if (txMoneda.getText().length() > txCapital.getText().length() && txMoneda.getText().length() > 20){
+            txMoneda.setTextSize(11);
+        }
 
         urlsFotos = new ArrayList<String>();
 
@@ -59,7 +82,7 @@ public class DetalleActivity extends AppCompatActivity {
             }
         });
 
-        Call<RespuestaUnsplah> call = serviceUnsplash.fotosDeUnPais("France");
+        Call<RespuestaUnsplah> call = serviceUnsplash.fotosDeUnPais(getIntent().getExtras().get(NOMBRE_PAIS_ORIGINAL).toString());
 
         call.enqueue(new Callback<RespuestaUnsplah>() {
             @Override

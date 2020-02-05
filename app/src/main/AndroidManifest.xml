@@ -10,25 +10,29 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_logo_app_foreground"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        >
-        <activity android:name=".DetalleActivity">
+        android:theme="@style/AppTheme">
+        <activity android:name=".DetalleActivity"></activity>
+    
+        <activity android:name=".test_quizz.MainActivityQuizz"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
+
+
+        </activity>
+        <activity android:name=".login.LogInActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.LogInActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"></activity>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
     </application>
 
 </manifest>

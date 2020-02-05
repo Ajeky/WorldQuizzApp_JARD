@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.worldquizzapp_jard.MainActivity;
 import com.example.worldquizzapp_jard.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -92,9 +93,9 @@ public class LogInActivity extends AppCompatActivity {
         try {
             GoogleSignInAccount acc = completedTask.getResult(ApiException.class);
             FirebaseGoogleAuth(acc);
-            Toast.makeText(this, "Sing in exitoso", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Sign in exitoso", Toast.LENGTH_SHORT).show();
         }catch (ApiException e){
-            Toast.makeText(this, "Sign in fallido", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Sign in fallido", Toast.LENGTH_SHORT).show();
             FirebaseGoogleAuth(null);
 
         }
@@ -106,9 +107,10 @@ public class LogInActivity extends AppCompatActivity {
              @Override
              public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    Toast.makeText(LogInActivity.this, "Succesful", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LogInActivity.this, "Succesful", Toast.LENGTH_SHORT).show();
                     FirebaseUser user = mAuth.getCurrentUser();
                     updateUi(user);
+                    cambiarDeActivity(MainActivity.class);
                 }else {
                     Toast.makeText(LogInActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                     updateUi(null);
@@ -117,7 +119,12 @@ public class LogInActivity extends AppCompatActivity {
          });
      }
 
-     private void updateUi(final FirebaseUser user){
+    private void cambiarDeActivity(Class activity) {
+        Intent i = new Intent(this,activity);
+        startActivity(i);
+    }
+
+    private void updateUi(final FirebaseUser user){
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         if(account != null){
 
