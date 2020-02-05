@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.worldquizzapp_jard.PreguntaFragment.OnListFragmentInteractionListener;
 import com.example.worldquizzapp_jard.models.Pregunta;
@@ -57,7 +58,7 @@ public class PreguntaAdapter extends RecyclerView.Adapter<PreguntaAdapter.ViewHo
 
                 if (respuesta.getText().toString() == holder.mItem.getRespuestaCorrecta()) {
 
-                    Log.d("AHYES", "PUTA MADRE BRO");
+                    Toast.makeText(ctx, "ENHORABUENA TIO", Toast.LENGTH_SHORT).show();
                 }
 
             }
