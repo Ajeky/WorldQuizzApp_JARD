@@ -1,10 +1,16 @@
 package com.example.worldquizzapp_jard;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
+import com.example.worldquizzapp_jard.test_quizz.MainActivityQuizz;
 
 import com.example.worldquizzapp_jard.models.Pais;
 import com.example.worldquizzapp_jard.ui.IPaisListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -13,8 +19,11 @@ import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends AppCompatActivity implements IPaisListener {
 
+    FloatingActionButton botonTest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -26,6 +35,16 @@ public class MainActivity extends AppCompatActivity implements IPaisListener {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+        botonTest = (FloatingActionButton)findViewById(R.id.botonTest);
+
+        botonTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, MainActivityQuizz.class));
+            }
+        });
+
+
     }
 
     @Override

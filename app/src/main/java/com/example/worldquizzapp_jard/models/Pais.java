@@ -111,6 +111,9 @@ public class Pais {
         this.cioc = cioc;
     }
 
+    public Pais() {
+    }
+
     public String getName() {
         return name;
     }

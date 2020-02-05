@@ -20,6 +20,7 @@ import com.example.worldquizzapp_jard.services.PaisService;
 import com.example.worldquizzapp_jard.ui.IPaisListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -33,9 +34,10 @@ public class PaisFragment extends Fragment {
     private int mColumnCount = 1;
     private IPaisListener mListener;
     private List<Pais> listadoPais;
-    private RecyclerView recyclerView;
     private MyPaisRecyclerViewAdapter adapter;
     PaisService service;
+    Context ctx;
+    RecyclerView recyclerView;
 
 
     public PaisFragment() {
@@ -59,6 +61,7 @@ public class PaisFragment extends Fragment {
 
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
+            recyclerView = (RecyclerView) view;
 
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -67,10 +70,11 @@ public class PaisFragment extends Fragment {
             }
 
 
-
+            listadoPais = new ArrayList<>();
 
             service = PaisServiceGenerator.createService(PaisService.class);
             new LoadDataTask().execute();
+
         }
         return view;
     }
@@ -79,6 +83,7 @@ public class PaisFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        ctx = context;
         if (context instanceof IPaisListener) {
             mListener = (IPaisListener) context;
         } else {
@@ -93,32 +98,36 @@ public class PaisFragment extends Fragment {
         mListener = null;
     }
 
-    private class LoadDataTask extends AsyncTask<List<Pais>, Void, List<Pais>> {
+    public void cargarDatos(List<Pais> lista) {
 
-        protected List<Pais> doInBackground(List<Pais>... paises) {
-            Call<List<Pais>> call = service.listadoPaises();
+        recyclerView.setAdapter(new MyPaisRecyclerViewAdapter(lista, ctx, R.layout.fragment_pais));
+    }
 
-            Response<List<Pais>> response = null;
+    private class LoadDataTask extends AsyncTask<Void, Void, List<Pais>> {
+
+        protected List<Pais> doInBackground(Void... voids) {
+            List<Pais> result = null;
+
+            Call<List<Pais>> callPaises = service.listadoPaises();
+
+            Response<List<Pais>> responsePaises = null;
 
             try {
-                response = call.execute();
-
-                if(response.isSuccessful()){
-                    return response.body();
-                }
-
+                responsePaises = callPaises.execute();
             } catch (IOException e){
                 e.printStackTrace();
-                Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
             }
-            return null;
+
+            if (responsePaises.isSuccessful()) {
+                result = responsePaises.body();
+            }
+            return result;
         }
 
         @Override
         protected void onPostExecute(List<Pais> paises) {
-
-            recyclerView.setAdapter(new MyPaisRecyclerViewAdapter(paises, mListener));
-
+            if (paises != null)
+                cargarDatos(paises);
         }
     }
 }
