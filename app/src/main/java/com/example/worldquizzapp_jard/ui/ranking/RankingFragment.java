@@ -77,8 +77,30 @@ public class RankingFragment extends Fragment{
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
+            adapter = new MyUsuarioRankingRecyclerViewAdapter(
+                    ctx,
+                    R.layout.fragment_ranking,
+                    usuariosList
+            );
 
-            new CargarUsuarios().execute();
+
+            recyclerView.setAdapter(adapter);
+
+            db.collection("usuarios")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            int i=0;
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                usuariosList.add(new Usuario(document.getData().get("nombre").toString(),document.getData().get("email").toString(), (List<Long>) document.getData().get("resultados"),document.getData().get("avatar").toString()));
+                                i++;
+                            }
+                            adapter.notifyDataSetChanged();
+                        }
+
+                    });
+
         }
 
             return root;
@@ -93,6 +115,8 @@ public class RankingFragment extends Fragment{
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
         }
+
+
     }
 
     @Override
@@ -109,21 +133,6 @@ public class RankingFragment extends Fragment{
         protected List<Usuario> doInBackground(Void... voids) {
 
 
-            db.collection("usuarios")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                int i=0;
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        usuariosList.add(new Usuario(document.getData().get("nombre").toString(),document.getData().get("email").toString(), (List<Long>) document.getData().get("resultados"),document.getData().get("avatar").toString()));
-                                        i++;
-                                    }
-                                   int tamaño = usuariosList.size();
-
-                                }
-
-                        });
 
 
             return usuariosList;
@@ -131,14 +140,8 @@ public class RankingFragment extends Fragment{
 
         @Override
         protected void onPostExecute(List<Usuario> usuarioList) {
-            adapter = new MyUsuarioRankingRecyclerViewAdapter(
-                    ctx,
-                    R.layout.fragment_ranking,
-                    usuariosList
-                    );
 
 
-            recyclerView.setAdapter(adapter);
 
 
         }

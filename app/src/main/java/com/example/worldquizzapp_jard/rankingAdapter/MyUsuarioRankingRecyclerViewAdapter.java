@@ -70,7 +70,7 @@ public class MyUsuarioRankingRecyclerViewAdapter extends RecyclerView.Adapter<My
 
         holder.tvNombre.setText(holder.mItem.getNombreCompleto());
         holder.tvPosicion.setText(String.valueOf(position+1));
-      //  holder.tvPuntosPorPartida.setText(String.valueOf(ppp));
+       // holder.tvPuntosPorPartida.setText(String.valueOf(ppp));
         holder.tvPuntos.setText(String.valueOf(total));
         holder.ivGold.setVisibility(View.INVISIBLE);
         holder.ivSilver.setVisibility(View.INVISIBLE);
