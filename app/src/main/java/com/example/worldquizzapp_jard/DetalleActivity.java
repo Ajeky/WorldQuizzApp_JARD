@@ -24,6 +24,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.worldquizzapp_jard.utilidades.Constantes.CONTINENTE;
+import static com.example.worldquizzapp_jard.utilidades.Constantes.HORA;
+import static com.example.worldquizzapp_jard.utilidades.Constantes.IDIOMA;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.MONEDA;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_CAPITAL;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_PAIS_EN_ESPANOL;
@@ -35,7 +38,7 @@ public class DetalleActivity extends AppCompatActivity {
     UnsplashService serviceUnsplash;
     SliderView sliderView;
     List<String> urlsFotos;
-    TextView txPais, txCapital, txMoneda, txPoblacion;
+    TextView txPais, txCapital, txMoneda, txPoblacion, txIdioma, txContinente, txHora;
     int IMAGENES_A_MOSTRAR = 5;
 
     @Override
@@ -49,11 +52,17 @@ public class DetalleActivity extends AppCompatActivity {
         txPais = findViewById(R.id.txPais);
         txMoneda = findViewById(R.id.txMoneda);
         txPoblacion = findViewById(R.id.txPoblacion);
+        txIdioma = findViewById(R.id.txIdioma);
+        txContinente = findViewById(R.id.txContinente);
+        txHora = findViewById(R.id.txHora);
 
         txPoblacion.setText(getIntent().getExtras().get(POBLACION).toString());
         txCapital.setText(getIntent().getExtras().get(NOMBRE_CAPITAL).toString());
         txMoneda.setText(getIntent().getExtras().get(MONEDA).toString());
         txPais.setText(getIntent().getExtras().get(NOMBRE_PAIS_EN_ESPANOL).toString());
+        txIdioma.setText(getIntent().getExtras().get(IDIOMA).toString());
+        txContinente.setText(getIntent().getExtras().get(CONTINENTE).toString());
+        txHora.setText(getIntent().getExtras().get(HORA).toString());
 
 
 

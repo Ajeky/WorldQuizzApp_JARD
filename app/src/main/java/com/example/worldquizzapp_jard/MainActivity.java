@@ -22,6 +22,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+
+import org.joda.time.LocalTime;
+
+import static com.example.worldquizzapp_jard.utilidades.Constantes.CONTINENTE;
+import static com.example.worldquizzapp_jard.utilidades.Constantes.HORA;
+import static com.example.worldquizzapp_jard.utilidades.Constantes.IDIOMA;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.MONEDA;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_CAPITAL;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_PAIS_EN_ESPANOL;
@@ -65,6 +71,18 @@ public class MainActivity extends AppCompatActivity implements IPaisListener, IU
         i.putExtra(NOMBRE_PAIS_ORIGINAL,p.getName());
         i.putExtra(POBLACION,p.getPopulation().toString());
         i.putExtra(MONEDA, p.getCurrencies().get(0).getName());
+        i.putExtra(CONTINENTE,p.getRegion());
+        i.putExtra(IDIOMA, p.getLanguages().get(0).getName());
+
+        String rangoHorario = p.getTimezones().get(0);
+
+        if (rangoHorario.substring(0,4).equals("UTC-")){
+            i.putExtra(HORA,LocalTime.now().minusHours(Integer.parseInt(rangoHorario.substring(4,6))).toString().substring(0,5));
+            //Log.i("hora_resultado",LocalTime.now().minusHours(Integer.parseInt(rangoHorario.substring(4,6))).toString());
+
+        }else {
+            i.putExtra(HORA,LocalTime.now().plusHours(Integer.parseInt(rangoHorario.substring(4,6))).toString().substring(0,5));
+        }
 
         startActivity(i);
     }
