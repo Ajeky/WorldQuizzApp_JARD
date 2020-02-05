@@ -25,7 +25,6 @@ import retrofit2.Response;
 
 public class DetalleActivity extends AppCompatActivity {
 
-    ImageView imgDetalle;
     UnsplashService serviceUnsplash;
     SliderView sliderView;
     List<String> urlsFotos;
@@ -37,7 +36,6 @@ public class DetalleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detalle);
 
         serviceUnsplash = ServiceGenerator.createService(UnsplashService.class);
-        imgDetalle = findViewById(R.id.imgDetalle);
         sliderView = findViewById(R.id.imageSlider);
 
         urlsFotos = new ArrayList<String>();
