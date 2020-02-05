@@ -3,6 +3,7 @@ package com.example.worldquizzapp_jard;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.PictureDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.example.worldquizzapp_jard.models.Pais;
+import com.example.worldquizzapp_jard.ui.IPaisListener;
 
 import java.util.List;
 
@@ -47,7 +49,6 @@ public class MyPaisRecyclerViewAdapter extends RecyclerView.Adapter<MyPaisRecycl
         holder.monedaPrincipal.setText(holder.item.getCurrencies().get(0).getName());
         holder.lenguaje.setText(holder.item.getLanguages().get(0).getName());
 
-
         //requestBuilder = Glide.with(ctx)
           //      .as(PictureDrawable.class)
             //    .load(holder.item.getFlag())
@@ -60,6 +61,8 @@ public class MyPaisRecyclerViewAdapter extends RecyclerView.Adapter<MyPaisRecycl
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                IPaisListener iPaisListener = (IPaisListener) ctx;
+                iPaisListener.onClickPais(holder.item);
             }
         });
     }
