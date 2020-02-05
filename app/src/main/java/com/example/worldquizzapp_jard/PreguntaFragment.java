@@ -178,14 +178,18 @@ public class PreguntaFragment extends Fragment {
                 for (int i = 0; i < 4; i++) {
                     random = new Random().nextInt(copiaDiezPaises.size());
                     pais = copiaDiezPaises.get(random);
-                    respuestas.add(pais.getCapital());
+                    if (pais.getCapital().isEmpty() || pais.getCapital() == null) {
+                        respuestas.add("No tiene");
+                    } else {
+                        respuestas.add(pais.getCapital());
+                    }
                     copiaDiezPaises.remove(random);
                 }
 
                 Collections.shuffle(respuestas);
 
 
-                pregunta = new Pregunta("¿Cuál es la capital de " + pais.name + "?", respuestas.get(0), respuestas.get(1), respuestas.get(2), respuestas.get(3), pais.getCapital());
+                pregunta = new Pregunta("¿Cuál es la capital de " + pais.getTranslations().getEs() + "?", respuestas.get(0), respuestas.get(1), respuestas.get(2), respuestas.get(3), pais.getCapital());
                 preguntas.add(pregunta);
             } while (preguntas.size() < 5);
 
