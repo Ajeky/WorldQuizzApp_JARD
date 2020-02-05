@@ -11,6 +11,6 @@ public class Usuario {
 
     private String nombreCompleto;
     private String email;
-    private List<Integer> resultados;
+    private List<Long> resultados;
     private String avatar;
 }

@@ -8,4 +8,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="enviar">enviar</string>
+    <string name="title_ranking">Ranking</string>
+    <string name="total_puntos">Puntos: </string>
+    <string name="puntos_por_partida">Puntos/Partida:</string>
 </resources>
