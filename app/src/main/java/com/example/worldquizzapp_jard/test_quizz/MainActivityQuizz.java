@@ -1,6 +1,7 @@
 package com.example.worldquizzapp_jard.test_quizz;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ public class MainActivityQuizz extends AppCompatActivity implements PreguntaFrag
     Button botonEnviar;
     RadioGroup rgRespuesta;
     String respuesta1, respuesta2, respuesta3, respuesta4, respuesta5;
+    Pregunta pregunta1, pregunta2, pregunta3, pregunta4, pregunta5;
 
 
 
@@ -29,7 +31,8 @@ public class MainActivityQuizz extends AppCompatActivity implements PreguntaFrag
         botonEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                DialogFragment puntuacionQuiz = new EnviarQuizDialogFragment();
+                puntuacionQuiz.show(getSupportFragmentManager(), "enviarQuiz");
             }
         });
 
@@ -39,7 +42,32 @@ public class MainActivityQuizz extends AppCompatActivity implements PreguntaFrag
     public void onListFragmentInteraction(Pregunta item) {
     }
 
-    public void registrarRespuesta(int posicion, String respuesta) {
+    public void registrarPreguntas(int posicion, Pregunta pregunta) {
+        switch (posicion) {
+            case 0:
+                pregunta1 = pregunta;
+                break;
+            case 1:
+                pregunta2 = pregunta;
+                break;
+            case 2:
+                pregunta3 = pregunta;
+                break;
+            case 3:
+                pregunta4 = pregunta;
+                break;
+            case 4:
+                pregunta5 = pregunta;
+                break;
+
+            default:
+                //TODO Tratar el error como se debe tratar
+                Log.d("Error", "Algo ha ido mal");
+                break;
+        }
+    }
+
+    public void registrarRespuestas(int posicion, String respuesta) {
         switch (posicion) {
             case 0:
                 respuesta1 = respuesta;

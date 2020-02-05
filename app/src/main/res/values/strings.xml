@@ -11,4 +11,7 @@
     <string name="title_ranking">Ranking</string>
     <string name="total_puntos">Puntos: </string>
     <string name="puntos_por_partida">Puntos/Partida:</string>
+    <string name="texto_puntos">¡Test finalizado! \n Tu puntuación es de:</string>
+    <string name="puntos">puntos</string>
+
 </resources>

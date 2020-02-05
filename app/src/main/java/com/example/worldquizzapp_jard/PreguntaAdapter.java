@@ -49,12 +49,14 @@ public class PreguntaAdapter extends RecyclerView.Adapter<PreguntaAdapter.ViewHo
         holder.rbRespuesta3.setText(holder.mItem.getRespuesta3());
         holder.rbRespuesta4.setText(holder.mItem.getRespuesta4());
 
+        ((MainActivityQuizz)ctx).registrarPreguntas(position, holder.mItem);
+
         holder.rgRespuestas.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton respuesta = (RadioButton) holder.rgRespuestas.findViewById(checkedId);
 
-                ((MainActivityQuizz)ctx).registrarRespuesta(position, respuesta.getText().toString());
+                ((MainActivityQuizz)ctx).registrarRespuestas(position, respuesta.getText().toString());
 
                 if (respuesta.getText().toString() == holder.mItem.getRespuestaCorrecta()) {
 

@@ -1,5 +1,10 @@
 package com.example.worldquizzapp_jard.models;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 public class Pregunta {
     private String enunciado, respuesta1, respuesta2, respuesta3, respuesta4, respuestaCorrecta;
 
