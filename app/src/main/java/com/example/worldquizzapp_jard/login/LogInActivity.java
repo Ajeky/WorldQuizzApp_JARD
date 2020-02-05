@@ -1,4 +1,4 @@
-package com.example.worldquizzapp_jard.login;
+/*package com.example.worldquizzapp_jard.login;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -155,3 +155,4 @@ public class LogInActivity extends AppCompatActivity {
         }
      }
 }
+*/

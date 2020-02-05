@@ -3,6 +3,7 @@ package com.example.worldquizzapp_jard.rankingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +15,21 @@ import com.bumptech.glide.load.engine.bitmap_recycle.IntegerArrayAdapter;
 import com.example.worldquizzapp_jard.R;
 import com.example.worldquizzapp_jard.models.Usuario;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
 public class MyUsuarioRankingRecyclerViewAdapter extends RecyclerView.Adapter<MyUsuarioRankingRecyclerViewAdapter.ViewHolder> {
 
     private final List<Usuario> mValues;
-    private List<Integer> resultados;
     private Context ctx;
     private int layout;
 
-    public MyUsuarioRankingRecyclerViewAdapter(Context ctx, int layout, List<Usuario > objects) {
+    public MyUsuarioRankingRecyclerViewAdapter(Context ctx, int layout, List<Usuario> objects) {
         this.ctx = ctx;
         this.layout = layout;
         mValues = objects;
@@ -41,20 +46,32 @@ public class MyUsuarioRankingRecyclerViewAdapter extends RecyclerView.Adapter<My
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.ivCopa.setVisibility(View.INVISIBLE);
-
-        resultados = holder.mItem.getResultados();
-        Integer total=0;
-
-
-        for (Integer i: resultados){
-            total += i;
+        List<Long> resultados = holder.mItem.getResultados();
+        long total=  0;
+        for (Long elemento : resultados
+             ) {
+            total+=elemento;
+            Log.d(TAG, "----------------------"+String.valueOf(elemento)+"--------------------------");
         }
+
+
+        /*
+        Collection<Double> resultados = holder.mItem.getResultados();
+
+        Iterator it = Collections.emptyIterator();
+
+        while (it.hasNext()) {
+            total += (Double) it.next();
+        }
+*/
+       // Double ppp = total/resultados.size();
+
 
 
         holder.tvNombre.setText(holder.mItem.getNombreCompleto());
         holder.tvPosicion.setText(String.valueOf(position+1));
-        holder.tvPuntosPorPartida.setText(String.valueOf(holder.mItem.getResultados());
-        holder.tvPuntos.setText(total);
+      //  holder.tvPuntosPorPartida.setText(String.valueOf(ppp));
+        holder.tvPuntos.setText(String.valueOf(total));
         holder.ivGold.setVisibility(View.INVISIBLE);
         holder.ivSilver.setVisibility(View.INVISIBLE);
         holder.ivBronze.setVisibility(View.INVISIBLE);
@@ -89,7 +106,7 @@ public class MyUsuarioRankingRecyclerViewAdapter extends RecyclerView.Adapter<My
         
         Glide
                 .with(ctx)
-                .load(holder.mItem.getFoto())
+                .load(holder.mItem.getAvatar())
                 .centerCrop()
                 .into(holder.ivAvatar);
 
