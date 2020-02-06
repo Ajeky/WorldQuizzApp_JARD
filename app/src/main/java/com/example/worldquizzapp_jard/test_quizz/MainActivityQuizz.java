@@ -3,6 +3,7 @@ package com.example.worldquizzapp_jard.test_quizz;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +38,8 @@ public class MainActivityQuizz extends AppCompatActivity implements PreguntaFrag
                 Log.d("Puntos: ", "" + puntos);
 
                 DialogFragment puntuacionQuiz = EnviarQuizDialogFragment.newInstance(respuesta1, respuesta2, respuesta3, respuesta4, respuesta5, respuestaCorrecta1, respuestaCorrecta2, respuestaCorrecta3, respuestaCorrecta4, respuestaCorrecta5, calcularPuntuacion() + "");
+
+
                 puntuacionQuiz.show(getSupportFragmentManager(), "enviarQuiz");
             }
         });

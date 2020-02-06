@@ -69,7 +69,6 @@ public class EnviarQuizDialogFragment extends DialogFragment {
 
         Log.d("onCreateDialog", "Llega a entrar aqui? ");
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         if (getArguments() != null) {
             respuesta1 = getArguments().getString(RESPUESTA1);
@@ -140,8 +139,7 @@ public class EnviarQuizDialogFragment extends DialogFragment {
             respuesta5mal.setVisibility(View.GONE);
         }
 
-        builder
-                .setView(view)
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setView(view)
                 .setPositiveButton(R.string.title_home, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
