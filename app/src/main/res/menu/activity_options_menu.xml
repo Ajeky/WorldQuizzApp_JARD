@@ -4,6 +4,7 @@
     <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_account_circle_black_24dp"
+        android:orderInCategory="1"
         android:title="Mi Perfil"
         app:showAsAction="ifRoom" />
 </menu>

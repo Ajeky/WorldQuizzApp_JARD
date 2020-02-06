@@ -18,14 +18,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.worldquizzapp_jard.models.Pais;
 import com.example.worldquizzapp_jard.serviceGenerator.PaisServiceGenerator;
 import com.example.worldquizzapp_jard.services.PaisService;
 import com.example.worldquizzapp_jard.ui.IPaisListener;
 import com.example.worldquizzapp_jard.utilidades.Constantes;
-import com.example.worldquizzapp_jard.utilidades.IFiltroListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -112,18 +110,30 @@ public class PaisFragment extends Fragment implements IFiltroListener {
     }
 
     @Override
-    public void onClickFiltros(String filtro) {
-        Toast.makeText(ctx, "En Pais fragment mirando tuto " + filtro, Toast.LENGTH_SHORT).show();
+    public void onClickFiltros(String filtro,String tipo) {
+        new LoadDataTask().execute(filtro,tipo);
+        //Toast.makeText(ctx, "En Pais fragment mirando tuto " + filtro, Toast.LENGTH_SHORT).show();
     }
 
-    private class LoadDataTask extends AsyncTask<Void, Void, List<Pais>> {
+    private class LoadDataTask extends AsyncTask<String, Void, List<Pais>> {
 
-        protected List<Pais> doInBackground(Void... voids) {
+        protected List<Pais> doInBackground(String... strings) {
+
             List<Pais> result = null;
-
-            Call<List<Pais>> callPaises = service.listadoPaises();
-
+            Call<List<Pais>> callPaises = null;
             Response<List<Pais>> responsePaises = null;
+
+            //Este if es para diferenciar y cargar toda la lista de paises o cargar una lista según el filtro que le pasamos por parámetro en el AsyncTask
+            if (strings.length != 0){
+                //Este if difenencia si el usuario ha filtrado por moneda o por idioma
+                if (strings[1].equals(Constantes.MONEDA)){
+                    callPaises = service.listadoPaisesByMoneda(strings[0]);
+                }else if(strings[1].equals(Constantes.IDIOMA)){
+                    callPaises = service.listadoPaisesByIdioma(strings[0]);
+                }
+            }else {
+                callPaises = service.listadoPaises();
+            }
 
             try {
                 responsePaises = callPaises.execute();
@@ -165,7 +175,8 @@ public class PaisFragment extends Fragment implements IFiltroListener {
                 Bundle bundleMoneda = new Bundle();
                 bundleMoneda.putString(Constantes.OPCION_FILTRO,Constantes.MONEDA);
                 dialogMoneda.setArguments(bundleMoneda);
-                dialogMoneda.show(getActivity().getSupportFragmentManager(),"FiltroMonedaFragment");
+                dialogMoneda.setTargetFragment(this,0);
+                dialogMoneda.show(getFragmentManager(),"FiltroMonedaFragment");
                 break;
             case R.id.filtro_idioma:
                 DialogFragment dialogIdioma = new FilterDialogFragment();
