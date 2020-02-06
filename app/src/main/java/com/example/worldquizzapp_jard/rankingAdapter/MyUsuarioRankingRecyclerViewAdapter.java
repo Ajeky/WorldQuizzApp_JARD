@@ -1,26 +1,16 @@
 package com.example.worldquizzapp_jard.rankingAdapter;
 
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.bitmap_recycle.IntegerArrayAdapter;
 import com.example.worldquizzapp_jard.R;
 import com.example.worldquizzapp_jard.models.Usuario;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
 public class MyUsuarioRankingRecyclerViewAdapter extends RecyclerView.Adapter<MyUsuarioRankingRecyclerViewAdapter.ViewHolder> {
@@ -47,31 +37,11 @@ public class MyUsuarioRankingRecyclerViewAdapter extends RecyclerView.Adapter<My
         holder.mItem = mValues.get(position);
         holder.ivCopa.setVisibility(View.INVISIBLE);
         List<Long> resultados = holder.mItem.getResultados();
-        long total=  0;
-        for (Long elemento : resultados
-             ) {
-            total+=elemento;
-            Log.d(TAG, "----------------------"+String.valueOf(elemento)+"--------------------------");
-        }
-
-
-        /*
-        Collection<Double> resultados = holder.mItem.getResultados();
-
-        Iterator it = Collections.emptyIterator();
-
-        while (it.hasNext()) {
-            total += (Double) it.next();
-        }
-*/
-       // Double ppp = total/resultados.size();
-
-
-
+        Double ppp = (double)(holder.mItem.getTotal()/resultados.size());
         holder.tvNombre.setText(holder.mItem.getNombreCompleto());
         holder.tvPosicion.setText(String.valueOf(position+1));
-       // holder.tvPuntosPorPartida.setText(String.valueOf(ppp));
-        holder.tvPuntos.setText(String.valueOf(total));
+        holder.tvPuntosPorPartida.setText(String.valueOf(ppp));
+        holder.tvPuntos.setText(String.valueOf(holder.mItem.getTotal()));
         holder.ivGold.setVisibility(View.INVISIBLE);
         holder.ivSilver.setVisibility(View.INVISIBLE);
         holder.ivBronze.setVisibility(View.INVISIBLE);
@@ -117,6 +87,7 @@ public class MyUsuarioRankingRecyclerViewAdapter extends RecyclerView.Adapter<My
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
