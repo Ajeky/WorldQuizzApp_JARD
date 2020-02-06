@@ -10,4 +10,5 @@ public class Constantes {
     public static final String IDIOMA = "idioma";
     public static final String HORA = "hora";
     public static final String CONTINENTE = "continente";
+    public static final String OPCION_FILTRO = "opcionFiltro";
 }

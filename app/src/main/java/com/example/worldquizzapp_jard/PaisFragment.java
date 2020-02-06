@@ -4,12 +4,18 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -18,6 +24,8 @@ import com.example.worldquizzapp_jard.models.Pais;
 import com.example.worldquizzapp_jard.serviceGenerator.PaisServiceGenerator;
 import com.example.worldquizzapp_jard.services.PaisService;
 import com.example.worldquizzapp_jard.ui.IPaisListener;
+import com.example.worldquizzapp_jard.utilidades.Constantes;
+import com.example.worldquizzapp_jard.utilidades.IFiltroListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 
-public class PaisFragment extends Fragment {
+public class PaisFragment extends Fragment implements IFiltroListener {
 
 
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -103,6 +111,11 @@ public class PaisFragment extends Fragment {
         recyclerView.setAdapter(new MyPaisRecyclerViewAdapter(lista, ctx, R.layout.fragment_pais));
     }
 
+    @Override
+    public void onClickFiltros(String filtro) {
+        Toast.makeText(ctx, "En Pais fragment mirando tuto " + filtro, Toast.LENGTH_SHORT).show();
+    }
+
     private class LoadDataTask extends AsyncTask<Void, Void, List<Pais>> {
 
         protected List<Pais> doInBackground(Void... voids) {
@@ -129,6 +142,42 @@ public class PaisFragment extends Fragment {
             if (paises != null)
                 cargarDatos(paises);
         }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_opciones_lista_paises,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.filtro_moneda:
+                DialogFragment dialogMoneda = new FilterDialogFragment();
+                Bundle bundleMoneda = new Bundle();
+                bundleMoneda.putString(Constantes.OPCION_FILTRO,Constantes.MONEDA);
+                dialogMoneda.setArguments(bundleMoneda);
+                dialogMoneda.show(getActivity().getSupportFragmentManager(),"FiltroMonedaFragment");
+                break;
+            case R.id.filtro_idioma:
+                DialogFragment dialogIdioma = new FilterDialogFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString(Constantes.OPCION_FILTRO,Constantes.IDIOMA);
+                dialogIdioma.setArguments(bundle);
+                dialogIdioma.setTargetFragment(this,0);
+                dialogIdioma.show(getFragmentManager(),"FiltroIdiomaFragment");
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
 

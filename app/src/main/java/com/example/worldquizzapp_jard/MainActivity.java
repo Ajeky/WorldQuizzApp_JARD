@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.worldquizzapp_jard.test_quizz.MainActivityQuizz;
 
@@ -16,6 +17,7 @@ import com.example.worldquizzapp_jard.ui.IPaisListener;
 import com.example.worldquizzapp_jard.models.Usuario;
 import com.example.worldquizzapp_jard.rankingAdapter.IUsuarioRankingListener;
 import com.example.worldquizzapp_jard.utilidades.Constantes;
+import com.example.worldquizzapp_jard.utilidades.IFiltroListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -36,7 +38,7 @@ import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_CAPITA
 import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_PAIS_EN_ESPANOL;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_PAIS_ORIGINAL;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.POBLACION;
-public class MainActivity extends AppCompatActivity implements IPaisListener, IUsuarioRankingListener {
+public class MainActivity extends AppCompatActivity implements IPaisListener, IUsuarioRankingListener, IFiltroListener {
 
     FloatingActionButton botonTest;
 
@@ -110,5 +112,10 @@ public class MainActivity extends AppCompatActivity implements IPaisListener, IU
 
     @Override
     public void onJugadorClick(Usuario user) {
+    }
+
+    @Override
+    public void onClickFiltros(String filtro) {
+        //Toast.makeText(this, "En Main Activity "+ filtro , Toast.LENGTH_SHORT).show();
     }
 }
