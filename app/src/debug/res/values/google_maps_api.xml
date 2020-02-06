@@ -4,7 +4,7 @@
 
     To get one, follow this link, follow the directions and press "Create" at the end:
 
-    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=57:76:00:0D:DB:59:98:7C:D4:DD:05:88:A1:F1:53:58:D9:2D:21:75%3Bcom.example.worldquizzapp_jard.utilidades
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=57:76:00:0D:DB:59:98:7C:D4:DD:05:88:A1:F1:53:58:D9:2D:21:75%3Bcom.example.worldquizzapp_jard
 
     You can also add your credentials to an existing key, using these values:
 
@@ -20,5 +20,5 @@
     Once you have your key (it starts with "AIza"), replace the "google_maps_key"
     string in this file.
     -->
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDjdBAz8mRGKlVktdb4DD8UfSNZ3CCsMQ0</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBywav1hhBdjBuM4BhWG3mp3U5g4EpJShg</string>
 </resources>

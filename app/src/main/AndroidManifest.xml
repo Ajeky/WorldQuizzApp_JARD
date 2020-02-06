@@ -28,11 +28,8 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDjdBAz8mRGKlVktdb4DD8UfSNZ3CCsMQ0" />
+            android:value="AIzaSyBywav1hhBdjBuM4BhWG3mp3U5g4EpJShg" />
 
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
         <activity android:name=".DetalleActivity" />
         <activity android:name=".test_quizz.MainActivityQuizz" />
         <activity

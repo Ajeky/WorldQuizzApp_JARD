@@ -1,17 +1,33 @@
 package com.example.worldquizzapp_jard;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.worldquizzapp_jard.models.Pais;
+import com.example.worldquizzapp_jard.serviceGenerator.PaisServiceGenerator;
+import com.example.worldquizzapp_jard.services.PaisService;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -19,7 +35,9 @@ import com.google.android.gms.maps.SupportMapFragment;
  */
 public class MapaEnFragment extends Fragment implements OnMapReadyCallback {
 
-
+    PaisService service;
+    GoogleMap mMap;
+    List<Pais> listado;
     public MapaEnFragment() {
         // Required empty public constructor
     }
@@ -41,6 +59,35 @@ public class MapaEnFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        service = PaisServiceGenerator.createService(PaisService.class);
+        Call<List<Pais>> call = service.listadoPaises();
 
+        call.enqueue(new Callback<List<Pais>>() {
+            @Override
+            public void onResponse(Call<List<Pais>> call, Response<List<Pais>> response) {
+                if(response.isSuccessful()){
+                       listado = response.body();
+                    for(int i = 0; i<listado.size(); i++){
+                        //SI NO ESTA VACIO
+                        if(!listado.get(i).getLatlng().isEmpty()){
+                            mMap.addMarker(new MarkerOptions()
+                                    .position(new LatLng(listado.get(i).getLatlng().get(0),listado.get(i).getLatlng().get(1)))
+                                    .title(listado.get(i).getName()));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(listado.get(0).getLatlng().get(0),listado.get(0).getLatlng().get(1))));
+                        }
+                    }
+
+                }
+
+            }
+
+
+            @Override
+            public void onFailure(Call<List<Pais>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error al realizar la petición", Toast.LENGTH_SHORT).show();
+            }
+
+        });
     }
 }
