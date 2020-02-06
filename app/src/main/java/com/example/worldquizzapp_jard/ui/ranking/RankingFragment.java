@@ -32,6 +32,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
@@ -51,6 +52,20 @@ public class RankingFragment extends Fragment{
     private FirebaseFirestore db;
     private Long l;
 
+
+    Comparator<Usuario> TOTAL_COMPARATOR = new Comparator<Usuario>() {
+        @Override
+        public int compare(Usuario u1, Usuario u2) {
+            return Long.compare(u2.getTotal(), u1.getTotal());
+        }
+    };
+
+    Comparator<Usuario> PPP_COMPARATOR = new Comparator<Usuario>() {
+        @Override
+        public int compare(Usuario u1, Usuario u2) {
+            return Double.compare((u2.getTotal()/u2.getResultados().size()), (u1.getTotal()/u1.getResultados().size()));
+        }
+    };
 
 
     public RankingFragment() {
@@ -78,6 +93,7 @@ public class RankingFragment extends Fragment{
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
+
             adapter = new MyUsuarioRankingRecyclerViewAdapter(
                     ctx,
                     R.layout.fragment_ranking,
@@ -98,6 +114,7 @@ public class RankingFragment extends Fragment{
                                 i++;
                             }
                             adapter.notifyDataSetChanged();
+                    Collections.sort(usuariosList,PPP_COMPARATOR);
                         }
 
                     });
