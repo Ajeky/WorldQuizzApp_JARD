@@ -11,13 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.bitmap_recycle.IntegerArrayAdapter;
 import com.example.worldquizzapp_jard.R;
 import com.example.worldquizzapp_jard.models.Usuario;
 
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
+import java.util.Comparator;
 import java.util.List;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
@@ -45,14 +43,20 @@ public class MyUsuarioRankingRecyclerViewAdapter extends RecyclerView.Adapter<My
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
+
+
+
         holder.ivCopa.setVisibility(View.INVISIBLE);
         List<Long> resultados = holder.mItem.getResultados();
-        long total=  0;
-        for (Long elemento : resultados
+      /*  double total=  0;
+        for (Double elemento : resultados
              ) {
             total+=elemento;
             Log.d(TAG, "----------------------"+String.valueOf(elemento)+"--------------------------");
         }
+        holder.mItem.setTotal(total);
+
+
 
 
         /*
@@ -64,14 +68,14 @@ public class MyUsuarioRankingRecyclerViewAdapter extends RecyclerView.Adapter<My
             total += (Double) it.next();
         }
 */
-       // Double ppp = total/resultados.size();
+        //Double ppp = holder.mItem.getTotal()/resultados.size();
 
 
 
         holder.tvNombre.setText(holder.mItem.getNombreCompleto());
         holder.tvPosicion.setText(String.valueOf(position+1));
-       // holder.tvPuntosPorPartida.setText(String.valueOf(ppp));
-        holder.tvPuntos.setText(String.valueOf(total));
+        //holder.tvPuntosPorPartida.setText(String.valueOf(ppp));
+        holder.tvPuntos.setText(String.valueOf(holder.mItem.getTotal()));
         holder.ivGold.setVisibility(View.INVISIBLE);
         holder.ivSilver.setVisibility(View.INVISIBLE);
         holder.ivBronze.setVisibility(View.INVISIBLE);
@@ -117,6 +121,7 @@ public class MyUsuarioRankingRecyclerViewAdapter extends RecyclerView.Adapter<My
             }
         });
     }
+
 
     @Override
     public int getItemCount() {

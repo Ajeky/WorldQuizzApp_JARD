@@ -49,6 +49,7 @@ public class RankingFragment extends Fragment{
     private RankingViewModel rankingViewModel;
     private IUsuarioRankingListener mListener;
     private FirebaseFirestore db;
+    private Long l;
 
 
 
