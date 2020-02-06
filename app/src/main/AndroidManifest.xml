@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_logo_app_foreground"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DetalleActivity"></activity>
+        <activity android:name=".DetalleActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            ></activity>
     
         <activity android:name=".test_quizz.MainActivityQuizz"></activity>
         <activity
