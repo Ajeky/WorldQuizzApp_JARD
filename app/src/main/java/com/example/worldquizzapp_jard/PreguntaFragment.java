@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,18 +83,6 @@ public class PreguntaFragment extends Fragment {
             servicio = PaisServiceGenerator.createService(PaisService.class);
             new CargarDatos().execute();
 
-
-
-            if (preguntas.isEmpty()) {
-                preguntas.add(new Pregunta("¿Cuál es la capital de Nicaragua?", "Mexico DF", "Managua", "Madrid", "Santiago", "Managua"));
-                preguntas.add(new Pregunta("¿Cuál es la capital de Nicaragua?", "Madrid", "Mexico DF", "Managua", "Santiago", "Managua"));
-                preguntas.add(new Pregunta("¿Cuál es la capital de Nicaragua?", "Santiago", "Madrid", "Mexico DF", "Managua", "Managua"));
-                preguntas.add(new Pregunta("¿Cuál es la capital de Nicaragua?", "Madrid", "Mexico DF", "Managua", "Santiago", "Managua"));
-                preguntas.add(new Pregunta("¿Cuál es la capital de Nicaragua?", "Managua", "Madrid", "Santiago", "Mexico DF", "Managua"));
-                preguntas.add(new Pregunta("¿Cuál es la capital de Nicaragua?", "Mexico DF", "Managua", "Santiago", "Madrid", "Managua"));
-                preguntas.add(new Pregunta("¿Cuál es la capital de Nicaragua?", "Managua", "Mexico DF", "Madrid", "Santiago", "Managua"));
-            }
-
         }
         return view;
     }
@@ -163,6 +152,7 @@ public class PreguntaFragment extends Fragment {
             int random;
             preguntas = new ArrayList<>();
 
+
             do {
                 diezPaises = new ArrayList<>();
                 copiaPaises = paises;
@@ -172,29 +162,51 @@ public class PreguntaFragment extends Fragment {
                     copiaPaises.remove(random);
                 }
 
-                copiaDiezPaises = diezPaises;
-                respuestas = new ArrayList<>();
+                pregunta = generarPreguntaCapitales(diezPaises);
 
-                for (int i = 0; i < 4; i++) {
-                    random = new Random().nextInt(copiaDiezPaises.size());
-                    pais = copiaDiezPaises.get(random);
-                    if (pais.getCapital().isEmpty() || pais.getCapital() == null) {
-                        respuestas.add("No tiene");
-                    } else {
-                        respuestas.add(pais.getCapital());
-                    }
-                    copiaDiezPaises.remove(random);
-                }
-
-                Collections.shuffle(respuestas);
-
-
-                pregunta = new Pregunta("¿Cuál es la capital de " + pais.getTranslations().getEs() + "?", respuestas.get(0), respuestas.get(1), respuestas.get(2), respuestas.get(3), pais.getCapital());
                 preguntas.add(pregunta);
             } while (preguntas.size() < 5);
+
+            /*List<String> monedas = new ArrayList<>();
+            copiaPaises = paises;
+
+            for (Pais p : copiaPaises) {
+                if (!monedas.contains(p.getCurrencies().get(0).getName())) {
+                    monedas.add(p.getCurrencies().get(0).getName());
+                    Log.d("moneda", p.getCurrencies().get(0).getName() + "");
+                }
+
+            }
+
+            Log.d("lista", monedas + "");*/
 
             recyclerView.setAdapter(new PreguntaAdapter(ctx, R.layout.fragment_pregunta, preguntas));
 
         }
+    }
+
+
+
+    public Pregunta generarPreguntaCapitales(List<Pais> diezPaises) {
+        Pais pais = new Pais();
+        int random;
+        List<String> respuestas = new ArrayList<>();
+        Pregunta pregunta;
+        for (int i = 0; i < 4; i++) {
+            random = new Random().nextInt(diezPaises.size());
+            pais = diezPaises.get(random);
+            if (pais.getCapital().isEmpty() || pais.getCapital() == null) {
+                respuestas.add("No tiene");
+            } else {
+                respuestas.add(pais.getCapital());
+            }
+            diezPaises.remove(random);
+        }
+
+        Collections.shuffle(respuestas);
+
+        pregunta = new Pregunta("¿Cuál es la capital de " + pais.getTranslations().getEs() + "?", respuestas.get(0), respuestas.get(1), respuestas.get(2), respuestas.get(3), pais.getCapital());
+
+        return pregunta;
     }
 }
