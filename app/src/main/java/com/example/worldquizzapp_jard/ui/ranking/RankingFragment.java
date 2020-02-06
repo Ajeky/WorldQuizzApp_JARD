@@ -63,6 +63,15 @@ public class RankingFragment extends Fragment{
     Comparator<Usuario> PPP_COMPARATOR = new Comparator<Usuario>() {
         @Override
         public int compare(Usuario u1, Usuario u2) {
+            if (u2.getResultados().size() == 0) {
+                if (u1.getResultados().size() == 0) {
+                    return Double.compare(0, 0);
+                } else {
+                    return Double.compare(0, u1.getTotal()/u1.getResultados().size());
+                }
+            } else if (u1.getResultados().size() == 0) {
+                return Double.compare(u2.getTotal()/u2.getResultados().size(), 0);
+            }
             return Double.compare((u2.getTotal()/u2.getResultados().size()), (u1.getTotal()/u1.getResultados().size()));
         }
     };

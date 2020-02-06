@@ -37,7 +37,12 @@ public class MyUsuarioRankingRecyclerViewAdapter extends RecyclerView.Adapter<My
         holder.mItem = mValues.get(position);
         holder.ivCopa.setVisibility(View.INVISIBLE);
         List<Long> resultados = holder.mItem.getResultados();
-        Double ppp = (double)(holder.mItem.getTotal()/resultados.size());
+        Double ppp;
+        if (resultados.size() == 0) {
+            ppp = (double) 0;
+        } else {
+            ppp = (double)(holder.mItem.getTotal()/resultados.size());
+        }
         holder.tvNombre.setText(holder.mItem.getNombreCompleto());
         holder.tvPosicion.setText(String.valueOf(position+1));
         holder.tvPuntosPorPartida.setText(String.valueOf(ppp));
