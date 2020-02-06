@@ -11,4 +11,5 @@
     <string name="title_ranking">Ranking</string>
     <string name="total_puntos">Puntos: </string>
     <string name="puntos_por_partida">Puntos/Partida:</string>
+    <string name="title_activity_maps_dani">Map</string>
 </resources>
