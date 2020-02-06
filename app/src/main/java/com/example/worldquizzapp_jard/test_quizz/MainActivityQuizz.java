@@ -18,7 +18,7 @@ public class MainActivityQuizz extends AppCompatActivity implements PreguntaFrag
     Button botonEnviar;
     RadioGroup rgRespuesta;
     String respuesta1, respuesta2, respuesta3, respuesta4, respuesta5;
-    Pregunta pregunta1, pregunta2, pregunta3, pregunta4, pregunta5;
+    String respuestaCorrecta1, respuestaCorrecta2, respuestaCorrecta3, respuestaCorrecta4, respuestaCorrecta5;
 
 
 
@@ -31,7 +31,12 @@ public class MainActivityQuizz extends AppCompatActivity implements PreguntaFrag
         botonEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogFragment puntuacionQuiz = new EnviarQuizDialogFragment();
+                int puntos = calcularPuntuacion();
+                Log.d("ActivityResp: ", "r1: " + respuesta1 + ", r2: " + respuesta2 + ", r3: " + respuesta3 + ", r4: " + respuesta4 + ", r5: " + respuesta5);
+                Log.d("ActivityCorrectas: ", "r1: " + respuestaCorrecta1 + ", r2: " + respuestaCorrecta2 + ", r3: " + respuestaCorrecta3 + ", r4: " + respuestaCorrecta4 + ", r5: " + respuestaCorrecta5);
+                Log.d("Puntos: ", "" + puntos);
+
+                DialogFragment puntuacionQuiz = EnviarQuizDialogFragment.newInstance(respuesta1, respuesta2, respuesta3, respuesta4, respuesta5, respuestaCorrecta1, respuestaCorrecta2, respuestaCorrecta3, respuestaCorrecta4, respuestaCorrecta5, calcularPuntuacion() + "");
                 puntuacionQuiz.show(getSupportFragmentManager(), "enviarQuiz");
             }
         });
@@ -45,19 +50,19 @@ public class MainActivityQuizz extends AppCompatActivity implements PreguntaFrag
     public void registrarPreguntas(int posicion, Pregunta pregunta) {
         switch (posicion) {
             case 0:
-                pregunta1 = pregunta;
+                respuestaCorrecta1 = pregunta.getRespuestaCorrecta();
                 break;
             case 1:
-                pregunta2 = pregunta;
+                respuestaCorrecta2 = pregunta.getRespuestaCorrecta();
                 break;
             case 2:
-                pregunta3 = pregunta;
+                respuestaCorrecta3 = pregunta.getRespuestaCorrecta();
                 break;
             case 3:
-                pregunta4 = pregunta;
+                respuestaCorrecta4 = pregunta.getRespuestaCorrecta();
                 break;
             case 4:
-                pregunta5 = pregunta;
+                respuestaCorrecta5 = pregunta.getRespuestaCorrecta();
                 break;
 
             default:
@@ -97,4 +102,21 @@ public class MainActivityQuizz extends AppCompatActivity implements PreguntaFrag
 
     }
 
+    public int calcularPuntuacion() {
+        int total = 0;
+
+        if (respuestaCorrecta1 == respuesta1) {
+            total += 10;
+        } if (respuestaCorrecta2 == respuesta2) {
+            total += 10;
+        } if (respuestaCorrecta3 == respuesta3) {
+            total += 10;
+        } if (respuestaCorrecta4 == respuesta4) {
+            total += 10;
+        } if (respuestaCorrecta5 == respuesta5) {
+            total += 10;
+        }
+
+        return total;
+    }
 }

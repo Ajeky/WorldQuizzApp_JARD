@@ -21,6 +21,7 @@ import com.example.worldquizzapp_jard.services.PaisService;
 import com.example.worldquizzapp_jard.test_quizz.MainActivityQuizz;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -145,12 +146,11 @@ public class PreguntaFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Pais> paises) {
             int numeroPaises = 10;
-            List<Pais> diezPaises, copiaDiezPaises, copiaPaises;
-            List<String> respuestas;
+            List<Pais> diezPaises, copiaPaises;
             Pregunta pregunta;
-            Pais pais = new Pais();
             int random;
             preguntas = new ArrayList<>();
+            List<String> monedas = generarListaMonedas(paises);
 
 
             do {
@@ -163,22 +163,11 @@ public class PreguntaFragment extends Fragment {
                 }
 
                 pregunta = generarPreguntaCapitales(diezPaises);
+                preguntas.add(pregunta);
 
+                pregunta = generarPreguntaMoneda(diezPaises, monedas);
                 preguntas.add(pregunta);
             } while (preguntas.size() < 5);
-
-            /*List<String> monedas = new ArrayList<>();
-            copiaPaises = paises;
-
-            for (Pais p : copiaPaises) {
-                if (!monedas.contains(p.getCurrencies().get(0).getName())) {
-                    monedas.add(p.getCurrencies().get(0).getName());
-                    Log.d("moneda", p.getCurrencies().get(0).getName() + "");
-                }
-
-            }
-
-            Log.d("lista", monedas + "");*/
 
             recyclerView.setAdapter(new PreguntaAdapter(ctx, R.layout.fragment_pregunta, preguntas));
 
@@ -192,6 +181,7 @@ public class PreguntaFragment extends Fragment {
         int random;
         List<String> respuestas = new ArrayList<>();
         Pregunta pregunta;
+
         for (int i = 0; i < 4; i++) {
             random = new Random().nextInt(diezPaises.size());
             pais = diezPaises.get(random);
@@ -207,6 +197,56 @@ public class PreguntaFragment extends Fragment {
 
         pregunta = new Pregunta("¿Cuál es la capital de " + pais.getTranslations().getEs() + "?", respuestas.get(0), respuestas.get(1), respuestas.get(2), respuestas.get(3), pais.getCapital());
 
+        ((MainActivityQuizz)getActivity()).registrarPreguntas(0, pregunta);
+
+
+        if (pregunta.getRespuestaCorrecta().isEmpty()) {
+            pregunta.setRespuestaCorrecta("No tiene");
+        }
+
         return pregunta;
+    }
+
+    public Pregunta generarPreguntaMoneda(List<Pais> diezPaises, List<String> monedas) {
+        Pais pais = new Pais();
+        int random;
+        List <String> respuestas = new ArrayList<>();
+        Pregunta pregunta;
+
+        random = new Random().nextInt(diezPaises.size());
+        pais = diezPaises.get(random);
+        respuestas.add(pais.getCurrencies().get(0).getName());
+        monedas.remove(respuestas.get(0));
+
+        for (int i = 0 ; i < 3 ; i++) {
+            random = new Random().nextInt(monedas.size());
+            respuestas.add(monedas.get(random));
+        }
+
+        Collections.shuffle(respuestas);
+
+        pregunta = new Pregunta("¿Cuál es la moneda de " + pais.getTranslations().getEs() + " ?", respuestas.get(0), respuestas.get(1), respuestas.get(2), respuestas.get(3), pais.getCurrencies().get(0).getName());
+
+        ((MainActivityQuizz)getActivity()).registrarPreguntas(1, pregunta);
+
+        return pregunta;
+    }
+
+
+
+    public List<String> generarListaMonedas(List<Pais> paises) {
+        List <String> monedas = new ArrayList<>();
+
+        for (Pais p : paises) {
+            if (!monedas.contains(p.getCurrencies().get(0).getName())) {
+                monedas.add(p.getCurrencies().get(0).getName());
+            }
+        }
+
+        return monedas;
+    }
+
+    public Pregunta generarPreguntaFrontera(List<Pais> paises) {
+        return null;
     }
 }
