@@ -2,25 +2,21 @@ package com.example.worldquizzapp_jard;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-
-import com.example.worldquizzapp_jard.test_quizz.MainActivityQuizz;
-
-import com.example.worldquizzapp_jard.models.Pais;
-import com.example.worldquizzapp_jard.ui.IPaisListener;
-
-import com.example.worldquizzapp_jard.models.Usuario;
-import com.example.worldquizzapp_jard.rankingAdapter.IUsuarioRankingListener;
-import com.example.worldquizzapp_jard.utilidades.Constantes;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import com.example.worldquizzapp_jard.models.Pais;
+import com.example.worldquizzapp_jard.models.Usuario;
+import com.example.worldquizzapp_jard.rankingAdapter.IUsuarioRankingListener;
+import com.example.worldquizzapp_jard.test_quizz.MainActivityQuizz;
+import com.example.worldquizzapp_jard.ui.IPaisListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 import org.joda.time.LocalTime;
@@ -77,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements IPaisListener, IU
         String rangoHorario = p.getTimezones().get(0);
 
         if (rangoHorario.substring(0,4).equals("UTC-")){
-            i.putExtra(HORA,LocalTime.now().minusHours(Integer.parseInt(rangoHorario.substring(4,6))).toString().substring(0,5));
+            i.putExtra(HORA, LocalTime.now().minusHours(Integer.parseInt(rangoHorario.substring(4,6))).toString().substring(0,5));
             //Log.i("hora_resultado",LocalTime.now().minusHours(Integer.parseInt(rangoHorario.substring(4,6))).toString());
 
         }else {
