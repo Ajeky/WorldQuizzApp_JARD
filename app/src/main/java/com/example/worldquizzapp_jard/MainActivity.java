@@ -22,6 +22,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import static com.example.worldquizzapp_jard.utilidades.Constantes.ALPHA;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.MONEDA;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_CAPITAL;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_PAIS_EN_ESPANOL;
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements IPaisListener, IU
         i.putExtra(NOMBRE_PAIS_ORIGINAL,p.getName());
         i.putExtra(POBLACION,p.getPopulation().toString());
         i.putExtra(MONEDA, p.getCurrencies().get(0).getName());
+        i.putExtra(ALPHA,p.getAlpha2Code());
 
         startActivity(i);
     }

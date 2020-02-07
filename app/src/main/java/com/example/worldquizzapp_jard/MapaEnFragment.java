@@ -79,33 +79,29 @@ public class MapaEnFragment extends Fragment implements OnMapReadyCallback {
                         if(!listado.get(i).getLatlng().isEmpty()){
                             Marker m = mMap.addMarker(new MarkerOptions()
                                     .position(new LatLng(listado.get(i).getLatlng().get(0),listado.get(i).getLatlng().get(1)))
-                                    .snippet("Capital: "+listado.get(i).getCapital())
                                     .title(listado.get(i).getTranslations().es));
 
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(listado.get(0).getLatlng().get(0),listado.get(0).getLatlng().get(1))));
 
-                            //m.setTag();
-
-
-
+                            m.setTag(listado.get(i).getAlpha2Code());
 
 
 
                         }
                     }
-                    /*mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                         @Override
                         public boolean onMarkerClick(Marker marker) {
                             Intent i = new Intent(getActivity(),
                                     DetalleActivity.class);
                             String isoCode = marker.getTag().toString();
-                            i.putExtra("", isoCode);
+                            i.putExtra(Constantes.ALPHA, isoCode);
 
                             startActivity(i);
 
                             return false;
                         }
-                    });*/
+                    });
 
 
                 }

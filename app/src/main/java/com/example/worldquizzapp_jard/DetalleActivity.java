@@ -2,6 +2,7 @@ package com.example.worldquizzapp_jard;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +12,16 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.worldquizzapp_jard.models.Foto;
+import com.example.worldquizzapp_jard.models.Pais;
 import com.example.worldquizzapp_jard.models.RespuestaUnsplah;
+import com.example.worldquizzapp_jard.serviceGenerator.PaisServiceGenerator;
+import com.example.worldquizzapp_jard.services.PaisService;
+import com.example.worldquizzapp_jard.utilidades.Constantes;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -34,9 +44,12 @@ import static com.example.worldquizzapp_jard.utilidades.Constantes.POBLACION;
 public class DetalleActivity extends AppCompatActivity {
 
     UnsplashService serviceUnsplash;
+    PaisService service;
     SliderView sliderView;
     List<String> urlsFotos;
     TextView txPais, txCapital, txMoneda, txPoblacion;
+    String isoCode;
+    Pais p;
     int IMAGENES_A_MOSTRAR = 5;
 
     @Override
@@ -45,22 +58,14 @@ public class DetalleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detalle);
 
         serviceUnsplash = ServiceGenerator.createService(UnsplashService.class);
+        service = PaisServiceGenerator.createService(PaisService.class);
         sliderView = findViewById(R.id.imageSlider);
         txCapital = findViewById(R.id.txCapital);
         txPais = findViewById(R.id.txPais);
         txMoneda = findViewById(R.id.txMoneda);
         txPoblacion = findViewById(R.id.txPoblacion);
+        isoCode = String.valueOf(getIntent().getExtras().get(ALPHA));
 
-        txPoblacion.setText(String.valueOf(getIntent().getExtras().get(POBLACION)));
-        txCapital.setText(String.valueOf(getIntent().getExtras().get(NOMBRE_CAPITAL)));
-        txMoneda.setText(String.valueOf(getIntent().getExtras().get(MONEDA)));
-        txPais.setText(String.valueOf(getIntent().getExtras().get(NOMBRE_PAIS_EN_ESPANOL)));
-
-
-
-        if (txMoneda.getText().length() > txCapital.getText().length() && txMoneda.getText().length() > 20){
-            txMoneda.setTextSize(11);
-        }
 
         urlsFotos = new ArrayList<String>();
 
@@ -82,6 +87,37 @@ public class DetalleActivity extends AppCompatActivity {
                 sliderView.setCurrentPagePosition(position);
             }
         });
+
+        Call<Pais> callp = service.cogerPais(isoCode);
+
+        callp.enqueue(new Callback<Pais>() {
+            @Override
+            public void onResponse(Call<Pais> call, Response<Pais> response) {
+                if(response.isSuccessful()){
+                    p = response.body();
+
+                    txPoblacion.setText(String.valueOf(p.getPopulation()));
+                    txCapital.setText(String.valueOf(p.getCapital()));
+                    txMoneda.setText(String.valueOf(p.getCurrencies().get(0).getName()));
+                    txPais.setText(String.valueOf(p.getTranslations().es));
+
+                    if (txMoneda.getText().length() > txCapital.getText().length() && txMoneda.getText().length() > 20){
+                        txMoneda.setTextSize(11);
+                    }
+
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Pais> call, Throwable t) {
+                Toast.makeText(getBaseContext(), "Error al realizar la petición", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+
 
         Call<RespuestaUnsplah> call = serviceUnsplash.fotosDeUnPais(String.valueOf(getIntent().getExtras().get(NOMBRE_PAIS_ORIGINAL)));
 
