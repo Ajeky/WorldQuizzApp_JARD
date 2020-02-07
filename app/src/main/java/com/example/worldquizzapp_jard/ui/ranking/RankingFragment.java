@@ -5,6 +5,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -51,6 +54,7 @@ public class RankingFragment extends Fragment{
     private IUsuarioRankingListener mListener;
     private FirebaseFirestore db;
     private Long l;
+    boolean ordenAsc = true;
 
 
     Comparator<Usuario> TOTAL_COMPARATOR = new Comparator<Usuario>() {
@@ -123,7 +127,7 @@ public class RankingFragment extends Fragment{
                                 i++;
                             }
                             adapter.notifyDataSetChanged();
-                    Collections.sort(usuariosList,PPP_COMPARATOR);
+                    Collections.sort(usuariosList,TOTAL_COMPARATOR);
                         }
 
                     });
@@ -132,6 +136,39 @@ public class RankingFragment extends Fragment{
 
             return root;
         }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        // ATENCIÓN ESTE FRAGMENT TIENE UN MENÚ ADICIONAL DE OPCIONES
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.activity_options_ranking, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.orden_ranking_item:
+                if(ordenAsc) {
+                    Collections.sort(usuariosList,PPP_COMPARATOR);
+                    item.setIcon(R.drawable.ic_diana);
+
+                } else {
+                    Collections.sort(usuariosList,TOTAL_COMPARATOR);
+                    item.setIcon(R.drawable.ic_posicion);
+                }
+                adapter.notifyDataSetChanged();
+                ordenAsc = !ordenAsc;
+                //TODO orederRanking();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     public void onAttach(Context context) {
         ctx =context;
@@ -152,25 +189,5 @@ public class RankingFragment extends Fragment{
         mListener = null;
     }
 
-    public class CargarUsuarios extends AsyncTask<Void, Void, List<Usuario>>{
 
-
-
-        @Override
-        protected List<Usuario> doInBackground(Void... voids) {
-
-
-
-
-            return usuariosList;
-        }
-
-        @Override
-        protected void onPostExecute(List<Usuario> usuarioList) {
-
-
-
-
-        }
-    }
 }

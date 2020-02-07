@@ -5,28 +5,10 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
-import com.example.worldquizzapp_jard.test_quizz.MainActivityQuizz;
-
-import com.example.worldquizzapp_jard.models.Pais;
-import com.example.worldquizzapp_jard.ui.IPaisListener;
-
-import com.example.worldquizzapp_jard.models.Usuario;
-import com.example.worldquizzapp_jard.rankingAdapter.IUsuarioRankingListener;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,6 +18,18 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.example.worldquizzapp_jard.models.Pais;
+import com.example.worldquizzapp_jard.models.Usuario;
+import com.example.worldquizzapp_jard.rankingAdapter.IUsuarioRankingListener;
+import com.example.worldquizzapp_jard.test_quizz.MainActivityQuizz;
+import com.example.worldquizzapp_jard.ui.IPaisListener;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.joda.time.LocalTime;
 
@@ -47,6 +41,8 @@ import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_CAPITA
 import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_PAIS_EN_ESPANOL;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_PAIS_ORIGINAL;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.POBLACION;
+
+
 public class MainActivity extends AppCompatActivity implements IPaisListener, IUsuarioRankingListener {
 
     FloatingActionButton botonTest;
@@ -138,11 +134,9 @@ public class MainActivity extends AppCompatActivity implements IPaisListener, IU
         if (rangoHorario.equals("UTC")){
             i.putExtra(HORA,LocalTime.now().toString().substring(0,5));
 
-        }else if(rangoHorario.substring(0,4).equals("UTC-")){
+        } else if(rangoHorario.substring(0,4).equals("UTC-")){
             i.putExtra(HORA,LocalTime.now().minusHours(Integer.parseInt(rangoHorario.substring(4,6))).toString().substring(0,5));
-        }
-
-        else {
+        } else {
             i.putExtra(HORA,LocalTime.now().plusHours(Integer.parseInt(rangoHorario.substring(4,6))).toString().substring(0,5));
         }
 
