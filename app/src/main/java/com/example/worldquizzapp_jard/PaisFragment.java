@@ -44,7 +44,8 @@ public class PaisFragment extends Fragment implements IFiltroListener {
     PaisService service;
     Context ctx;
     RecyclerView recyclerView;
-
+    boolean filtroActivo = false;
+    MenuItem itemLimpiarFiltro;
 
     public PaisFragment() {
     }
@@ -111,6 +112,7 @@ public class PaisFragment extends Fragment implements IFiltroListener {
 
     @Override
     public void onClickFiltros(String filtro,String tipo) {
+        itemLimpiarFiltro.setVisible(true);
         new LoadDataTask().execute(filtro,tipo);
         //Toast.makeText(ctx, "En Pais fragment mirando tuto " + filtro, Toast.LENGTH_SHORT).show();
     }
@@ -164,6 +166,7 @@ public class PaisFragment extends Fragment implements IFiltroListener {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_opciones_lista_paises,menu);
+        itemLimpiarFiltro = menu.findItem(R.id.borrar_filtro);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -185,6 +188,11 @@ public class PaisFragment extends Fragment implements IFiltroListener {
                 dialogIdioma.setArguments(bundle);
                 dialogIdioma.setTargetFragment(this,0);
                 dialogIdioma.show(getFragmentManager(),"FiltroIdiomaFragment");
+                break;
+            case R.id.borrar_filtro:
+                new LoadDataTask().execute();
+                item.setVisible(false);
+                filtroActivo=false;
                 break;
         }
 

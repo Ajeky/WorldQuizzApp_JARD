@@ -29,7 +29,6 @@ public class FilterDialogFragment extends DialogFragment {
     Map<String, String> listaIdiomasMap = new HashMap<>();
     Map<String, String> listaMonedasMap = new HashMap<>();
     ListView lv;
-    //TextView txPais;
 
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -53,7 +52,7 @@ public class FilterDialogFragment extends DialogFragment {
        if (getArguments() != null){
            //Entra en la opcion de filtrar por moneda
            if (getArguments().getString(Constantes.OPCION_FILTRO).equals(Constantes.MONEDA)){
-               builder.setTitle(getArguments().getString(Constantes.OPCION_FILTRO));
+               builder.setTitle("Filtrar por moneda");
 
                adapter = new ArrayAdapter<String>(
                        getActivity(),
@@ -66,7 +65,7 @@ public class FilterDialogFragment extends DialogFragment {
 
            //Entra en la opción de filtrar por idioma
            }else if (getArguments().getString(Constantes.OPCION_FILTRO).equals(Constantes.IDIOMA)){
-               builder.setTitle(getArguments().getString(Constantes.OPCION_FILTRO));
+               builder.setTitle("Filtrar por idioma");
 
                adapter = new ArrayAdapter<String>(
                        getActivity(),

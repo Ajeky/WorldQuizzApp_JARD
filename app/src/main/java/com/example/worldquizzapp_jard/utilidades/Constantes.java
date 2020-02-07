@@ -11,4 +11,7 @@ public class Constantes {
     public static final String HORA = "hora";
     public static final String CONTINENTE = "continente";
     public static final String OPCION_FILTRO = "opcionFiltro";
+    public static final String LATITUD = "latitud";
+    public static final String LONGITUD = "longitud";
+
 }
