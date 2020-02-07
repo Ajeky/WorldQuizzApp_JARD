@@ -36,6 +36,8 @@ import retrofit2.Response;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.CONTINENTE;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.HORA;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.IDIOMA;
+import static com.example.worldquizzapp_jard.utilidades.Constantes.LATITUD;
+import static com.example.worldquizzapp_jard.utilidades.Constantes.LONGITUD;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.MONEDA;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_CAPITAL;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_PAIS_EN_ESPANOL;
@@ -160,11 +162,13 @@ public class DetalleActivity extends AppCompatActivity implements OnMapReadyCall
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        double latitud = getIntent().getExtras().getDouble(LATITUD);
+        double longitud = getIntent().getExtras().getDouble(LONGITUD);
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        // Add a marker in pais and move the camera
+        LatLng pais = new LatLng(latitud,longitud);
+        mMap.addMarker(new MarkerOptions().position(pais).title("Marcador en " + getIntent().getExtras().getString(NOMBRE_PAIS_EN_ESPANOL)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(pais));
     }
 }

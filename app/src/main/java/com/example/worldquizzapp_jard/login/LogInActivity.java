@@ -59,6 +59,10 @@ public class LogInActivity extends AppCompatActivity {
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
+        if (mAuth.getUid() == null){
+            mGoogleSignInClient.signOut();
+        }
+
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,21 +106,23 @@ public class LogInActivity extends AppCompatActivity {
      }
 
      private void FirebaseGoogleAuth(GoogleSignInAccount acct){
-         AuthCredential authCredential = GoogleAuthProvider.getCredential(acct.getIdToken(),null);
-         mAuth.signInWithCredential(authCredential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-             @Override
-             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    //Toast.makeText(LogInActivity.this, "Succesful", Toast.LENGTH_SHORT).show();
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    updateUi(user);
-                    cambiarDeActivity(MainActivity.class);
-                }else {
-                    Toast.makeText(LogInActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-                    updateUi(null);
+        if (acct != null) {
+            AuthCredential authCredential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+            mAuth.signInWithCredential(authCredential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        //Toast.makeText(LogInActivity.this, "Succesful", Toast.LENGTH_SHORT).show();
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        updateUi(user);
+                        cambiarDeActivity(MainActivity.class);
+                    } else {
+                        Toast.makeText(LogInActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                        updateUi(null);
+                    }
                 }
-             }
-         });
+            });
+        }
      }
 
     private void cambiarDeActivity(Class activity) {

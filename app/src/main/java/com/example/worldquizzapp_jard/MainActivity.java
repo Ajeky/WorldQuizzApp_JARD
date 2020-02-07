@@ -16,6 +16,7 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.worldquizzapp_jard.login.LogInActivity;
 import com.example.worldquizzapp_jard.test_quizz.MainActivityQuizz;
 
 import com.example.worldquizzapp_jard.models.Pais;
@@ -25,8 +26,10 @@ import com.example.worldquizzapp_jard.models.Usuario;
 import com.example.worldquizzapp_jard.rankingAdapter.IUsuarioRankingListener;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,6 +45,8 @@ import org.joda.time.LocalTime;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.CONTINENTE;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.HORA;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.IDIOMA;
+import static com.example.worldquizzapp_jard.utilidades.Constantes.LATITUD;
+import static com.example.worldquizzapp_jard.utilidades.Constantes.LONGITUD;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.MONEDA;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_CAPITAL;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_PAIS_EN_ESPANOL;
@@ -50,7 +55,6 @@ import static com.example.worldquizzapp_jard.utilidades.Constantes.POBLACION;
 public class MainActivity extends AppCompatActivity implements IPaisListener, IUsuarioRankingListener {
 
     FloatingActionButton botonTest;
-    MenuItem itemPerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,30 +86,24 @@ public class MainActivity extends AppCompatActivity implements IPaisListener, IU
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_options_menu, menu);
-
         final MenuItem settingsItem = menu.findItem(R.id.profile);
-        if (true) {
-            Glide
-                    .with(this)
-                    .asBitmap()
-                    .load(account.getPhotoUrl().toString())
-                    .circleCrop()
-                    .into(new CustomTarget<Bitmap>(100,100) {
-                @Override
-                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                    settingsItem.setIcon(new BitmapDrawable(getResources(), resource));
-                }
 
-                @Override
-                public void onLoadCleared(@Nullable Drawable placeholder) {
+        Glide
+                .with(this)
+                .asBitmap()
+                .load(account.getPhotoUrl().toString())
+                .circleCrop()
+                .into(new CustomTarget<Bitmap>(100,100) {
+            @Override
+            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                settingsItem.setIcon(new BitmapDrawable(getResources(), resource));
+            }
 
-                }
+            @Override
+            public void onLoadCleared(@Nullable Drawable placeholder) {
 
-            });
-        }
-
-
-
+            }
+        });
 
         return true;
     }
@@ -116,10 +114,16 @@ public class MainActivity extends AppCompatActivity implements IPaisListener, IU
         switch (item.getItemId()) {
             case R.id.profile:
                 // TODO goToProfile();
-                return true;
+                break;
+            case R.id.log_out:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(this, LogInActivity.class));
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
+
+        return true;
     }
 
     @Override
@@ -132,6 +136,14 @@ public class MainActivity extends AppCompatActivity implements IPaisListener, IU
         i.putExtra(MONEDA, p.getCurrencies().get(0).getName());
         i.putExtra(CONTINENTE,p.getRegion());
         i.putExtra(IDIOMA, p.getLanguages().get(0).getName());
+        //Hay paises en la api que no tienen longitud ni latitud
+        if (p.getLatlng().size() <= 1 || p.getLatlng().size() <= 1){
+            i.putExtra(LATITUD,0);
+            i.putExtra(LONGITUD,0);
+        } else {
+            i.putExtra(LATITUD,p.getLatlng().get(0));
+            i.putExtra(LONGITUD,p.getLatlng().get(1));
+        }
 
         String rangoHorario = p.getTimezones().get(0);
 
