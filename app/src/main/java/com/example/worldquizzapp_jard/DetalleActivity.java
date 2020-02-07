@@ -24,6 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.worldquizzapp_jard.utilidades.Constantes.ALPHA;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.MONEDA;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_CAPITAL;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_PAIS_EN_ESPANOL;
@@ -50,10 +51,10 @@ public class DetalleActivity extends AppCompatActivity {
         txMoneda = findViewById(R.id.txMoneda);
         txPoblacion = findViewById(R.id.txPoblacion);
 
-        txPoblacion.setText(getIntent().getExtras().get(POBLACION).toString());
-        txCapital.setText(getIntent().getExtras().get(NOMBRE_CAPITAL).toString());
-        txMoneda.setText(getIntent().getExtras().get(MONEDA).toString());
-        txPais.setText(getIntent().getExtras().get(NOMBRE_PAIS_EN_ESPANOL).toString());
+        txPoblacion.setText(String.valueOf(getIntent().getExtras().get(POBLACION)));
+        txCapital.setText(String.valueOf(getIntent().getExtras().get(NOMBRE_CAPITAL)));
+        txMoneda.setText(String.valueOf(getIntent().getExtras().get(MONEDA)));
+        txPais.setText(String.valueOf(getIntent().getExtras().get(NOMBRE_PAIS_EN_ESPANOL)));
 
 
 
@@ -82,7 +83,7 @@ public class DetalleActivity extends AppCompatActivity {
             }
         });
 
-        Call<RespuestaUnsplah> call = serviceUnsplash.fotosDeUnPais(getIntent().getExtras().get(NOMBRE_PAIS_ORIGINAL).toString());
+        Call<RespuestaUnsplah> call = serviceUnsplash.fotosDeUnPais(String.valueOf(getIntent().getExtras().get(NOMBRE_PAIS_ORIGINAL)));
 
         call.enqueue(new Callback<RespuestaUnsplah>() {
             @Override
