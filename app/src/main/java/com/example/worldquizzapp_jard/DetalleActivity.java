@@ -31,6 +31,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
 import com.smarteist.autoimageslider.SliderView;
+
+import org.joda.time.LocalTime;
+
 import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
@@ -83,13 +86,7 @@ public class DetalleActivity extends AppCompatActivity implements OnMapReadyCall
         txContinente = findViewById(R.id.txContinente);
         txHora = findViewById(R.id.txHora);
 
-        txPoblacion.setText(getIntent().getExtras().get(POBLACION).toString());
-        txCapital.setText(getIntent().getExtras().get(NOMBRE_CAPITAL).toString());
-        txMoneda.setText(getIntent().getExtras().get(MONEDA).toString());
-        txPais.setText(getIntent().getExtras().get(NOMBRE_PAIS_EN_ESPANOL).toString());
-        txIdioma.setText(getIntent().getExtras().get(IDIOMA).toString());
-        txContinente.setText(getIntent().getExtras().get(CONTINENTE).toString());
-        txHora.setText(getIntent().getExtras().get(HORA).toString());
+
 
 
 
@@ -126,20 +123,20 @@ public class DetalleActivity extends AppCompatActivity implements OnMapReadyCall
                     txCapital.setText(String.valueOf(p.getCapital()));
                     txMoneda.setText(String.valueOf(p.getCurrencies().get(0).getName()));
                     txPais.setText(String.valueOf(p.getTranslations().es));
-                    txIdioma.setText(String.valueOf(p.getLanguages().get(0)));
-                    txContinente.setText(getIntent().getExtras().get(CONTINENTE).toString());
+                    txIdioma.setText(String.valueOf(p.getLanguages().get(0).getName()));
+                    txContinente.setText(String.valueOf(p.getRegion()));
+                    txHora.setText(String.valueOf(getIntent().getExtras().get(HORA)));
 
 
                     String rangoHorario = p.getTimezones().get(0);
                     if (rangoHorario.equals("UTC")){
-                     //   txHora.setText(String.valueOf(LocalTime.now().toString().substring(0,5));
+                       txHora.setText(String.valueOf(LocalTime.now().toString().substring(0,5)));
                     }else if(rangoHorario.substring(0,4).equals("UTC-")){
-                      //  txHora.setText(String.valueOf(LocalTime.now().minusHours(Integer.parseInt(rangoHorario.substring(4,6))).toString().substring(0,5)));
+                        txHora.setText(String.valueOf(LocalTime.now().minusHours(Integer.parseInt(rangoHorario.substring(4,6))).toString().substring(0,5)));
                     }
                     else {
-                     //   txHora.setText(String.valueOf(LocalTime.now().plusHours(Integer.parseInt(rangoHorario.substring(4,6))).toString().substring(0,5)));
+                        txHora.setText(String.valueOf(LocalTime.now().plusHours(Integer.parseInt(rangoHorario.substring(4,6))).toString().substring(0,5)));
                     }
-                    txHora.setText(HORA);
                     if (txMoneda.getText().length() > txCapital.getText().length() && txMoneda.getText().length() > 20){
                         txMoneda.setTextSize(11);
                     }

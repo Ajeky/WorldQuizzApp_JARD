@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements IPaisListener, IU
                 .into(new CustomTarget<Bitmap>(100,100) {
             @Override
             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                //settingsItem.setIcon(new BitmapDrawable(getResources(), resource));
+                settingsItem.setIcon(new BitmapDrawable(getResources(), resource));
             }
 
             @Override
