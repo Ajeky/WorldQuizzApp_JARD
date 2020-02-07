@@ -195,7 +195,7 @@ public class PreguntaFragment extends Fragment {
 
         Collections.shuffle(respuestas);
 
-        pregunta = new Pregunta("¿Cuál es la capital de " + pais.getTranslations().getEs() + "?", respuestas.get(0), respuestas.get(1), respuestas.get(2), respuestas.get(3), pais.getCapital());
+        pregunta = new Pregunta("¿Cuál es la capital de " + pais.getTranslations().getEs() + "?", respuestas.get(0), respuestas.get(1), respuestas.get(2), respuestas.get(3), pais.getCapital(), pais);
 
         ((MainActivityQuizz)getActivity()).registrarPreguntas(0, pregunta);
 
@@ -225,7 +225,7 @@ public class PreguntaFragment extends Fragment {
 
         Collections.shuffle(respuestas);
 
-        pregunta = new Pregunta("¿Cuál es la moneda de " + pais.getTranslations().getEs() + " ?", respuestas.get(0), respuestas.get(1), respuestas.get(2), respuestas.get(3), pais.getCurrencies().get(0).getName());
+        pregunta = new Pregunta("¿Cuál es la moneda de " + pais.getTranslations().getEs() + " ?", respuestas.get(0), respuestas.get(1), respuestas.get(2), respuestas.get(3), pais.getCurrencies().get(0).getName(), pais);
 
         ((MainActivityQuizz)getActivity()).registrarPreguntas(1, pregunta);
 
