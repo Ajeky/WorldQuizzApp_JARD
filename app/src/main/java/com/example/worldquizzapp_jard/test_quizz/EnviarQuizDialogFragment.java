@@ -45,7 +45,7 @@ public class EnviarQuizDialogFragment extends DialogFragment {
     private String puntos;
 
     public static DialogFragment newInstance(String respuesta1, String respuesta2, String respuesta3, String respuesta4, String respuesta5, String respuestaCorrecta1, String respuestaCorrecta2, String respuestaCorrecta3, String respuestaCorrecta4, String respuestaCorrecta5, String puntos) {
-        DialogFragment fragment = new DialogFragment();
+        DialogFragment fragment = new EnviarQuizDialogFragment();
         Bundle args = new Bundle();
         args.putString(RESPUESTA1, respuesta1);
         args.putString(RESPUESTA2, respuesta2);
@@ -67,9 +67,9 @@ public class EnviarQuizDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
 
+        this.setCancelable(false);
+
         Log.d("onCreateDialog", "Llega a entrar aqui? ");
-
-
         if (getArguments() != null) {
             respuesta1 = getArguments().getString(RESPUESTA1);
             respuesta2 = getArguments().getString(RESPUESTA2);

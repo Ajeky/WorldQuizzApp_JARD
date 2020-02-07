@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.worldquizzapp_jard.PreguntaFragment;
 import com.example.worldquizzapp_jard.R;
@@ -17,11 +18,10 @@ import com.example.worldquizzapp_jard.models.Pregunta;
 public class MainActivityQuizz extends AppCompatActivity implements PreguntaFragment.OnListFragmentInteractionListener {
 
     Button botonEnviar;
+    boolean isButtonBackPressed = false;
     RadioGroup rgRespuesta;
     String respuesta1, respuesta2, respuesta3, respuesta4, respuesta5;
     String respuestaCorrecta1, respuestaCorrecta2, respuestaCorrecta3, respuestaCorrecta4, respuestaCorrecta5;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +38,6 @@ public class MainActivityQuizz extends AppCompatActivity implements PreguntaFrag
                 Log.d("Puntos: ", "" + puntos);
 
                 DialogFragment puntuacionQuiz = EnviarQuizDialogFragment.newInstance(respuesta1, respuesta2, respuesta3, respuesta4, respuesta5, respuestaCorrecta1, respuestaCorrecta2, respuestaCorrecta3, respuestaCorrecta4, respuestaCorrecta5, calcularPuntuacion() + "");
-
-
                 puntuacionQuiz.show(getSupportFragmentManager(), "enviarQuiz");
             }
         });
@@ -48,6 +46,7 @@ public class MainActivityQuizz extends AppCompatActivity implements PreguntaFrag
 
     @Override
     public void onListFragmentInteraction(Pregunta item) {
+
     }
 
     public void registrarPreguntas(int posicion, Pregunta pregunta) {
@@ -79,30 +78,50 @@ public class MainActivityQuizz extends AppCompatActivity implements PreguntaFrag
         switch (posicion) {
             case 0:
                 respuesta1 = respuesta;
+                isTestFinalizado();
                 break;
 
             case 1:
                 respuesta2 = respuesta;
+                isTestFinalizado();
                 break;
 
             case 2:
                 respuesta3 = respuesta;
+                isTestFinalizado();
                 break;
 
             case 3:
                 respuesta4 = respuesta;
+                isTestFinalizado();
                 break;
 
             case 4:
                 respuesta5 = respuesta;
+                isTestFinalizado();
                 break;
 
             default:
+
                 //TODO Tratar el error como se debe tratar
                 Log.d("Error", "Algo ha ido mal");
                 break;
         }
 
+    }
+
+    private void isTestFinalizado() {
+        if (
+                respuesta1==null
+                || respuesta2==null
+                || respuesta3==null
+                || respuesta4==null
+                || respuesta5==null
+        ){
+
+        }else {
+            botonEnviar.setEnabled(true);
+        }
     }
 
     public int calcularPuntuacion() {
@@ -121,5 +140,11 @@ public class MainActivityQuizz extends AppCompatActivity implements PreguntaFrag
         }
 
         return total;
+    }
+
+    @Override
+    public void onBackPressed() {
+        DialogFragment abandonarQuizFragment = new AbandonarQuizDialogFragment();
+        abandonarQuizFragment.show(getSupportFragmentManager(),"AbandonarQuizFragment");
     }
 }
