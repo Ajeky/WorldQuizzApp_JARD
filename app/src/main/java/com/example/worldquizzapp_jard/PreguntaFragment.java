@@ -80,7 +80,7 @@ public class PreguntaFragment extends Fragment {
 
             preguntas = new ArrayList<>();
             servicio = PaisServiceGenerator.createService(PaisService.class);
-            new CargarDatos().execute();
+           // new CargarDatos().execute();
 
 
 
@@ -131,7 +131,7 @@ public class PreguntaFragment extends Fragment {
         void onListFragmentInteraction(Pregunta item);
     }
 
-    private class CargarDatos extends AsyncTask<Void, Void, List<Pais>> {
+   /* private class CargarDatos extends AsyncTask<Void, Void, List<Pais> {
 
         @Override
         protected List<Pais> doInBackground(Void... voids) {
@@ -196,5 +196,5 @@ public class PreguntaFragment extends Fragment {
             recyclerView.setAdapter(new PreguntaAdapter(ctx, R.layout.fragment_pregunta, preguntas));
 
         }
-    }
+    }*/
 }
