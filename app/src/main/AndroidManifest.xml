@@ -32,7 +32,9 @@
 
         <activity
             android:name=".DetalleActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:value="AIzaSyBywav1hhBdjBuM4BhWG3mp3U5g4EpJShg" />
+
         <activity android:name=".test_quizz.MainActivityQuizz" />
         <activity
             android:name=".MainActivity"
