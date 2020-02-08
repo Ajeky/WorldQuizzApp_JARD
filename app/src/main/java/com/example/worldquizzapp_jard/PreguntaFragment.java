@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.service.notification.NotificationListenerService;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,7 @@ public class PreguntaFragment extends Fragment {
     PaisService servicio;
     RecyclerView recyclerView;
     Context ctx;
+    String nombrePais;
 
     private OnListFragmentInteractionListener mListener;
 
@@ -146,7 +148,7 @@ public class PreguntaFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Pais> paises) {
             int numeroPaises = 10;
-            List<Pais> diezPaises, copiaPaises;
+            List<Pais> diezPaises, copiaPaises, copiaDiezPaises;
             Pregunta pregunta;
             int random;
             preguntas = new ArrayList<>();
@@ -162,11 +164,25 @@ public class PreguntaFragment extends Fragment {
                     copiaPaises.remove(random);
                 }
 
-                pregunta = generarPreguntaCapitales(diezPaises);
+                copiaDiezPaises = new ArrayList<>();
+                copiaDiezPaises.removeAll(copiaDiezPaises);
+                copiaDiezPaises.addAll(diezPaises);
+
+                pregunta = generarPreguntaCapitales(copiaDiezPaises);
                 preguntas.add(pregunta);
 
-                pregunta = generarPreguntaMoneda(diezPaises, monedas);
+                copiaDiezPaises.removeAll(copiaDiezPaises);
+                copiaDiezPaises.addAll(diezPaises);
+
+                pregunta = generarPreguntaMoneda(copiaDiezPaises, monedas);
                 preguntas.add(pregunta);
+
+                copiaDiezPaises.removeAll(copiaDiezPaises);
+                copiaDiezPaises.addAll(diezPaises);
+
+                pregunta = generarPreguntaFrontera(copiaDiezPaises);
+                preguntas.add(pregunta);
+
             } while (preguntas.size() < 5);
 
             recyclerView.setAdapter(new PreguntaAdapter(ctx, R.layout.fragment_pregunta, preguntas));
@@ -208,7 +224,7 @@ public class PreguntaFragment extends Fragment {
     }
 
     public Pregunta generarPreguntaMoneda(List<Pais> diezPaises, List<String> monedas) {
-        Pais pais = new Pais();
+        Pais pais;
         int random;
         List <String> respuestas = new ArrayList<>();
         Pregunta pregunta;
@@ -221,6 +237,7 @@ public class PreguntaFragment extends Fragment {
         for (int i = 0 ; i < 3 ; i++) {
             random = new Random().nextInt(monedas.size());
             respuestas.add(monedas.get(random));
+            monedas.remove(monedas.get(random));
         }
 
         Collections.shuffle(respuestas);
@@ -246,7 +263,106 @@ public class PreguntaFragment extends Fragment {
         return monedas;
     }
 
-    public Pregunta generarPreguntaFrontera(List<Pais> paises) {
-        return null;
+    public Pregunta generarPreguntaFrontera(List<Pais> diezPaises) {
+        Pais pais;
+        int random;
+        int randomP;
+        String resBuena;
+        List<String> respuesta = new ArrayList<>();
+        Pregunta pregunta;
+
+
+        random = new Random().nextInt(diezPaises.size());
+        pais = diezPaises.get(random);
+
+        if (pais.getBorders().isEmpty()){
+
+           respuesta.add("No tiene pais limitrofe");
+        }else{
+
+            randomP = new Random().nextInt(pais.getBorders().size());
+            resBuena = pais.getBorders().get(randomP);
+
+           new cargarNombrePais().execute(resBuena);
+
+            respuesta.add(nombrePais);
+        }
+
+        do {
+            random = new Random().nextInt(diezPaises.size());
+            respuesta.add(diezPaises.get(random).getName());
+            diezPaises.remove(random);
+        }while (respuesta.size()<4);
+
+        Collections.shuffle(respuesta);
+        pregunta = new Pregunta("¿Cuál de los siguiente paises es frontera de "+ pais.getTranslations().getEs()+"?", respuesta.get(0),respuesta.get(1),respuesta.get(2), respuesta.get(3),nombrePais);
+        ((MainActivityQuizz)getActivity()).registrarPreguntas(2, pregunta);
+/*
+        for (int i = 0; i < 4 ; i++) {
+
+            pais = diezPaises.get(random);
+
+            if (pais.getBorders().isEmpty()) {
+                respuesta.add("No tiene pais limitrofe");
+            } else {
+                if (respuesta.contains(pais.getBorders().get(0))) {
+                    pais.getBorders().remove(0);
+
+                    do {
+
+                        if (!pais.getBorders().isEmpty()) {
+
+                            if (respuesta.contains(pais.getBorders().get(randomP))) {
+                                pais.getBorders().remove(randomP);
+                            } else {
+                                respuesta.add(pais.getBorders().get(randomP));
+                                pais.getBorders().remove(randomP);
+                            }
+                        }
+                    } while (!respuesta.contains(respuesta.add(pais.getBorders().get(randomP))) || pais.getBorders().isEmpty());
+                } else {
+                    respuesta.add(pais.getBorders().get(0));
+                }
+            }
+            diezPaises.remove(random);
+        }
+        Collections.shuffle(respuesta);
+        pregunta = new Pregunta("¿Cuál de los siguiente paises es frontera de "+ pais.getTranslations().getEs()+"?", respuesta.get(0),respuesta.get(1),respuesta.get(2), respuesta.get(3),pais.getBorders().get(0));
+        ((MainActivityQuizz)getActivity()).registrarPreguntas(2, pregunta);
+
+        if (pregunta.getRespuestaCorrecta().isEmpty()){
+            pregunta.setRespuestaCorrecta("No tiene pais limitrofe");
+        }
+*/
+        return pregunta;
     }
+
+    public class cargarNombrePais extends AsyncTask<String, Void, Pais>{
+
+        @Override
+        protected Pais doInBackground(String... strings) {
+            Pais result = new Pais();
+            Call<Pais> callPais = servicio.nombrePais(strings[0]);
+
+            Response<Pais> responsePais = null;
+            try {
+                responsePais = callPais.execute();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+            if (responsePais.isSuccessful()){
+                result=responsePais.body();
+            }
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(Pais pais) {
+
+            nombrePais = pais.getName();
+
+        }
+    }
+
 }
