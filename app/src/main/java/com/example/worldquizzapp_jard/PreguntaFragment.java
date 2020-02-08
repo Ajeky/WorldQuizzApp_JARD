@@ -46,6 +46,7 @@ public class PreguntaFragment extends Fragment {
     RecyclerView recyclerView;
     Context ctx;
     String nombrePais;
+    List<String> respuesta = new ArrayList<>();
 
     private OnListFragmentInteractionListener mListener;
 
@@ -268,8 +269,8 @@ public class PreguntaFragment extends Fragment {
         int random;
         int randomP;
         String resBuena;
-        List<String> respuesta = new ArrayList<>();
         Pregunta pregunta;
+        respuesta.removeAll(respuesta);
 
 
         random = new Random().nextInt(diezPaises.size());
@@ -285,7 +286,7 @@ public class PreguntaFragment extends Fragment {
 
            new cargarNombrePais().execute(resBuena);
 
-            respuesta.add(nombrePais);
+
         }
 
         do {
@@ -297,43 +298,6 @@ public class PreguntaFragment extends Fragment {
         Collections.shuffle(respuesta);
         pregunta = new Pregunta("¿Cuál de los siguiente paises es frontera de "+ pais.getTranslations().getEs()+"?", respuesta.get(0),respuesta.get(1),respuesta.get(2), respuesta.get(3),nombrePais);
         ((MainActivityQuizz)getActivity()).registrarPreguntas(2, pregunta);
-/*
-        for (int i = 0; i < 4 ; i++) {
-
-            pais = diezPaises.get(random);
-
-            if (pais.getBorders().isEmpty()) {
-                respuesta.add("No tiene pais limitrofe");
-            } else {
-                if (respuesta.contains(pais.getBorders().get(0))) {
-                    pais.getBorders().remove(0);
-
-                    do {
-
-                        if (!pais.getBorders().isEmpty()) {
-
-                            if (respuesta.contains(pais.getBorders().get(randomP))) {
-                                pais.getBorders().remove(randomP);
-                            } else {
-                                respuesta.add(pais.getBorders().get(randomP));
-                                pais.getBorders().remove(randomP);
-                            }
-                        }
-                    } while (!respuesta.contains(respuesta.add(pais.getBorders().get(randomP))) || pais.getBorders().isEmpty());
-                } else {
-                    respuesta.add(pais.getBorders().get(0));
-                }
-            }
-            diezPaises.remove(random);
-        }
-        Collections.shuffle(respuesta);
-        pregunta = new Pregunta("¿Cuál de los siguiente paises es frontera de "+ pais.getTranslations().getEs()+"?", respuesta.get(0),respuesta.get(1),respuesta.get(2), respuesta.get(3),pais.getBorders().get(0));
-        ((MainActivityQuizz)getActivity()).registrarPreguntas(2, pregunta);
-
-        if (pregunta.getRespuestaCorrecta().isEmpty()){
-            pregunta.setRespuestaCorrecta("No tiene pais limitrofe");
-        }
-*/
         return pregunta;
     }
 
@@ -361,6 +325,7 @@ public class PreguntaFragment extends Fragment {
         protected void onPostExecute(Pais pais) {
 
             nombrePais = pais.getName();
+            respuesta.add(nombrePais);
 
         }
     }
