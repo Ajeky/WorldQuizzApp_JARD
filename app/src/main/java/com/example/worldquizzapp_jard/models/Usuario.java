@@ -25,6 +25,7 @@ public class Usuario {
         this.resultados = resultados;
         this.avatar = avatar;
 
+
         for (Long elemento : resultados
         ) {
             this.total += elemento;
