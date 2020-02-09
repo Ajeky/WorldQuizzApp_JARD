@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.worldquizzapp_jard.MapaEnFragment"
-        android:label="@string/title_dashboard"
+        android:label="MAPA"
         tools:layout="@layout/fragment_dashboard"/>
 
     <fragment

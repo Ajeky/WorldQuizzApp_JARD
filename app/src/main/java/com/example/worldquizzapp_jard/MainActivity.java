@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements IPaisListener, IU
     public void onClickPais(Pais p) {
         Intent i = new Intent(this,DetalleActivity.class);
         i.putExtra(ALPHA,p.getAlpha2Code());
+        i.putExtra(NOMBRE_PAIS_ORIGINAL, p.getName());
         //Hay paises en la api que no tienen longitud ni latitud
         if (p.getLatlng().size() <= 1 || p.getLatlng().size() <= 1){
             i.putExtra(LATITUD,0);

@@ -84,7 +84,7 @@ public class MapaEnFragment extends Fragment implements OnMapReadyCallback {
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(listado.get(0).getLatlng().get(0),listado.get(0).getLatlng().get(1))));
 
                             m.setTag(listado.get(i).getAlpha2Code());
-
+                            m.setTitle(listado.get(i).getName());
 
 
                         }
@@ -95,7 +95,9 @@ public class MapaEnFragment extends Fragment implements OnMapReadyCallback {
                             Intent i = new Intent(getActivity(),
                                     DetalleActivity.class);
                             String isoCode = marker.getTag().toString();
+                            String name = marker.getTitle().toString();
                             i.putExtra(Constantes.ALPHA, isoCode);
+                            i.putExtra(Constantes.NOMBRE_PAIS_ORIGINAL, name);
 
                             startActivity(i);
 
