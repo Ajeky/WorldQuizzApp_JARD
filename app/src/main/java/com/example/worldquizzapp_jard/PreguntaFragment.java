@@ -284,8 +284,7 @@ public class PreguntaFragment extends Fragment {
             randomP = new Random().nextInt(pais.getBorders().size());
             resBuena = pais.getBorders().get(randomP);
 
-           new cargarNombrePais().execute(resBuena);
-
+            new cargarNombrePais().execute(resBuena);
 
         }
 
@@ -296,7 +295,7 @@ public class PreguntaFragment extends Fragment {
         }while (respuesta.size()<4);
 
         Collections.shuffle(respuesta);
-        pregunta = new Pregunta("¿Cuál de los siguiente paises es frontera de "+ pais.getTranslations().getEs()+"?", respuesta.get(0),respuesta.get(1),respuesta.get(2), respuesta.get(3),nombrePais);
+        pregunta = new Pregunta("¿Cuál de los siguiente paises es frontera de "+ pais.getTranslations().getEs()+"?", respuesta.get(0),respuesta.get(1),respuesta.get(2), respuesta.get(3),nombrePais, pais);
         ((MainActivityQuizz)getActivity()).registrarPreguntas(2, pregunta);
         return pregunta;
     }
