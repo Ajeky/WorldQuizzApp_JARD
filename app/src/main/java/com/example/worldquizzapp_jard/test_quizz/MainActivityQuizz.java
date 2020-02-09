@@ -32,11 +32,6 @@ public class MainActivityQuizz extends AppCompatActivity implements PreguntaFrag
         botonEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int puntos = calcularPuntuacion();
-                Log.d("ActivityResp: ", "r1: " + respuesta1 + ", r2: " + respuesta2 + ", r3: " + respuesta3 + ", r4: " + respuesta4 + ", r5: " + respuesta5);
-                Log.d("ActivityCorrectas: ", "r1: " + respuestaCorrecta1 + ", r2: " + respuestaCorrecta2 + ", r3: " + respuestaCorrecta3 + ", r4: " + respuestaCorrecta4 + ", r5: " + respuestaCorrecta5);
-                Log.d("Puntos: ", "" + puntos);
-
                 DialogFragment puntuacionQuiz = EnviarQuizDialogFragment.newInstance(respuesta1, respuesta2, respuesta3, respuesta4, respuesta5, respuestaCorrecta1, respuestaCorrecta2, respuestaCorrecta3, respuestaCorrecta4, respuestaCorrecta5, calcularPuntuacion() + "");
                 puntuacionQuiz.show(getSupportFragmentManager(), "enviarQuiz");
             }

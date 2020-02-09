@@ -50,41 +50,37 @@
         android:id="@+id/respuesta3bien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#4F944F"
         app:layout_constraintStart_toStartOf="@+id/respuesta1bien"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta2bien" />
+        app:layout_constraintTop_toBottomOf="@+id/respuesta2mal" />
 
     <TextView
         android:id="@+id/respuesta2bien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#4F944F"
         app:layout_constraintStart_toStartOf="@+id/respuesta1bien"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta1bien" />
+        app:layout_constraintTop_toBottomOf="@+id/respuesta1mal" />
 
     <TextView
         android:id="@+id/respuesta5bien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#4F944F"
         app:layout_constraintStart_toStartOf="@+id/respuesta1bien"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta4bien" />
+        app:layout_constraintTop_toBottomOf="@+id/respuesta4mal" />
 
     <TextView
         android:id="@+id/respuesta4bien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#4F944F"
         app:layout_constraintStart_toStartOf="@+id/respuesta1bien"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta3bien" />
+        app:layout_constraintTop_toBottomOf="@+id/respuesta3mal" />
 
     <TextView
         android:id="@+id/respuesta1mal"
@@ -94,46 +90,42 @@
         android:text="TextView"
         android:textColor="#B93434"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/puntuacion" />
+        app:layout_constraintTop_toBottomOf="@+id/respuesta1bien" />
 
     <TextView
         android:id="@+id/respuesta2mal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#B93434"
-        app:layout_constraintStart_toStartOf="@+id/respuesta1mal"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta1mal" />
+        app:layout_constraintEnd_toEndOf="@+id/respuesta1mal"
+        app:layout_constraintTop_toBottomOf="@+id/respuesta2bien" />
 
     <TextView
         android:id="@+id/respuesta3mal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#B93434"
-        app:layout_constraintStart_toStartOf="@+id/respuesta2mal"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta2mal" />
+        app:layout_constraintEnd_toEndOf="@+id/respuesta1mal"
+        app:layout_constraintTop_toBottomOf="@+id/respuesta3bien" />
 
     <TextView
         android:id="@+id/respuesta4mal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#B93434"
-        app:layout_constraintStart_toStartOf="@+id/respuesta3mal"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta3mal" />
+        app:layout_constraintEnd_toEndOf="@+id/respuesta3mal"
+        app:layout_constraintTop_toBottomOf="@+id/respuesta4bien" />
 
     <TextView
         android:id="@+id/respuesta5mal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#B93434"
-        app:layout_constraintStart_toStartOf="@+id/respuesta4mal"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta4mal" />
+        app:layout_constraintEnd_toEndOf="@+id/respuesta1mal"
+        app:layout_constraintTop_toBottomOf="@+id/respuesta5bien" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

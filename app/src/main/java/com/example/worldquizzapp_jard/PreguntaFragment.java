@@ -45,8 +45,8 @@ public class PreguntaFragment extends Fragment {
     PaisService servicio;
     RecyclerView recyclerView;
     Context ctx;
-    String nombrePais;
-    List<String> respuesta = new ArrayList<>();
+    List<Pais> copiaPaises;
+    Pais paisFrontera;
 
     private OnListFragmentInteractionListener mListener;
 
@@ -136,7 +136,7 @@ public class PreguntaFragment extends Fragment {
 
             try {
                 responsePaises = callPaises.execute();
-            } catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
 
@@ -149,48 +149,59 @@ public class PreguntaFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Pais> paises) {
             int numeroPaises = 10;
-            List<Pais> diezPaises, copiaPaises, copiaDiezPaises;
+            List<Pais> diezPaises, copiaDiezPaises;
             Pregunta pregunta;
             int random;
             preguntas = new ArrayList<>();
             List<String> monedas = generarListaMonedas(paises);
 
+            diezPaises = new ArrayList<>();
+            copiaPaises = new ArrayList<>();
 
-            do {
-                diezPaises = new ArrayList<>();
-                copiaPaises = paises;
-                for (int i = 0; i < numeroPaises; i++) {
-                    random = new Random().nextInt(copiaPaises.size());
-                    diezPaises.add(copiaPaises.get(random));
-                    copiaPaises.remove(random);
-                }
+            copiaPaises.addAll(paises);
+            for (int i = 0; i < numeroPaises; i++) {
+                random = new Random().nextInt(copiaPaises.size());
+                diezPaises.add(copiaPaises.get(random));
+                copiaPaises.remove(random);
+            }
 
-                copiaDiezPaises = new ArrayList<>();
-                copiaDiezPaises.removeAll(copiaDiezPaises);
-                copiaDiezPaises.addAll(diezPaises);
+            copiaPaises.removeAll(copiaPaises);
+            copiaPaises.addAll(paises);
 
-                pregunta = generarPreguntaCapitales(copiaDiezPaises);
-                preguntas.add(pregunta);
+            copiaDiezPaises = new ArrayList<>();
+            copiaDiezPaises.removeAll(copiaDiezPaises);
+            copiaDiezPaises.addAll(diezPaises);
 
-                copiaDiezPaises.removeAll(copiaDiezPaises);
-                copiaDiezPaises.addAll(diezPaises);
+            pregunta = generarPreguntaCapitales(copiaDiezPaises);
+            preguntas.add(pregunta);
 
-                pregunta = generarPreguntaMoneda(copiaDiezPaises, monedas);
-                preguntas.add(pregunta);
+            copiaDiezPaises.removeAll(copiaDiezPaises);
+            copiaDiezPaises.addAll(diezPaises);
 
-                copiaDiezPaises.removeAll(copiaDiezPaises);
-                copiaDiezPaises.addAll(diezPaises);
+            pregunta = generarPreguntaMoneda(copiaDiezPaises, monedas);
+            preguntas.add(pregunta);
 
-                pregunta = generarPreguntaFrontera(copiaDiezPaises);
-                preguntas.add(pregunta);
+            copiaDiezPaises.removeAll(copiaDiezPaises);
+            copiaDiezPaises.addAll(diezPaises);
 
-            } while (preguntas.size() < 5);
+            pregunta = generarPreguntaIdiomas();
+            preguntas.add(pregunta);
 
-            recyclerView.setAdapter(new PreguntaAdapter(ctx, R.layout.fragment_pregunta, preguntas));
+            copiaPaises.removeAll(copiaPaises);
+            copiaPaises.addAll(paises);
+
+            pregunta = generarPreguntaBandera(copiaDiezPaises);
+            preguntas.add(pregunta);
+
+            copiaDiezPaises.removeAll(copiaDiezPaises);
+            copiaDiezPaises.addAll(diezPaises);
+
+            generarPreguntaFrontera(copiaDiezPaises);
+
+
 
         }
     }
-
 
 
     public Pregunta generarPreguntaCapitales(List<Pais> diezPaises) {
@@ -214,7 +225,7 @@ public class PreguntaFragment extends Fragment {
 
         pregunta = new Pregunta("¿Cuál es la capital de " + pais.getTranslations().getEs() + "?", respuestas.get(0), respuestas.get(1), respuestas.get(2), respuestas.get(3), pais.getCapital(), pais);
 
-        ((MainActivityQuizz)getActivity()).registrarPreguntas(0, pregunta);
+        ((MainActivityQuizz) getActivity()).registrarPreguntas(0, pregunta);
 
 
         if (pregunta.getRespuestaCorrecta().isEmpty()) {
@@ -227,7 +238,7 @@ public class PreguntaFragment extends Fragment {
     public Pregunta generarPreguntaMoneda(List<Pais> diezPaises, List<String> monedas) {
         Pais pais;
         int random;
-        List <String> respuestas = new ArrayList<>();
+        List<String> respuestas = new ArrayList<>();
         Pregunta pregunta;
 
         random = new Random().nextInt(diezPaises.size());
@@ -235,7 +246,7 @@ public class PreguntaFragment extends Fragment {
         respuestas.add(pais.getCurrencies().get(0).getName());
         monedas.remove(respuestas.get(0));
 
-        for (int i = 0 ; i < 3 ; i++) {
+        for (int i = 0; i < 3; i++) {
             random = new Random().nextInt(monedas.size());
             respuestas.add(monedas.get(random));
             monedas.remove(monedas.get(random));
@@ -245,15 +256,14 @@ public class PreguntaFragment extends Fragment {
 
         pregunta = new Pregunta("¿Cuál es la moneda de " + pais.getTranslations().getEs() + " ?", respuestas.get(0), respuestas.get(1), respuestas.get(2), respuestas.get(3), pais.getCurrencies().get(0).getName(), pais);
 
-        ((MainActivityQuizz)getActivity()).registrarPreguntas(1, pregunta);
+        ((MainActivityQuizz) getActivity()).registrarPreguntas(1, pregunta);
 
         return pregunta;
     }
 
 
-
     public List<String> generarListaMonedas(List<Pais> paises) {
-        List <String> monedas = new ArrayList<>();
+        List<String> monedas = new ArrayList<>();
 
         for (Pais p : paises) {
             if (!monedas.contains(p.getCurrencies().get(0).getName())) {
@@ -264,43 +274,86 @@ public class PreguntaFragment extends Fragment {
         return monedas;
     }
 
-    public Pregunta generarPreguntaFrontera(List<Pais> diezPaises) {
-        Pais pais;
+    public Pregunta generarPreguntaBandera(List<Pais> diezPaises) {
         int random;
-        int randomP;
-        String resBuena;
+        Pais pais = new Pais();
+        List <String> respuestas = new ArrayList<>();
         Pregunta pregunta;
-        respuesta.removeAll(respuesta);
 
-
-        random = new Random().nextInt(diezPaises.size());
-        pais = diezPaises.get(random);
-
-        if (pais.getBorders().isEmpty()){
-
-           respuesta.add("No tiene pais limitrofe");
-        }else{
-
-            randomP = new Random().nextInt(pais.getBorders().size());
-            resBuena = pais.getBorders().get(randomP);
-
-            new cargarNombrePais().execute(resBuena);
-
+        for (int i = 0 ; i < 4 ; i++) {
+            random = new Random().nextInt(diezPaises.size());
+            pais = diezPaises.get(random);
+            respuestas.add(pais.getTranslations().getEs());
+            diezPaises.remove(random);
         }
 
-        do {
-            random = new Random().nextInt(diezPaises.size());
-            respuesta.add(diezPaises.get(random).getName());
-            diezPaises.remove(random);
-        }while (respuesta.size()<4);
+        Collections.shuffle(respuestas);
 
-        Collections.shuffle(respuesta);
-        pregunta = new Pregunta("¿Cuál de los siguiente paises es frontera de "+ pais.getTranslations().getEs()+"?", respuesta.get(0),respuesta.get(1),respuesta.get(2), respuesta.get(3),nombrePais, pais);
-        ((MainActivityQuizz)getActivity()).registrarPreguntas(2, pregunta);
+        pregunta = new Pregunta("¿A qué país pertenece la siguiente bandera?", respuestas.get(0), respuestas.get(1), respuestas.get(2), respuestas.get(3), pais.getTranslations().getEs(), pais);
+
+        ((MainActivityQuizz)getActivity()).registrarPreguntas(3, pregunta);
+
         return pregunta;
     }
 
-    public class cargarNombrePais extends AsyncTask<String, Void, Pais>{
+    public Pregunta generarPreguntaIdiomas() {
+        Pais pais;
+        int random;
+        List<String> respuestas = new ArrayList<>();
+        Pregunta pregunta;
+        String idioma;
+
+        do {
+            random = new Random().nextInt(copiaPaises.size());
+            pais = copiaPaises.get(random);
+            idioma = pais.getLanguages().get(0).getName();
+            if (!respuestas.contains(idioma)) {
+                respuestas.add(idioma);
+            }
+            copiaPaises.remove(random);
+
+        } while (respuestas.size() < 4);
+
+        Collections.shuffle(respuestas);
+
+        pregunta = new Pregunta("¿Qué idioma se habla mayoritariamente en " + pais.getTranslations().getEs() + "?", respuestas.get(0), respuestas.get(1), respuestas.get(2), respuestas.get(3), pais.getLanguages().get(0).getName(), pais);
+
+        ((MainActivityQuizz) getActivity()).registrarPreguntas(4, pregunta);
+
+        return pregunta;
+    }
+
+    public void generarPreguntaFrontera(List<Pais> diezPaises) {
+        int random;
+        List<String> respuestas = new ArrayList<>();
+        Pregunta pregunta;
+        String codigoPais;
+
+        random = new Random().nextInt(diezPaises.size());
+        paisFrontera = diezPaises.get(random);
+        diezPaises.remove(random);
+
+        if (paisFrontera.getBorders().isEmpty() || paisFrontera.getBorders() == null) {
+            respuestas.add("No tiene países limítrofes.");
+            do {
+                random = new Random().nextInt(diezPaises.size());
+                respuestas.add(diezPaises.get(random).getTranslations().getEs());
+                diezPaises.remove(random);
+            } while (respuestas.size() < 4);
+
+            Collections.shuffle(respuestas);
+            preguntas.add(new Pregunta("¿Que país es limítrofe de " + paisFrontera.getTranslations().getEs() + "?", respuestas.get(0), respuestas.get(1), respuestas.get(2), respuestas.get(3), "No tiene países limítrofes.", paisFrontera));
+            recyclerView.setAdapter(new PreguntaAdapter(ctx, R.layout.fragment_pregunta, preguntas));
+
+        } else {
+            random = new Random().nextInt(paisFrontera.getBorders().size());
+            codigoPais = paisFrontera.getBorders().get(random);
+
+            new cargarPreguntaFrontera().execute(codigoPais);
+        }
+    }
+
+    public class cargarPreguntaFrontera extends AsyncTask<String, Void, Pais> {
 
         @Override
         protected Pais doInBackground(String... strings) {
@@ -310,11 +363,11 @@ public class PreguntaFragment extends Fragment {
             Response<Pais> responsePais = null;
             try {
                 responsePais = callPais.execute();
-            } catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-            if (responsePais.isSuccessful()){
-                result=responsePais.body();
+            if (responsePais.isSuccessful()) {
+                result = responsePais.body();
             }
 
             return result;
@@ -322,11 +375,32 @@ public class PreguntaFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Pais pais) {
+            List<String> respuestas = new ArrayList<>();
+            int random;
+            String respCorrecta;
 
-            nombrePais = pais.getName();
-            respuesta.add(nombrePais);
+            respCorrecta = pais.getTranslations().getEs();
+            respuestas.add(respCorrecta);
+
+            do {
+                random = new Random().nextInt(copiaPaises.size());
+                pais = copiaPaises.get(random);
+
+                if (pais != paisFrontera && !respuestas.contains(pais.getTranslations().getEs())) {
+                    respuestas.add(pais.getTranslations().getEs());
+                }
+
+                copiaPaises.remove(random);
+
+            } while (respuestas.size()< 4);
+
+            Collections.shuffle(respuestas);
+            preguntas.add(new Pregunta("¿Qué país es limítrofe de " + paisFrontera.getTranslations().getEs() + "?", respuestas.get(0), respuestas.get(1), respuestas.get(2), respuestas.get(3), respCorrecta, paisFrontera));
+
+            recyclerView.setAdapter(new PreguntaAdapter(ctx, R.layout.fragment_pregunta, preguntas));
 
         }
     }
+
 
 }
