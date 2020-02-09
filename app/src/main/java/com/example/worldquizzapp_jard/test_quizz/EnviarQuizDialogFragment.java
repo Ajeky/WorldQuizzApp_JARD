@@ -67,9 +67,9 @@ public class EnviarQuizDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
 
+        this.setCancelable(false);
+
         Log.d("onCreateDialog", "Llega a entrar aqui? ");
-
-
         if (getArguments() != null) {
             respuesta1 = getArguments().getString(RESPUESTA1);
             respuesta2 = getArguments().getString(RESPUESTA2);
