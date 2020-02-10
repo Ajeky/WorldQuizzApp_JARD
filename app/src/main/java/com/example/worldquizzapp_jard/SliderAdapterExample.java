@@ -1,6 +1,7 @@
 package com.example.worldquizzapp_jard;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,15 @@ public class SliderAdapterExample extends
                 .load(viewHolder.url)
                 .centerCrop()
                 .into(viewHolder.imageViewBackground);
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context,FotoDetalleActivity.class);
+                i.putExtra("URL",urlsFotos.get(position));
+                context.startActivity(i);
+            }
+        });
 
     }
 
