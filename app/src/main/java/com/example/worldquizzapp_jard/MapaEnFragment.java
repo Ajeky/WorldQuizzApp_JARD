@@ -22,6 +22,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -79,10 +81,12 @@ public class MapaEnFragment extends Fragment implements OnMapReadyCallback {
                         if(!listado.get(i).getLatlng().isEmpty()){
                             Marker m = mMap.addMarker(new MarkerOptions()
                                     .position(new LatLng(listado.get(i).getLatlng().get(0),listado.get(i).getLatlng().get(1)))
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
                                     .title(listado.get(i).getTranslations().es));
 
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(listado.get(0).getLatlng().get(0),listado.get(0).getLatlng().get(1))));
 
+                            m.setPosition(new LatLng(listado.get(i).getLatlng().get(0),listado.get(i).getLatlng().get(1)));
                             m.setTag(listado.get(i).getAlpha2Code());
                             m.setTitle(listado.get(i).getName());
 
@@ -94,10 +98,14 @@ public class MapaEnFragment extends Fragment implements OnMapReadyCallback {
                         public boolean onMarkerClick(Marker marker) {
                             Intent i = new Intent(getActivity(),
                                     DetalleActivity.class);
+                            Double lat = marker.getPosition().latitude;
+                            Double lon = marker.getPosition().longitude;
                             String isoCode = marker.getTag().toString();
                             String name = marker.getTitle().toString();
                             i.putExtra(Constantes.ALPHA, isoCode);
                             i.putExtra(Constantes.NOMBRE_PAIS_ORIGINAL, name);
+                            i.putExtra(Constantes.LATITUD,lat);
+                            i.putExtra(Constantes.LONGITUD, lon);
 
                             startActivity(i);
 
