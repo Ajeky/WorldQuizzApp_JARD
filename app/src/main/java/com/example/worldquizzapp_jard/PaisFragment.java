@@ -12,12 +12,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.worldquizzapp_jard.models.Pais;
 import com.example.worldquizzapp_jard.serviceGenerator.PaisServiceGenerator;
@@ -29,6 +32,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.opencensus.internal.StringUtils;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -45,7 +49,7 @@ public class PaisFragment extends Fragment implements IFiltroListener {
     Context ctx;
     RecyclerView recyclerView;
     boolean filtroActivo = false;
-    MenuItem itemLimpiarFiltro;
+    MenuItem itemLimpiarFiltro, busqueda;
 
     public PaisFragment() {
     }
@@ -114,14 +118,13 @@ public class PaisFragment extends Fragment implements IFiltroListener {
     public void onClickFiltros(String filtro,String tipo) {
         itemLimpiarFiltro.setVisible(true);
         new LoadDataTask().execute(filtro,tipo);
-        //Toast.makeText(ctx, "En Pais fragment mirando tuto " + filtro, Toast.LENGTH_SHORT).show();
     }
 
     private class LoadDataTask extends AsyncTask<String, Void, List<Pais>> {
 
         protected List<Pais> doInBackground(String... strings) {
 
-            List<Pais> result = null;
+            List<Pais> result = new ArrayList<>();
             Call<List<Pais>> callPaises = null;
             Response<List<Pais>> responsePaises = null;
 
@@ -132,8 +135,21 @@ public class PaisFragment extends Fragment implements IFiltroListener {
                     callPaises = service.listadoPaisesByMoneda(strings[0]);
                 }else if(strings[1].equals(Constantes.IDIOMA)){
                     callPaises = service.listadoPaisesByIdioma(strings[0]);
+                }else if (strings[1].equals("busqueda")){
+                    for (Pais pais : listadoPais){
+                        for (String palabraClave : pais.getPalabrasClave()){
+                            if(palabraClave.equalsIgnoreCase(strings[0]) || palabraClave.toLowerCase().contains(strings[0].toLowerCase())){
+                                if (!result.contains(pais)){
+                                    result.add(pais);
+                                }
+                            }
+                        }
+                    }
+                    Log.i("pais",""+result.toString());
+                    return result;
                 }
             }else {
+                Log.i("aquientra","Primera vez");
                 callPaises = service.listadoPaises();
             }
 
@@ -144,7 +160,20 @@ public class PaisFragment extends Fragment implements IFiltroListener {
             }
 
             if (responsePaises.isSuccessful()) {
-                result = responsePaises.body();
+                for (Pais pais : responsePaises.body()){
+                    List<String> palabrasClave = new ArrayList<>();
+                    palabrasClave.add(pais.name);
+                    palabrasClave.add(pais.currencies.get(0).getName());
+                    palabrasClave.add(pais.languages.get(0).getName());
+                    palabrasClave.add(pais.languages.get(0).getNativeName());
+                    if (pais.translations.es != null){
+                        palabrasClave.add(pais.translations.es);
+                    }
+                    pais.setPalabrasClave(palabrasClave);
+                    result.add(pais);
+                }
+                listadoPais = result;
+                //result = responsePaises.body();
             }
             return result;
         }
@@ -166,7 +195,25 @@ public class PaisFragment extends Fragment implements IFiltroListener {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_opciones_lista_paises,menu);
+
         itemLimpiarFiltro = menu.findItem(R.id.borrar_filtro);
+        busqueda = menu.findItem(R.id.app_bar_search);
+        SearchView searchView = (SearchView) busqueda.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //itemLimpiarFiltro.setVisible(true);
+                
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                new LoadDataTask().execute(newText,"busqueda");
+                return false;
+            }
+        });
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -193,6 +240,9 @@ public class PaisFragment extends Fragment implements IFiltroListener {
                 new LoadDataTask().execute();
                 item.setVisible(false);
                 filtroActivo=false;
+                break;
+            case R.id.app_bar_search:
+                Toast.makeText(ctx, "En buscador", Toast.LENGTH_SHORT).show();
                 break;
         }
 

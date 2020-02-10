@@ -94,7 +94,6 @@ public class FilterDialogFragment extends DialogFragment {
                         iFiltroListener.onClickFiltros(listaIdiomasMap.get(listaIdiomas.get(position)),Constantes.IDIOMA);
                     }
                 }
-
                 dismiss();
                 //Toast.makeText(getActivity(), "" + listaIdiomasMap.get(listaIdiomas.get(position)), Toast.LENGTH_SHORT).show();
             }

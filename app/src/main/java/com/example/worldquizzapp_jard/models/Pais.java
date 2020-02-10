@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -84,6 +85,8 @@ public class Pais {
     @JsonProperty("cioc")
     public String cioc;
 
+    public List<String> palabrasClave;
+
     public Pais(String name, List<String> topLevelDomain, String alpha2Code, String alpha3Code, List<String> callingCodes, String capital, List<String> altSpellings, String region, String subregion, Integer population, List<Double> latlng, String demonym, Double area, Double gini, List<String> timezones, List<String> borders, String nativeName, String numericCode, List<Currency> currencies, List<Language> languages, Translations translations, String flag, List<RegionalBloc> regionalBlocs, String cioc) {
         this.name = name;
         this.topLevelDomain = topLevelDomain;
@@ -109,6 +112,7 @@ public class Pais {
         this.flag = flag;
         this.regionalBlocs = regionalBlocs;
         this.cioc = cioc;
+        this.palabrasClave = new ArrayList<>();
     }
 
     public Pais() {
@@ -128,6 +132,14 @@ public class Pais {
 
     public void setTopLevelDomain(List<String> topLevelDomain) {
         this.topLevelDomain = topLevelDomain;
+    }
+
+    public List<String> getPalabrasClave() {
+        return palabrasClave;
+    }
+
+    public void setPalabrasClave(List<String> palabrasClave) {
+        this.palabrasClave = palabrasClave;
     }
 
     public String getAlpha2Code() {
