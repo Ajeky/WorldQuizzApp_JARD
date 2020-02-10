@@ -1,10 +1,13 @@
 package com.example.worldquizzapp_jard;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,6 +15,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.worldquizzapp_jard.models.Foto;
 import com.example.worldquizzapp_jard.models.RespuestaUnsplah;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -27,24 +36,31 @@ import retrofit2.Response;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.CONTINENTE;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.HORA;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.IDIOMA;
+import static com.example.worldquizzapp_jard.utilidades.Constantes.LATITUD;
+import static com.example.worldquizzapp_jard.utilidades.Constantes.LONGITUD;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.MONEDA;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_CAPITAL;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_PAIS_EN_ESPANOL;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.NOMBRE_PAIS_ORIGINAL;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.POBLACION;
 
-public class DetalleActivity extends AppCompatActivity {
+public class DetalleActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     UnsplashService serviceUnsplash;
     SliderView sliderView;
     List<String> urlsFotos;
     TextView txPais, txCapital, txMoneda, txPoblacion, txIdioma, txContinente, txHora;
     int IMAGENES_A_MOSTRAR = 5;
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+        initToolbar();
 
         serviceUnsplash = ServiceGenerator.createService(UnsplashService.class);
         sliderView = findViewById(R.id.imageSlider);
@@ -118,5 +134,41 @@ public class DetalleActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void initToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        // toolbar.setNavigationIcon(R.drawable.ic_arrow_bac_white_24dp);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(null);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_options_detalle, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        } else {
+            Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        double latitud = getIntent().getExtras().getDouble(LATITUD);
+        double longitud = getIntent().getExtras().getDouble(LONGITUD);
+        mMap = googleMap;
+
+        // Add a marker in pais and move the camera
+        LatLng pais = new LatLng(latitud,longitud);
+        mMap.addMarker(new MarkerOptions().position(pais).title("Marcador en " + getIntent().getExtras().getString(NOMBRE_PAIS_EN_ESPANOL)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(pais));
     }
 }

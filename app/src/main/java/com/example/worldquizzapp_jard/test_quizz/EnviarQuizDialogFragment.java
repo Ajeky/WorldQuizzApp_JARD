@@ -45,7 +45,7 @@ public class EnviarQuizDialogFragment extends DialogFragment {
     private String puntos;
 
     public static DialogFragment newInstance(String respuesta1, String respuesta2, String respuesta3, String respuesta4, String respuesta5, String respuestaCorrecta1, String respuestaCorrecta2, String respuestaCorrecta3, String respuestaCorrecta4, String respuestaCorrecta5, String puntos) {
-        DialogFragment fragment = new DialogFragment();
+        DialogFragment fragment = new EnviarQuizDialogFragment();
         Bundle args = new Bundle();
         args.putString(RESPUESTA1, respuesta1);
         args.putString(RESPUESTA2, respuesta2);
@@ -67,10 +67,9 @@ public class EnviarQuizDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
 
+        this.setCancelable(false);
+
         Log.d("onCreateDialog", "Llega a entrar aqui? ");
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         if (getArguments() != null) {
             respuesta1 = getArguments().getString(RESPUESTA1);
             respuesta2 = getArguments().getString(RESPUESTA2);
@@ -128,20 +127,19 @@ public class EnviarQuizDialogFragment extends DialogFragment {
         TextView respuesta5mal = (TextView) view.findViewById(R.id.respuesta5mal);
         respuesta5mal.setText(respuesta5);
 
-        if (respuesta1bien == respuesta1mal) {
+        if (respuesta1bien.getText() == respuesta1mal.getText()) {
             respuesta1mal.setVisibility(View.GONE);
-        } if (respuesta2bien == respuesta2mal) {
+        } if (respuesta2bien.getText() == respuesta2mal.getText()) {
             respuesta2mal.setVisibility(View.GONE);
-        } if (respuesta3bien == respuesta3mal) {
+        } if (respuesta3bien.getText() == respuesta3mal.getText()) {
             respuesta3mal.setVisibility(View.GONE);
-        } if (respuesta4bien == respuesta4mal) {
+        } if (respuesta4bien.getText() == respuesta4mal.getText()) {
             respuesta4mal.setVisibility(View.GONE);
-        } if (respuesta5bien == respuesta5mal) {
+        } if (respuesta5bien.getText() == respuesta5mal.getText()) {
             respuesta5mal.setVisibility(View.GONE);
         }
 
-        builder
-                .setView(view)
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setView(view)
                 .setPositiveButton(R.string.title_home, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

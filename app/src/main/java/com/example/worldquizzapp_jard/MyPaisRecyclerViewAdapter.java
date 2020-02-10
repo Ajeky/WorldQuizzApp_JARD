@@ -47,7 +47,7 @@ public class MyPaisRecyclerViewAdapter extends RecyclerView.Adapter<MyPaisRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.item = listadoPaises.get(position);
-        holder.nombrePais.setText(holder.item.getName());
+        holder.nombrePais.setText(holder.item.getTranslations().es);
 
 
         Glide.with(ctx)

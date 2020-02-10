@@ -7,11 +7,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.worldquizzapp_jard.PreguntaFragment.OnListFragmentInteractionListener;
 import com.example.worldquizzapp_jard.models.Pregunta;
 import com.example.worldquizzapp_jard.test_quizz.MainActivityQuizz;
@@ -49,6 +51,13 @@ public class PreguntaAdapter extends RecyclerView.Adapter<PreguntaAdapter.ViewHo
         holder.rbRespuesta3.setText(holder.mItem.getRespuesta3());
         holder.rbRespuesta4.setText(holder.mItem.getRespuesta4());
 
+        if (position == 3) {
+            Glide.with(ctx)
+                    .load("https://www.countryflags.io/"+holder.mItem.getPais().getAlpha2Code()+"/flat/64.png")
+                    .centerCrop()
+                    .into(holder.ivBandera);
+        }
+
         ((MainActivityQuizz)ctx).registrarPreguntas(position, holder.mItem);
 
         holder.rgRespuestas.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -57,11 +66,6 @@ public class PreguntaAdapter extends RecyclerView.Adapter<PreguntaAdapter.ViewHo
                 RadioButton respuesta = (RadioButton) holder.rgRespuestas.findViewById(checkedId);
 
                 ((MainActivityQuizz)ctx).registrarRespuestas(position, respuesta.getText().toString());
-
-                if (respuesta.getText().toString() == holder.mItem.getRespuestaCorrecta()) {
-
-                    Toast.makeText(ctx, "ENHORABUENA TIO", Toast.LENGTH_SHORT).show();
-                }
 
             }
         });
@@ -86,6 +90,7 @@ public class PreguntaAdapter extends RecyclerView.Adapter<PreguntaAdapter.ViewHo
         public final RadioButton rbRespuesta2;
         public final RadioButton rbRespuesta3;
         public final RadioButton rbRespuesta4;
+        public final ImageView ivBandera;
         public Pregunta mItem;
 
         public ViewHolder(View view) {
@@ -97,6 +102,7 @@ public class PreguntaAdapter extends RecyclerView.Adapter<PreguntaAdapter.ViewHo
             rbRespuesta2 = (RadioButton) view.findViewById(R.id.respuesta2);
             rbRespuesta3 = (RadioButton) view.findViewById(R.id.respuesta3);
             rbRespuesta4 = (RadioButton) view.findViewById(R.id.respuesta4);
+            ivBandera = (ImageView) view.findViewById(R.id.banderaPregunta);
         }
 
 

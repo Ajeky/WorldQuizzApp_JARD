@@ -39,53 +39,48 @@
         android:id="@+id/respuesta1bien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#4F944F"
-        app:layout_constraintEnd_toStartOf="@+id/respuesta1mal"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/pais1"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/puntuacion" />
 
     <TextView
         android:id="@+id/respuesta3bien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#4F944F"
         app:layout_constraintStart_toStartOf="@+id/respuesta1bien"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta2bien" />
+        app:layout_constraintTop_toBottomOf="@+id/respuesta2mal" />
 
     <TextView
         android:id="@+id/respuesta2bien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#4F944F"
         app:layout_constraintStart_toStartOf="@+id/respuesta1bien"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta1bien" />
+        app:layout_constraintTop_toBottomOf="@+id/respuesta1mal" />
 
     <TextView
         android:id="@+id/respuesta5bien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#4F944F"
         app:layout_constraintStart_toStartOf="@+id/respuesta1bien"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta4bien" />
+        app:layout_constraintTop_toBottomOf="@+id/respuesta4mal" />
 
     <TextView
         android:id="@+id/respuesta4bien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#4F944F"
         app:layout_constraintStart_toStartOf="@+id/respuesta1bien"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta3bien" />
+        app:layout_constraintTop_toBottomOf="@+id/respuesta3mal" />
 
     <TextView
         android:id="@+id/respuesta1mal"
@@ -95,100 +90,42 @@
         android:text="TextView"
         android:textColor="#B93434"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/respuesta1bien"
-        app:layout_constraintTop_toTopOf="@+id/respuesta1bien" />
+        app:layout_constraintTop_toBottomOf="@+id/respuesta1bien" />
 
     <TextView
         android:id="@+id/respuesta2mal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#B93434"
-        app:layout_constraintStart_toStartOf="@+id/respuesta1mal"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta1mal" />
+        app:layout_constraintEnd_toEndOf="@+id/respuesta1mal"
+        app:layout_constraintTop_toBottomOf="@+id/respuesta2bien" />
 
     <TextView
         android:id="@+id/respuesta3mal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#B93434"
-        app:layout_constraintStart_toStartOf="@+id/respuesta1mal"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta2mal" />
+        app:layout_constraintEnd_toEndOf="@+id/respuesta1mal"
+        app:layout_constraintTop_toBottomOf="@+id/respuesta3bien" />
 
     <TextView
         android:id="@+id/respuesta4mal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#B93434"
-        app:layout_constraintStart_toStartOf="@+id/respuesta1mal"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta3mal" />
+        app:layout_constraintEnd_toEndOf="@+id/respuesta3mal"
+        app:layout_constraintTop_toBottomOf="@+id/respuesta4bien" />
 
     <TextView
         android:id="@+id/respuesta5mal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#B93434"
-        app:layout_constraintStart_toStartOf="@+id/respuesta1mal"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta4mal" />
-
-    <TextView
-        android:id="@+id/pais1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="TextView"
-        android:textColor="#000000"
-        app:layout_constraintEnd_toStartOf="@+id/respuesta1bien"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/respuesta1bien" />
-
-    <TextView
-        android:id="@+id/pais2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textColor="#000000"
-        app:layout_constraintStart_toStartOf="@+id/pais1"
-        app:layout_constraintTop_toBottomOf="@+id/pais1" />
-
-    <TextView
-        android:id="@+id/pais3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textColor="#000000"
-        app:layout_constraintStart_toStartOf="@+id/pais1"
-        app:layout_constraintTop_toBottomOf="@+id/pais2" />
-
-    <TextView
-        android:id="@+id/pais4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textColor="#000000"
-        app:layout_constraintStart_toStartOf="@+id/pais1"
-        app:layout_constraintTop_toBottomOf="@+id/pais3" />
-
-    <TextView
-        android:id="@+id/pais5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textColor="#000000"
-        app:layout_constraintStart_toStartOf="@+id/pais1"
-        app:layout_constraintTop_toBottomOf="@+id/pais4" />
+        app:layout_constraintEnd_toEndOf="@+id/respuesta1mal"
+        app:layout_constraintTop_toBottomOf="@+id/respuesta5bien" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

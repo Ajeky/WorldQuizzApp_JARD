@@ -14,7 +14,9 @@
     <string name="texto_puntos">¡Test finalizado! \n Tu puntuación es de:</string>
     <string name="puntos">puntos</string>
 
+    <string name="title_activity_maps_dani">Map</string>
+    <string name="title_activity_maps">Mapa</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
 </resources>

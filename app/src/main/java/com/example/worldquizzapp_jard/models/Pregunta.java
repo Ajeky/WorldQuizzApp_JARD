@@ -7,14 +7,16 @@ import java.util.Random;
 
 public class Pregunta {
     private String enunciado, respuesta1, respuesta2, respuesta3, respuesta4, respuestaCorrecta;
+    private Pais pais;
 
-    public Pregunta(String enunciado, String respuesta1, String respuesta2, String respuesta3, String respuesta4, String respuestaCorrecta) {
+    public Pregunta(String enunciado, String respuesta1, String respuesta2, String respuesta3, String respuesta4, String respuestaCorrecta, Pais pais) {
         this.enunciado = enunciado;
         this.respuesta1 = respuesta1;
         this.respuesta2 = respuesta2;
         this.respuesta3 = respuesta3;
         this.respuesta4 = respuesta4;
         this.respuestaCorrecta = respuestaCorrecta;
+        this.pais = pais;
     }
 
     public Pregunta() {
@@ -64,9 +66,11 @@ public class Pregunta {
         return respuestaCorrecta;
     }
 
-    public void setRespuestaCorrecta(String respuestaCorrecta) {
-        this.respuestaCorrecta = respuestaCorrecta;
-    }
+    public void setRespuestaCorrecta(String respuestaCorrecta) { this.respuestaCorrecta = respuestaCorrecta; }
+
+    public Pais getPais() { return pais; }
+
+    public void setPais(Pais pais) { this.pais = pais; }
 
     @Override
     public String toString() {
