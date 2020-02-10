@@ -90,9 +90,6 @@ public class DetalleActivity extends AppCompatActivity implements OnMapReadyCall
 
 
 
-        if (txMoneda.getText().length() > txCapital.getText().length() && txMoneda.getText().length() > 14){
-            txMoneda.setTextSize(12);
-        }
 
         urlsFotos = new ArrayList<String>();
 
@@ -130,9 +127,10 @@ public class DetalleActivity extends AppCompatActivity implements OnMapReadyCall
                     txIdioma.setText(String.valueOf(p.getLanguages().get(0).getName()));
                     txContinente.setText(String.valueOf(p.getRegion()));
                     txHora.setText(String.valueOf(getIntent().getExtras().get(HORA)));
+                    Log.d("MONEDA", ""+ p.getLanguages().get(0).getName());
 
                     if(p.getTranslations().getEs() == null){
-                        txPais.setText((p.getName()));
+                        txPais.setText((p.getCurrencies().get(0).getName()));
                     }
                     else {
                         txPais.setText(String.valueOf(p.getTranslations().es));
@@ -146,7 +144,7 @@ public class DetalleActivity extends AppCompatActivity implements OnMapReadyCall
                     else {
                         txHora.setText(String.valueOf(LocalTime.now().plusHours(Integer.parseInt(rangoHorario.substring(4,6))).toString().substring(0,5)));
                     }
-                    if (txMoneda.getText().length() > txCapital.getText().length() && txMoneda.getText().length() > 20){
+                    if (txMoneda.getText().length() > txCapital.getText().length() && txMoneda.getText().length() > 12){
                         txMoneda.setTextSize(11);
                     }
 
