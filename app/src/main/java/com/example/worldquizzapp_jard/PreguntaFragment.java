@@ -124,7 +124,7 @@ public class PreguntaFragment extends Fragment {
         void onListFragmentInteraction(Pregunta item);
     }
 
-    private class CargarDatos extends AsyncTask<Void, Void, List<Pais>>{
+    private class CargarDatos extends AsyncTask<Void, Void, List<Pais>> {
 
         @Override
         protected List<Pais> doInBackground(Void... voids) {
@@ -199,7 +199,6 @@ public class PreguntaFragment extends Fragment {
             generarPreguntaFrontera(copiaDiezPaises);
 
 
-
         }
     }
 
@@ -244,16 +243,20 @@ public class PreguntaFragment extends Fragment {
         List<String> respuestas = new ArrayList<>();
         Pregunta pregunta;
 
-        random = new Random().nextInt(diezPaises.size());
-        pais = diezPaises.get(random);
-        respuestas.add(pais.getCurrencies().get(0).getName());
-        monedas.remove(respuestas.get(0));
+        do {
+            random = new Random().nextInt(diezPaises.size());
+            pais = diezPaises.get(random);
+            if (!pais.getCurrencies().get(0).getName().contains("[")) {
+                respuestas.add(pais.getCurrencies().get(0).getName());
+                monedas.remove(respuestas.get(0));
+            }
+        } while (respuestas.size() < 1);
 
-        for (int i = 0; i < 3; i++) {
+        do {
             random = new Random().nextInt(monedas.size());
             respuestas.add(monedas.get(random));
             monedas.remove(monedas.get(random));
-        }
+        } while (respuestas.size() < 4);
 
         Collections.shuffle(respuestas);
 
@@ -269,7 +272,7 @@ public class PreguntaFragment extends Fragment {
         List<String> monedas = new ArrayList<>();
 
         for (Pais p : paises) {
-            if (!monedas.contains(p.getCurrencies().get(0).getName())) {
+            if (!monedas.contains(p.getCurrencies().get(0).getName()) && !p.getCurrencies().get(0).getName().contains("[")) {
                 monedas.add(p.getCurrencies().get(0).getName());
             }
         }
@@ -280,21 +283,23 @@ public class PreguntaFragment extends Fragment {
     public Pregunta generarPreguntaBandera(List<Pais> diezPaises) {
         int random;
         Pais pais = new Pais();
-        List <String> respuestas = new ArrayList<>();
+        List<String> respuestas = new ArrayList<>();
         Pregunta pregunta;
 
-        for (int i = 0 ; i < 4 ; i++) {
+        do {
             random = new Random().nextInt(diezPaises.size());
             pais = diezPaises.get(random);
-            respuestas.add(pais.getTranslations().getEs());
+            if (pais.getTranslations().getEs() != null && !pais.getTranslations().getEs().isEmpty()) {
+                respuestas.add(pais.getTranslations().getEs());
+            }
             diezPaises.remove(random);
-        }
+        } while (respuestas.size() < 4);
 
         Collections.shuffle(respuestas);
 
         pregunta = new Pregunta("¿A qué país pertenece la siguiente bandera?", respuestas.get(0), respuestas.get(1), respuestas.get(2), respuestas.get(3), pais.getTranslations().getEs(), pais);
 
-        ((MainActivityQuizz)getActivity()).registrarPreguntas(3, pregunta);
+        ((MainActivityQuizz) getActivity()).registrarPreguntas(3, pregunta);
 
         return pregunta;
     }
@@ -395,7 +400,7 @@ public class PreguntaFragment extends Fragment {
 
                 copiaPaises.remove(random);
 
-            } while (respuestas.size()< 4);
+            } while (respuestas.size() < 4);
 
             Collections.shuffle(respuestas);
             preguntas.add(new Pregunta("¿Qué país es limítrofe de " + paisFrontera.getTranslations().getEs() + "?", respuestas.get(0), respuestas.get(1), respuestas.get(2), respuestas.get(3), respCorrecta, paisFrontera));
