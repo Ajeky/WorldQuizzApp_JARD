@@ -3,6 +3,7 @@ package com.example.worldquizzapp_jard;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,25 +15,34 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.worldquizzapp_jard.models.Foto;
+import com.example.worldquizzapp_jard.models.Pais;
 import com.example.worldquizzapp_jard.models.RespuestaUnsplah;
+import com.example.worldquizzapp_jard.serviceGenerator.PaisServiceGenerator;
+import com.example.worldquizzapp_jard.services.PaisService;
+import com.example.worldquizzapp_jard.utilidades.Constantes;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
-import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
+
+import org.joda.time.LocalTime;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
+import static com.example.worldquizzapp_jard.utilidades.Constantes.ALPHA;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.CONTINENTE;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.HORA;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.IDIOMA;
@@ -47,9 +57,12 @@ import static com.example.worldquizzapp_jard.utilidades.Constantes.POBLACION;
 public class DetalleActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     UnsplashService serviceUnsplash;
+    PaisService service;
     SliderView sliderView;
     List<String> urlsFotos;
-    TextView txPais, txCapital, txMoneda, txPoblacion, txIdioma, txContinente, txHora;
+    TextView txPais, txCapital, txMoneda, txPoblacion,txIdioma, txContinente, txHora;
+    String isoCode;
+    Pais p;
     int IMAGENES_A_MOSTRAR = 5;
     private GoogleMap mMap;
 
@@ -63,28 +76,20 @@ public class DetalleActivity extends AppCompatActivity implements OnMapReadyCall
         initToolbar();
 
         serviceUnsplash = ServiceGenerator.createService(UnsplashService.class);
+        service = PaisServiceGenerator.createService(PaisService.class);
         sliderView = findViewById(R.id.imageSlider);
         txCapital = findViewById(R.id.txCapital);
         txPais = findViewById(R.id.txPais);
         txMoneda = findViewById(R.id.txMoneda);
         txPoblacion = findViewById(R.id.txPoblacion);
+        isoCode = String.valueOf(getIntent().getExtras().get(ALPHA));
         txIdioma = findViewById(R.id.txIdioma);
         txContinente = findViewById(R.id.txContinente);
         txHora = findViewById(R.id.txHora);
 
-        txPoblacion.setText(getIntent().getExtras().get(POBLACION).toString());
-        txCapital.setText(getIntent().getExtras().get(NOMBRE_CAPITAL).toString());
-        txMoneda.setText(getIntent().getExtras().get(MONEDA).toString());
-        txPais.setText(getIntent().getExtras().get(NOMBRE_PAIS_EN_ESPANOL).toString());
-        txIdioma.setText(getIntent().getExtras().get(IDIOMA).toString());
-        txContinente.setText(getIntent().getExtras().get(CONTINENTE).toString());
-        txHora.setText(getIntent().getExtras().get(HORA).toString());
 
 
 
-        if (txMoneda.getText().length() > txCapital.getText().length() && txMoneda.getText().length() > 20){
-            txMoneda.setTextSize(11);
-        }
 
         urlsFotos = new ArrayList<String>();
 
@@ -107,7 +112,51 @@ public class DetalleActivity extends AppCompatActivity implements OnMapReadyCall
             }
         });
 
-        Call<RespuestaUnsplah> call = serviceUnsplash.fotosDeUnPais(getIntent().getExtras().get(NOMBRE_PAIS_ORIGINAL).toString());
+        Call<Pais> callp = service.cogerPais(isoCode);
+
+        callp.enqueue(new Callback<Pais>() {
+            @Override
+            public void onResponse(Call<Pais> call, Response<Pais> response) {
+                if(response.isSuccessful()){
+                    p = response.body();
+
+                    txPoblacion.setText(String.valueOf(p.getPopulation()));
+                    txCapital.setText(String.valueOf(p.getCapital()));
+                    txMoneda.setText(String.valueOf(p.getCurrencies().get(0).getName()));
+                    txPais.setText(String.valueOf(p.getTranslations().es));
+                    txIdioma.setText(String.valueOf(p.getLanguages().get(0).getName()));
+                    txContinente.setText(String.valueOf(p.getRegion()));
+                    txHora.setText(String.valueOf(getIntent().getExtras().get(HORA)));
+
+
+                    String rangoHorario = p.getTimezones().get(0);
+                    if (rangoHorario.equals("UTC")){
+                       txHora.setText(String.valueOf(LocalTime.now().toString().substring(0,5)));
+                    }else if(rangoHorario.substring(0,4).equals("UTC-")){
+                        txHora.setText(String.valueOf(LocalTime.now().minusHours(Integer.parseInt(rangoHorario.substring(4,6))).toString().substring(0,5)));
+                    }
+                    else {
+                        txHora.setText(String.valueOf(LocalTime.now().plusHours(Integer.parseInt(rangoHorario.substring(4,6))).toString().substring(0,5)));
+                    }
+                    if (txMoneda.getText().length() > txCapital.getText().length() && txMoneda.getText().length() > 20){
+                        txMoneda.setTextSize(11);
+                    }
+
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Pais> call, Throwable t) {
+                Toast.makeText(getBaseContext(), "Error al realizar la petición", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+
+
+        Call<RespuestaUnsplah> call = serviceUnsplash.fotosDeUnPais(String.valueOf(getIntent().getExtras().get(NOMBRE_PAIS_ORIGINAL)));
 
         call.enqueue(new Callback<RespuestaUnsplah>() {
             @Override
@@ -168,7 +217,11 @@ public class DetalleActivity extends AppCompatActivity implements OnMapReadyCall
 
         // Add a marker in pais and move the camera
         LatLng pais = new LatLng(latitud,longitud);
-        mMap.addMarker(new MarkerOptions().position(pais).title("Marcador en " + getIntent().getExtras().getString(NOMBRE_PAIS_EN_ESPANOL)));
+        mMap.addMarker(new MarkerOptions()
+                .position(pais)
+                .title("Marcador en " + getIntent().getExtras().getString(NOMBRE_PAIS_ORIGINAL)))
+                .setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+
         mMap.moveCamera(CameraUpdateFactory.newLatLng(pais));
     }
 }

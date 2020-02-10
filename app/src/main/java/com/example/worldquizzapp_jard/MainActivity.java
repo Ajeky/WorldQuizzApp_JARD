@@ -37,6 +37,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.joda.time.LocalTime;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
+
+import static com.example.worldquizzapp_jard.utilidades.Constantes.ALPHA;
+
 
 import static com.example.worldquizzapp_jard.utilidades.Constantes.CONTINENTE;
 import static com.example.worldquizzapp_jard.utilidades.Constantes.HORA;
@@ -127,13 +138,8 @@ public class MainActivity extends AppCompatActivity implements IPaisListener, IU
     @Override
     public void onClickPais(Pais p) {
         Intent i = new Intent(this,DetalleActivity.class);
-        i.putExtra(NOMBRE_CAPITAL,p.getCapital());
-        i.putExtra(NOMBRE_PAIS_EN_ESPANOL,p.getTranslations().es);
-        i.putExtra(NOMBRE_PAIS_ORIGINAL,p.getName());
-        i.putExtra(POBLACION,p.getPopulation().toString());
-        i.putExtra(MONEDA, p.getCurrencies().get(0).getName());
-        i.putExtra(CONTINENTE,p.getRegion());
-        i.putExtra(IDIOMA, p.getLanguages().get(0).getName());
+        i.putExtra(ALPHA,p.getAlpha2Code());
+        i.putExtra(NOMBRE_PAIS_ORIGINAL, p.getName());
         //Hay paises en la api que no tienen longitud ni latitud
         if (p.getLatlng().size() <= 1 || p.getLatlng().size() <= 1){
             i.putExtra(LATITUD,0);

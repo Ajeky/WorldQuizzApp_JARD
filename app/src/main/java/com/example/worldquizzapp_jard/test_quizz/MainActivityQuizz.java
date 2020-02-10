@@ -42,7 +42,6 @@ public class MainActivityQuizz extends AppCompatActivity implements PreguntaFrag
     private RadioGroup rgRespuesta;
     private String respuesta1, respuesta2, respuesta3, respuesta4, respuesta5;
     private String respuestaCorrecta1, respuestaCorrecta2, respuestaCorrecta3, respuestaCorrecta4, respuestaCorrecta5;
-    //private FirebaseFirestore db;
     private FirebaseFirestore db;
 
     @Override
@@ -75,8 +74,6 @@ public class MainActivityQuizz extends AppCompatActivity implements PreguntaFrag
 
                                     datos.remove("resultados");
                                     datos.put("resultados", resultados);
-
-                                    Log.d("RESULTADOS USUARIO", resultados + "");
 
                                     db.collection("usuarios").document(uid).set(datos);
 

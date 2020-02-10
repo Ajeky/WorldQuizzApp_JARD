@@ -14,6 +14,9 @@ import retrofit2.http.Query;
 
 public interface PaisService {
 
+    @GET("rest/v2/alpha/{co}")
+    Call<Pais> cogerPais(@Path("co") String co);
+
     @GET("rest/v2/all/")
     Call<List<Pais>> listadoPaises();
 

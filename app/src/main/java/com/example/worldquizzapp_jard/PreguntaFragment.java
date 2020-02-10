@@ -124,7 +124,7 @@ public class PreguntaFragment extends Fragment {
         void onListFragmentInteraction(Pregunta item);
     }
 
-    private class CargarDatos extends AsyncTask<Void, Void, List<Pais>> {
+    private class CargarDatos extends AsyncTask<Void, Void, List<Pais>>{
 
         @Override
         protected List<Pais> doInBackground(Void... voids) {

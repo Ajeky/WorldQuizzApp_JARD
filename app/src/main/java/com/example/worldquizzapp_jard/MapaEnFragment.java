@@ -1,6 +1,7 @@
 package com.example.worldquizzapp_jard;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -15,11 +16,16 @@ import android.widget.Toast;
 import com.example.worldquizzapp_jard.models.Pais;
 import com.example.worldquizzapp_jard.serviceGenerator.PaisServiceGenerator;
 import com.example.worldquizzapp_jard.services.PaisService;
+import com.example.worldquizzapp_jard.ui.IPaisListener;
+import com.example.worldquizzapp_jard.utilidades.Constantes;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
@@ -34,10 +40,10 @@ import retrofit2.Response;
  * A simple {@link Fragment} subclass.
  */
 public class MapaEnFragment extends Fragment implements OnMapReadyCallback {
-
     PaisService service;
     GoogleMap mMap;
     List<Pais> listado;
+    IPaisListener listener;
     public MapaEnFragment() {
         // Required empty public constructor
     }
@@ -68,15 +74,45 @@ public class MapaEnFragment extends Fragment implements OnMapReadyCallback {
             public void onResponse(Call<List<Pais>> call, Response<List<Pais>> response) {
                 if(response.isSuccessful()){
                        listado = response.body();
+
                     for(int i = 0; i<listado.size(); i++){
+
                         //SI NO ESTA VACIO
                         if(!listado.get(i).getLatlng().isEmpty()){
-                            mMap.addMarker(new MarkerOptions()
+                            Marker m = mMap.addMarker(new MarkerOptions()
                                     .position(new LatLng(listado.get(i).getLatlng().get(0),listado.get(i).getLatlng().get(1)))
-                                    .title(listado.get(i).getName()));
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+                                    .title(listado.get(i).getTranslations().es));
+
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(listado.get(0).getLatlng().get(0),listado.get(0).getLatlng().get(1))));
+
+                            m.setPosition(new LatLng(listado.get(i).getLatlng().get(0),listado.get(i).getLatlng().get(1)));
+                            m.setTag(listado.get(i).getAlpha2Code());
+                            m.setTitle(listado.get(i).getName());
+
+
                         }
                     }
+                    mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                        @Override
+                        public boolean onMarkerClick(Marker marker) {
+                            Intent i = new Intent(getActivity(),
+                                    DetalleActivity.class);
+                            Double lat = marker.getPosition().latitude;
+                            Double lon = marker.getPosition().longitude;
+                            String isoCode = marker.getTag().toString();
+                            String name = marker.getTitle().toString();
+                            i.putExtra(Constantes.ALPHA, isoCode);
+                            i.putExtra(Constantes.NOMBRE_PAIS_ORIGINAL, name);
+                            i.putExtra(Constantes.LATITUD,lat);
+                            i.putExtra(Constantes.LONGITUD, lon);
+
+                            startActivity(i);
+
+                            return false;
+                        }
+                    });
+
 
                 }
 
