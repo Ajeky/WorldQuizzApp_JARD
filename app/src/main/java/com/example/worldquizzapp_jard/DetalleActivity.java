@@ -35,6 +35,7 @@ import com.smarteist.autoimageslider.SliderView;
 
 import org.joda.time.LocalTime;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
@@ -121,7 +122,7 @@ public class DetalleActivity extends AppCompatActivity implements OnMapReadyCall
                     p = response.body();
 
 
-                    txPoblacion.setText(String.valueOf(p.getPopulation()));
+                    txPoblacion.setText(String.valueOf(humanizeNumber(p.getPopulation())));
                     txCapital.setText(String.valueOf(p.getCapital()));
                     txMoneda.setText(String.valueOf(p.getCurrencies().get(0).getName()));
                     txIdioma.setText(String.valueOf(p.getLanguages().get(0).getName()));
@@ -229,5 +230,11 @@ public class DetalleActivity extends AppCompatActivity implements OnMapReadyCall
                 .setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(pais));
+    }
+
+    public String humanizeNumber(int num) {
+        NumberFormat format = NumberFormat.getInstance();
+        format.setMaximumFractionDigits(0);
+        return format.format(num).replace(",",".");
     }
 }

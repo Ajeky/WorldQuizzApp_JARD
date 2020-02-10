@@ -31,11 +31,11 @@ import java.util.Random;
 import retrofit2.Call;
 import retrofit2.Response;
 
+
 /**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
+ * La mayoría de lo que hace esta clase ocurre en los onPostExecute de los AsyncTask,
+ * para asegurarnos de que cargase todos los datos a la vez y evitar problemas de
+ * objetos nulos.
  */
 public class PreguntaFragment extends Fragment {
 
@@ -50,15 +50,8 @@ public class PreguntaFragment extends Fragment {
 
     private OnListFragmentInteractionListener mListener;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public PreguntaFragment() {
-    }
 
-    public PreguntaFragment(List<Pregunta> preguntas) {
-        this.preguntas = preguntas;
+    public PreguntaFragment() {
     }
 
     @Override
@@ -109,23 +102,18 @@ public class PreguntaFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(Pregunta item);
     }
 
+
     private class CargarDatos extends AsyncTask<Void, Void, List<Pais>> {
 
+        /**
+         * Aquí empieza lo gordo. Primero, llamamos al servicio de países para que me devuelva
+         * la lista completa de los 249 países, y se la pasamos al onPostExecute.
+         */
         @Override
         protected List<Pais> doInBackground(Void... voids) {
             List<Pais> result = null;
@@ -146,6 +134,23 @@ public class PreguntaFragment extends Fragment {
             return result;
         }
 
+        /**
+         * Una vez aquí, declaramos todas las variables que vamos a necesitar para generar las
+         * preguntas. El número de países que se utilizarán para generar las preguntas (por
+         * defecto 10), la lista de dichos 10 países, una copia para poder cambiar valores al
+         * generar una pregunta sin miedo a que la lista no nos valga para generar el resto,
+         * la pregunta que se le añadirá a la lista de preguntas que se le pasará al adapter,
+         * un entero para generar números aleatorios, la lista de preguntas para el adapter,
+         * y la lista de todas las monedas.
+         * A continuación añadimos los países especificados a la lista a utilizar en las preguntas,
+         * comprobando que tengan traducción al español y que en la primera posición del array de
+         * monedas haya una moneda válida.
+         * Tras esto, se van llamando a los métodos para generar preguntas uno a uno. Al ser
+         * necesario un AsyncTask para generar la pregunta de fronteras, se llamará al adaptador
+         * en el onPostExecute de dicho AsyncTask.
+         *
+         * @param paises Lista de 249 países.
+         */
         @Override
         protected void onPostExecute(List<Pais> paises) {
             int numeroPaises = 10;
@@ -159,11 +164,13 @@ public class PreguntaFragment extends Fragment {
             copiaPaises = new ArrayList<>();
 
             copiaPaises.addAll(paises);
-            for (int i = 0; i < numeroPaises; i++) {
+            do {
                 random = new Random().nextInt(copiaPaises.size());
-                diezPaises.add(copiaPaises.get(random));
+                if (copiaPaises.get(random).getTranslations().getEs() != null && !copiaPaises.get(random).getCurrencies().get(0).getName().contains("[")) {
+                    diezPaises.add(copiaPaises.get(random));
+                }
                 copiaPaises.remove(random);
-            }
+            } while (diezPaises.size() < numeroPaises);
 
             copiaPaises.removeAll(copiaPaises);
             copiaPaises.addAll(paises);
@@ -202,7 +209,7 @@ public class PreguntaFragment extends Fragment {
         }
     }
 
-
+    
     public Pregunta generarPreguntaCapitales(List<Pais> diezPaises) {
         Pais pais = new Pais();
         int random;
@@ -246,7 +253,7 @@ public class PreguntaFragment extends Fragment {
         do {
             random = new Random().nextInt(diezPaises.size());
             pais = diezPaises.get(random);
-            if (!pais.getCurrencies().get(0).getName().contains("[")) {
+            if (!pais.getCurrencies().get(0).getName().contains("[") && pais.getTranslations().getEs() != null) {
                 respuestas.add(pais.getCurrencies().get(0).getName());
                 monedas.remove(respuestas.get(0));
             }

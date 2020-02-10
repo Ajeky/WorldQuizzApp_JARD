@@ -13,6 +13,7 @@
     <string name="puntos_por_partida">Puntos/Partida:</string>
     <string name="texto_puntos">¡Test finalizado! \n Tu puntuación es de:</string>
     <string name="puntos">puntos</string>
+    <string name="volver">VOLVER</string>
 
     <string name="title_activity_maps_dani">Map</string>
     <string name="title_activity_maps">Mapa</string>

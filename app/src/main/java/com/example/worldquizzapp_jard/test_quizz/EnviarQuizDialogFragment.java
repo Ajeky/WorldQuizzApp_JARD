@@ -141,7 +141,7 @@ public class EnviarQuizDialogFragment extends DialogFragment {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setView(view)
-                .setPositiveButton(R.string.title_home, new DialogInterface.OnClickListener() {
+                .setNeutralButton(R.string.volver, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         startActivity(new Intent(getActivity(), MainActivity.class) );
