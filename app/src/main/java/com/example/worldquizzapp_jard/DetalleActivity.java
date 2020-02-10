@@ -120,15 +120,20 @@ public class DetalleActivity extends AppCompatActivity implements OnMapReadyCall
                 if(response.isSuccessful()){
                     p = response.body();
 
+
                     txPoblacion.setText(String.valueOf(p.getPopulation()));
                     txCapital.setText(String.valueOf(p.getCapital()));
                     txMoneda.setText(String.valueOf(p.getCurrencies().get(0).getName()));
-                    txPais.setText(String.valueOf(p.getTranslations().es));
                     txIdioma.setText(String.valueOf(p.getLanguages().get(0).getName()));
                     txContinente.setText(String.valueOf(p.getRegion()));
                     txHora.setText(String.valueOf(getIntent().getExtras().get(HORA)));
 
-
+                    if(p.getTranslations().getEs() == null){
+                        txPais.setText((p.getName()));
+                    }
+                    else {
+                        txPais.setText(String.valueOf(p.getTranslations().es));
+                    }
                     String rangoHorario = p.getTimezones().get(0);
                     if (rangoHorario.equals("UTC")){
                        txHora.setText(String.valueOf(LocalTime.now().toString().substring(0,5)));

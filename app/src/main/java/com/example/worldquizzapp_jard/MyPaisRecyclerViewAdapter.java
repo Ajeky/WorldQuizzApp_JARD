@@ -47,8 +47,12 @@ public class MyPaisRecyclerViewAdapter extends RecyclerView.Adapter<MyPaisRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.item = listadoPaises.get(position);
-        holder.nombrePais.setText(holder.item.getTranslations().es);
-
+        if(holder.item.getTranslations().getEs() == null){
+            holder.nombrePais.setText(holder.item.getName());
+        }
+        else {
+            holder.nombrePais.setText(holder.item.getTranslations().es);
+        }
 
         Glide.with(ctx)
                 .load("https://www.countryflags.io/"+holder.item.getAlpha2Code()+"/flat/64.png")
