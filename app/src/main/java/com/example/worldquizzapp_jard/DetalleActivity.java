@@ -82,8 +82,8 @@ public class DetalleActivity extends AppCompatActivity implements OnMapReadyCall
 
 
 
-        if (txMoneda.getText().length() > txCapital.getText().length() && txMoneda.getText().length() > 20){
-            txMoneda.setTextSize(11);
+        if (txMoneda.getText().length() > txCapital.getText().length() && txMoneda.getText().length() > 14){
+            txMoneda.setTextSize(12);
         }
 
         urlsFotos = new ArrayList<String>();

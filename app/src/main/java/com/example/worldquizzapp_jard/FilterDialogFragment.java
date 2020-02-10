@@ -24,8 +24,8 @@ public class FilterDialogFragment extends DialogFragment {
 
     View v;
     ArrayAdapter<String> adapter;
-    List<String> listaIdiomas = new ArrayList<>(Arrays.asList("Español","Ingles","Frances"));
-    List<String> listaMonedas = new ArrayList<>(Arrays.asList("Euro","Dolar Estadounidense","Libra Esterlina"));
+    List<String> listaIdiomas = new ArrayList<>(Arrays.asList("Español","Ingles","Frances","Alemán","Italiano"));
+    List<String> listaMonedas = new ArrayList<>(Arrays.asList("Euro","Dolar Estadounidense","Libra Esterlina","Yen Japonés"));
     Map<String, String> listaIdiomasMap = new HashMap<>();
     Map<String, String> listaMonedasMap = new HashMap<>();
     ListView lv;
@@ -39,10 +39,13 @@ public class FilterDialogFragment extends DialogFragment {
         listaIdiomasMap.put("Español","es");
         listaIdiomasMap.put("Ingles","en");
         listaIdiomasMap.put("Frances","fr");
+        listaIdiomasMap.put("Alemán","de");
+        listaIdiomasMap.put("Italiano","it");
 
         listaMonedasMap.put("Euro","eur");
         listaMonedasMap.put("Dolar Estadounidense","usd");
         listaMonedasMap.put("Libra Esterlina","gbp");
+        listaMonedasMap.put("Yen Japonés", "jpy");
 
 
         lv = v.findViewById(R.id.ListViewOpcionesFiltro);
