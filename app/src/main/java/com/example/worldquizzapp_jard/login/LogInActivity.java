@@ -150,10 +150,10 @@ public class LogInActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot document = task.getResult();
-                                //Si el usuario existe no lo vuelve a guardar en firebase
                                 if (document.exists()) {
-                                //Si el usuario no existe lo guarda en firebase
+                                    //Si el usuario existe no hace nada
                                 } else {
+                                    //Si el usuario no existe lo guarda en firebase
                                     // Add a new document with a custom ID
                                     db.collection("usuarios")
                                             .document(user.getUid())
