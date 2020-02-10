@@ -210,16 +210,19 @@ public class PreguntaFragment extends Fragment {
         List<String> respuestas = new ArrayList<>();
         Pregunta pregunta;
 
-        for (int i = 0; i < 4; i++) {
+        do {
             random = new Random().nextInt(diezPaises.size());
             pais = diezPaises.get(random);
-            if (pais.getCapital().isEmpty() || pais.getCapital() == null) {
-                respuestas.add("No tiene");
-            } else {
-                respuestas.add(pais.getCapital());
+
+            if (pais.getTranslations().getEs() != null && !pais.getTranslations().getEs().isEmpty()) {
+                if (pais.getCapital().isEmpty() || pais.getCapital() == null) {
+                    respuestas.add("No tiene");
+                } else {
+                    respuestas.add(pais.getCapital());
+                }
             }
             diezPaises.remove(random);
-        }
+        } while (respuestas.size() < 4);
 
         Collections.shuffle(respuestas);
 

@@ -58,8 +58,6 @@ public class AbandonarQuizDialogFragment extends DialogFragment {
                                     datos.remove("resultados");
                                     datos.put("resultados", resultados);
 
-                                    Log.d("RESULTADOS USUARIO", resultados + "");
-
                                     db.collection("usuarios").document(uid).set(datos);
 
                                 }
