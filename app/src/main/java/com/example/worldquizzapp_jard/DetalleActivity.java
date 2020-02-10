@@ -22,6 +22,7 @@ import com.example.worldquizzapp_jard.services.PaisService;
 import com.example.worldquizzapp_jard.utilidades.Constantes;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -216,7 +217,11 @@ public class DetalleActivity extends AppCompatActivity implements OnMapReadyCall
 
         // Add a marker in pais and move the camera
         LatLng pais = new LatLng(latitud,longitud);
-        mMap.addMarker(new MarkerOptions().position(pais).title("Marcador en " + getIntent().getExtras().getString(NOMBRE_PAIS_ORIGINAL)));
+        mMap.addMarker(new MarkerOptions()
+                .position(pais)
+                .title("Marcador en " + getIntent().getExtras().getString(NOMBRE_PAIS_ORIGINAL)))
+                .setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+
         mMap.moveCamera(CameraUpdateFactory.newLatLng(pais));
     }
 }
