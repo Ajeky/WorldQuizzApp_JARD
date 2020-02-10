@@ -19,4 +19,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pregunta_capitales">Capital:</string>
+    <string name="pregunta_moneda">Moneda:</string>
+    <string name="pregunta_idioma">Idioma:</string>
+    <string name="pregunta_bandera">Bandera:</string>
+    <string name="pregunta_frontera">Frontera:</string>
+    <string name="respuesta_correcta">Respuestas\ncorrectas:</string>
+    <string name="respuesta_elegida">Respuestas\nescogidas:</string>
 </resources>

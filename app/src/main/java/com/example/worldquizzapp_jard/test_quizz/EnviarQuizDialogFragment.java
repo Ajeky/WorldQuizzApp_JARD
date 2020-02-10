@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -128,15 +129,15 @@ public class EnviarQuizDialogFragment extends DialogFragment {
         respuesta5mal.setText(respuesta5);
 
         if (respuesta1bien.getText() == respuesta1mal.getText()) {
-            respuesta1mal.setVisibility(View.GONE);
+            respuesta1mal.setTextColor(Color.parseColor("#4F944F"));
         } if (respuesta2bien.getText() == respuesta2mal.getText()) {
-            respuesta2mal.setVisibility(View.GONE);
+            respuesta2mal.setTextColor(Color.parseColor("#4F944F"));
         } if (respuesta3bien.getText() == respuesta3mal.getText()) {
-            respuesta3mal.setVisibility(View.GONE);
+            respuesta3mal.setTextColor(Color.parseColor("#4F944F"));
         } if (respuesta4bien.getText() == respuesta4mal.getText()) {
-            respuesta4mal.setVisibility(View.GONE);
+            respuesta4mal.setTextColor(Color.parseColor("#4F944F"));
         } if (respuesta5bien.getText() == respuesta5mal.getText()) {
-            respuesta5mal.setVisibility(View.GONE);
+            respuesta5mal.setTextColor(Color.parseColor("#4F944F"));
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setView(view)

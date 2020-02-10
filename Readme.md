@@ -28,3 +28,5 @@
 **Ricardo Mejias Dorado**
 
 **Daniel Leiva Nieto**
+
+[Documento de reparto de tareas](https://docs.google.com/document/d/1ohl3Ztv70FC9zbbM9vs7BK6ubKaTsVJomFH6J_pV6zs/edit?usp=sharing)

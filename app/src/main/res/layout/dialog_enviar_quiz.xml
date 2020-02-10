@@ -28,7 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif-medium"
-        android:text="30/50"
         android:textColor="#000000"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,91 +40,169 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
         android:textColor="#4F944F"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/puntuacion" />
+        app:layout_constraintTop_toBottomOf="@+id/pregunta1" />
 
     <TextView
         android:id="@+id/respuesta3bien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginTop="8dp"
         android:textColor="#4F944F"
         app:layout_constraintStart_toStartOf="@+id/respuesta1bien"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta2mal" />
+        app:layout_constraintTop_toBottomOf="@+id/pregunta3" />
 
     <TextView
         android:id="@+id/respuesta2bien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginTop="8dp"
         android:textColor="#4F944F"
         app:layout_constraintStart_toStartOf="@+id/respuesta1bien"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta1mal" />
+        app:layout_constraintTop_toBottomOf="@+id/pregunta2" />
 
     <TextView
         android:id="@+id/respuesta5bien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginTop="8dp"
         android:textColor="#4F944F"
         app:layout_constraintStart_toStartOf="@+id/respuesta1bien"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta4mal" />
+        app:layout_constraintTop_toBottomOf="@+id/pregunta5" />
 
     <TextView
         android:id="@+id/respuesta4bien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginTop="8dp"
         android:textColor="#4F944F"
         app:layout_constraintStart_toStartOf="@+id/respuesta1bien"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta3mal" />
+        app:layout_constraintTop_toBottomOf="@+id/pregunta4" />
 
     <TextView
         android:id="@+id/respuesta1mal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="TextView"
         android:textColor="#B93434"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta1bien" />
+        app:layout_constraintTop_toBottomOf="@+id/pregunta1" />
 
     <TextView
         android:id="@+id/respuesta2mal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:textColor="#B93434"
-        app:layout_constraintEnd_toEndOf="@+id/respuesta1mal"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta2bien" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pregunta2" />
 
     <TextView
         android:id="@+id/respuesta3mal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:textColor="#B93434"
-        app:layout_constraintEnd_toEndOf="@+id/respuesta1mal"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta3bien" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pregunta3" />
 
     <TextView
         android:id="@+id/respuesta4mal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:textColor="#B93434"
-        app:layout_constraintEnd_toEndOf="@+id/respuesta3mal"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta4bien" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pregunta4" />
 
     <TextView
         android:id="@+id/respuesta5mal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:textColor="#B93434"
-        app:layout_constraintEnd_toEndOf="@+id/respuesta1mal"
-        app:layout_constraintTop_toBottomOf="@+id/respuesta5bien" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pregunta5" />
+
+    <TextView
+        android:id="@+id/pregunta1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/pregunta_capitales"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_quiz_resp_correcta" />
+
+    <TextView
+        android:id="@+id/pregunta2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/pregunta_moneda"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/respuesta1bien" />
+
+    <TextView
+        android:id="@+id/pregunta3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/pregunta_idioma"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/respuesta2bien" />
+
+    <TextView
+        android:id="@+id/pregunta4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/pregunta_bandera"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/respuesta3bien" />
+
+    <TextView
+        android:id="@+id/pregunta5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/pregunta_frontera"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/respuesta4bien" />
+
+    <TextView
+        android:id="@+id/dialog_quiz_resp_correcta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/respuesta_correcta"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/puntuacion" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/respuesta_elegida"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/puntuacion" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

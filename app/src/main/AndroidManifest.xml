@@ -35,7 +35,8 @@
             android:name=".DetalleActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:value="AIzaSyBywav1hhBdjBuM4BhWG3mp3U5g4EpJShg" />
-        <activity android:name=".test_quizz.MainActivityQuizz" />
+        <activity android:name=".test_quizz.MainActivityQuizz"
+            android:label="Test"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" />
