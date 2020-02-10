@@ -216,7 +216,7 @@ public class DetalleActivity extends AppCompatActivity implements OnMapReadyCall
 
         // Add a marker in pais and move the camera
         LatLng pais = new LatLng(latitud,longitud);
-        mMap.addMarker(new MarkerOptions().position(pais).title("Marcador en " + getIntent().getExtras().getString(NOMBRE_PAIS_EN_ESPANOL)));
+        mMap.addMarker(new MarkerOptions().position(pais).title("Marcador en " + getIntent().getExtras().getString(NOMBRE_PAIS_ORIGINAL)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(pais));
     }
 }
