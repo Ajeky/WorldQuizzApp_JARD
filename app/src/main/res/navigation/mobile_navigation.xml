@@ -8,13 +8,13 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.worldquizzapp_jard.PaisFragment"
-        android:label="@string/title_home"
+        android:label="Inicio"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.worldquizzapp_jard.MapaEnFragment"
-        android:label="MAPA"
+        android:label="Mapa"
         tools:layout="@layout/fragment_dashboard"/>
 
     <fragment
